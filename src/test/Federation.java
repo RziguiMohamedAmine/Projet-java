@@ -21,7 +21,7 @@ public class Federation {
         //        DataSource ds2 = DataSource.getInstance();
         //        System.out.println(ds1);
         //        System.out.println(ds2);
-        Personne p1 = new Personne("houssem", "charef");
+        Personne p1 = new Personne("charef", "charef");
         PersonneService ps = new PersonneService();
         ps.insertPersonne(p1);
         
