@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.1.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Feb 11, 2022 at 12:20 PM
--- Server version: 10.4.22-MariaDB
--- PHP Version: 7.4.26
+-- Hôte : 127.0.0.1
+-- Généré le : ven. 11 fév. 2022 à 21:59
+-- Version du serveur :  10.4.18-MariaDB
+-- Version de PHP : 7.4.16
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `ftf`
+-- Base de données : `oldftf`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `arbitre`
+-- Structure de la table `arbitre`
 --
 
 CREATE TABLE `arbitre` (
@@ -39,7 +39,7 @@ CREATE TABLE `arbitre` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `billet`
+-- Structure de la table `billet`
 --
 
 CREATE TABLE `billet` (
@@ -52,7 +52,7 @@ CREATE TABLE `billet` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `categorie`
+-- Structure de la table `categorie`
 --
 
 CREATE TABLE `categorie` (
@@ -63,21 +63,7 @@ CREATE TABLE `categorie` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `commande`
---
-
-CREATE TABLE `commande` (
-  `id` int(11) NOT NULL,
-  `etat` tinyint(1) NOT NULL,
-  `date` date NOT NULL DEFAULT current_timestamp(),
-  `id_user` int(11) NOT NULL,
-  `id_panier` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `equipe`
+-- Structure de la table `equipe`
 --
 
 CREATE TABLE `equipe` (
@@ -91,7 +77,7 @@ CREATE TABLE `equipe` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `joueur`
+-- Structure de la table `joueur`
 --
 
 CREATE TABLE `joueur` (
@@ -110,20 +96,7 @@ CREATE TABLE `joueur` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ligne_cmd`
---
-
-CREATE TABLE `ligne_cmd` (
-  `id` int(11) NOT NULL,
-  `id_panier` int(11) NOT NULL,
-  `id_produit` int(11) NOT NULL,
-  `quantite` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `matchs`
+-- Structure de la table `matchs`
 --
 
 CREATE TABLE `matchs` (
@@ -144,18 +117,33 @@ CREATE TABLE `matchs` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `panier`
+-- Structure de la table `orders`
 --
 
-CREATE TABLE `panier` (
+CREATE TABLE `orders` (
   `id` int(11) NOT NULL,
-  `id_user` int(11) NOT NULL
+  `user_id` int(11) NOT NULL,
+  `state` varchar(20) NOT NULL,
+  `date` date NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `produit`
+-- Structure de la table `order_items`
+--
+
+CREATE TABLE `order_items` (
+  `id` int(11) NOT NULL,
+  `oder_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `produit`
 --
 
 CREATE TABLE `produit` (
@@ -170,7 +158,7 @@ CREATE TABLE `produit` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `role`
+-- Structure de la table `role`
 --
 
 CREATE TABLE `role` (
@@ -181,7 +169,7 @@ CREATE TABLE `role` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `role_arbitre`
+-- Structure de la table `role_arbitre`
 --
 
 CREATE TABLE `role_arbitre` (
@@ -193,7 +181,7 @@ CREATE TABLE `role_arbitre` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- Structure de la table `user`
 --
 
 CREATE TABLE `user` (
@@ -208,83 +196,77 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Indexes for dumped tables
+-- Index pour les tables déchargées
 --
 
 --
--- Indexes for table `arbitre`
+-- Index pour la table `arbitre`
 --
 ALTER TABLE `arbitre`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `billet`
+-- Index pour la table `billet`
 --
 ALTER TABLE `billet`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `categorie`
+-- Index pour la table `categorie`
 --
 ALTER TABLE `categorie`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `commande`
---
-ALTER TABLE `commande`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `equipe`
+-- Index pour la table `equipe`
 --
 ALTER TABLE `equipe`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `joueur`
+-- Index pour la table `joueur`
 --
 ALTER TABLE `joueur`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `ligne_cmd`
---
-ALTER TABLE `ligne_cmd`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `matchs`
+-- Index pour la table `matchs`
 --
 ALTER TABLE `matchs`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `panier`
+-- Index pour la table `orders`
 --
-ALTER TABLE `panier`
+ALTER TABLE `orders`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `produit`
+-- Index pour la table `order_items`
+--
+ALTER TABLE `order_items`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `produit`
 --
 ALTER TABLE `produit`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `role`
+-- Index pour la table `role`
 --
 ALTER TABLE `role`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `role_arbitre`
+-- Index pour la table `role_arbitre`
 --
 ALTER TABLE `role_arbitre`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `user`
+-- Index pour la table `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`),
@@ -292,83 +274,77 @@ ALTER TABLE `user`
   ADD UNIQUE KEY `email` (`email`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT pour les tables déchargées
 --
 
 --
--- AUTO_INCREMENT for table `arbitre`
+-- AUTO_INCREMENT pour la table `arbitre`
 --
 ALTER TABLE `arbitre`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `billet`
+-- AUTO_INCREMENT pour la table `billet`
 --
 ALTER TABLE `billet`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `categorie`
+-- AUTO_INCREMENT pour la table `categorie`
 --
 ALTER TABLE `categorie`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `commande`
---
-ALTER TABLE `commande`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `equipe`
+-- AUTO_INCREMENT pour la table `equipe`
 --
 ALTER TABLE `equipe`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `joueur`
+-- AUTO_INCREMENT pour la table `joueur`
 --
 ALTER TABLE `joueur`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `ligne_cmd`
---
-ALTER TABLE `ligne_cmd`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `matchs`
+-- AUTO_INCREMENT pour la table `matchs`
 --
 ALTER TABLE `matchs`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `panier`
+-- AUTO_INCREMENT pour la table `orders`
 --
-ALTER TABLE `panier`
+ALTER TABLE `orders`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `produit`
+-- AUTO_INCREMENT pour la table `order_items`
+--
+ALTER TABLE `order_items`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `produit`
 --
 ALTER TABLE `produit`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `role`
+-- AUTO_INCREMENT pour la table `role`
 --
 ALTER TABLE `role`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `role_arbitre`
+-- AUTO_INCREMENT pour la table `role_arbitre`
 --
 ALTER TABLE `role_arbitre`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `user`
+-- AUTO_INCREMENT pour la table `user`
 --
 ALTER TABLE `user`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
