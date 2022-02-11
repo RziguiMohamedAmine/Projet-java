@@ -5,7 +5,7 @@
  */
 package entite;
 
-import java.util.Date;
+import java.sql.Date;
 
 /**
  *
@@ -13,7 +13,9 @@ import java.util.Date;
  */
 public class Match {
 
-    private int id, nb_but1, nb_but2, nb_spectateur;
+    private int id, nb_but1, nb_but2;
+    private String stade;
+    private long nb_spectateur;
     private int equipe1, equipe2;
     private int id_arbiter1, id_arbiter2, id_arbiter3, id_arbiter4;
     private Date date;
@@ -21,9 +23,10 @@ public class Match {
     public Match() {
     }
 
-    public Match(int nb_but1, int nb_but2, int nb_spectateur, int equipe1, int equipe2, int id_arbiter1, int id_arbiter2, int id_arbiter3, int id_arbiter4, Date date) {
+    public Match(int nb_but1, int nb_but2, String stade, long nb_spectateur, int equipe1, int equipe2, int id_arbiter1, int id_arbiter2, int id_arbiter3, int id_arbiter4, Date date) {
         this.nb_but1 = nb_but1;
         this.nb_but2 = nb_but2;
+        this.stade = stade;
         this.nb_spectateur = nb_spectateur;
         this.equipe1 = equipe1;
         this.equipe2 = equipe2;
@@ -34,10 +37,11 @@ public class Match {
         this.date = date;
     }
 
-    public Match(int id, int nb_but1, int nb_but2, int nb_spectateur, int equipe1, int equipe2, int id_arbiter1, int id_arbiter2, int id_arbiter3, int id_arbiter4, Date date) {
+    public Match(int id, int nb_but1, int nb_but2, String stade, long nb_spectateur, int equipe1, int equipe2, int id_arbiter1, int id_arbiter2, int id_arbiter3, int id_arbiter4, Date date) {
         this.id = id;
         this.nb_but1 = nb_but1;
         this.nb_but2 = nb_but2;
+        this.stade = stade;
         this.nb_spectateur = nb_spectateur;
         this.equipe1 = equipe1;
         this.equipe2 = equipe2;
@@ -82,7 +86,15 @@ public class Match {
 
     @Override
     public String toString() {
-        return "Match{" + "id=" + id + ", nb_but1=" + nb_but1 + ", nb_but2=" + nb_but2 + ", nb_spectateur=" + nb_spectateur + ", equipe1=" + equipe1 + ", equipe2=" + equipe2 + ", id_arbiter1=" + id_arbiter1 + ", id_arbiter2=" + id_arbiter2 + ", id_arbiter3=" + id_arbiter3 + ", id_arbiter4=" + id_arbiter4 + ", date=" + date + '}';
+        return "Match{" + "id=" + id + ", nb_but1=" + nb_but1 + ", nb_but2=" + nb_but2 + ", stade=" + stade + ", nb_spectateur=" + nb_spectateur + ", equipe1=" + equipe1 + ", equipe2=" + equipe2 + ", id_arbiter1=" + id_arbiter1 + ", id_arbiter2=" + id_arbiter2 + ", id_arbiter3=" + id_arbiter3 + ", id_arbiter4=" + id_arbiter4 + ", date=" + date + '}';
+    }
+
+    public String getStade() {
+        return stade;
+    }
+
+    public void setStade(String stade) {
+        this.stade = stade;
     }
 
     public int getId() {
@@ -109,11 +121,11 @@ public class Match {
         this.nb_but2 = nb_but2;
     }
 
-    public int getNb_spectateur() {
+    public long getNb_spectateur() {
         return nb_spectateur;
     }
 
-    public void setNb_spectateur(int nb_spectateur) {
+    public void setNb_spectateur(long nb_spectateur) {
         this.nb_spectateur = nb_spectateur;
     }
 
