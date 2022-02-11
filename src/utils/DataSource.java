@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  */
 public class DataSource {
 
-    private String url = "jdbc:mysql://localhost:3306/testconnectjava";
+    private String url = "jdbc:mysql://localhost:3306/ftf";
     private String login = "root";
     private String pwd = "";
     private Connection cnx;
