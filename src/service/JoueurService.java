@@ -75,10 +75,11 @@ public class JoueurService implements IService<Joueur>{//relation entre entite e
     @Override
      public Boolean update(Joueur j) 
     {
-      String req="UPDATE joueur SET nom=?,prenom=?,poste=?,nationalite=?,age=?,taille=?,poids=?,image=?,id_equipe=? WHERE id=1";
+      String req="UPDATE joueur SET nom=?,prenom=?,poste=?,nationalite=?,age=?,taille=?,poids=?,image=?,id_equipe=? WHERE id=?";
        Boolean updated=false;
         try {
             pst=conn.prepareStatement(req);
+         
             pst.setString(1,j.getNom());
             pst.setString(2,j.getPrenom());
             pst.setString(3,j.getPoste());
@@ -88,6 +89,8 @@ public class JoueurService implements IService<Joueur>{//relation entre entite e
             pst.setFloat(7,j.getPoids());
             pst.setString(8,j.getImage());
             pst.setInt(9,j.getId_equipe());
+            pst.setInt(10,j.getId());
+            
             updated=pst.executeUpdate()>0;
         } catch (SQLException ex) {
             Logger.getLogger(JoueurService.class.getName()).log(Level.SEVERE, null, ex);
@@ -102,7 +105,7 @@ public class JoueurService implements IService<Joueur>{//relation entre entite e
     @Override
      public Boolean delete(Joueur j) 
     {
-      String req="DELETE FROM JOUEUR WHERE id=?";
+      String req="DELETE FROM joueur WHERE id=?";
       Boolean deleted=false;
         try {
              pst=conn.prepareStatement(req);
