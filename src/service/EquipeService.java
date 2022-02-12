@@ -34,11 +34,11 @@ public class EquipeService implements IService<Equipe> {
       
     public EquipeService()
     {
-        conn=DataSource.getinstance().getcnx();
+        conn=DataSource.getInstance().getCnx();
     }
     
      @Override
-    public Boolean insert(Equipe e)
+    public boolean insert(Equipe e)
     {
         String req="insert into equipe (nom,logo,nom_entreneur,niveau) values (?,?,?,?)";
         Boolean inserted=false;
@@ -58,7 +58,7 @@ public class EquipeService implements IService<Equipe> {
     
     
       @Override
-     public Boolean update(Equipe e) 
+     public boolean update(Equipe e) 
     {
       String req="UPDATE equipe SET nom=?,logo=?,nom_entreneur=?,niveau=? WHERE id=?";
        Boolean updated=false;
@@ -80,7 +80,7 @@ public class EquipeService implements IService<Equipe> {
 
       
     @Override
-     public Boolean delete(Equipe e) 
+     public boolean delete(Equipe e) 
     {
       String req="DELETE FROM equipe WHERE id=?";
       Boolean deleted=false;

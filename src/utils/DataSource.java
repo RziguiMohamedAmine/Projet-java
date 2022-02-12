@@ -37,14 +37,14 @@ public class DataSource {
     }
     
     
-    public static DataSource getinstance()
+    public static DataSource getInstance()
     {
         if(instance==null)
             instance=new DataSource();
         return instance;
     }
     
-    public Connection getcnx()
+    public Connection getCnx()
     {
         return cnx;
     }

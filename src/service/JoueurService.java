@@ -25,7 +25,7 @@ public class JoueurService implements IService<Joueur>{//relation entre entite e
     
     public JoueurService()
     {
-        conn=DataSource.getinstance().getcnx();
+        conn=DataSource.getInstance().getCnx();
     }
     
     
@@ -48,7 +48,7 @@ public class JoueurService implements IService<Joueur>{//relation entre entite e
     
     
     @Override
-    public Boolean insert(Joueur j)
+    public boolean insert(Joueur j)
     {
         String req="insert into joueur (nom,prenom,poste,nationalite,age,taille,poids,image,id_equipe) values (?,?,?,?,?,?,?,?,?)";
         Boolean inserted=false;
@@ -73,7 +73,7 @@ public class JoueurService implements IService<Joueur>{//relation entre entite e
     
     
     @Override
-     public Boolean update(Joueur j) 
+     public boolean update(Joueur j) 
     {
       String req="UPDATE joueur SET nom=?,prenom=?,poste=?,nationalite=?,age=?,taille=?,poids=?,image=?,id_equipe=? WHERE id=?";
        Boolean updated=false;
@@ -103,7 +103,7 @@ public class JoueurService implements IService<Joueur>{//relation entre entite e
     
     
     @Override
-     public Boolean delete(Joueur j) 
+     public boolean delete(Joueur j) 
     {
       String req="DELETE FROM joueur WHERE id=?";
       Boolean deleted=false;

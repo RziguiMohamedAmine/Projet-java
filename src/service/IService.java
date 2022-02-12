@@ -13,9 +13,9 @@ import java.util.List;
  */
 public interface IService<T> {
 
-    Boolean insert(T t);
-    Boolean update(T t);
-    Boolean delete(T t);
+    boolean insert(T t);
+    boolean update(T t);
+    boolean delete(T t);
     List<T> getAll();
     T getOne(int id);
 }
