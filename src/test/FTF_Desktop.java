@@ -42,7 +42,7 @@ public class FTF_Desktop {
         bs.update(b);
         //        bs.delete(b);
 //        System.out.println(bs.getAll());
-        System.out.println(bs.getOne(2));
+        System.out.println(bs.getOne(10));
     }
 
 }

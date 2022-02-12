@@ -153,12 +153,14 @@ public class MatchService implements IService<Match> {
                 m.setNb_but2(rs.getInt("nb_but2"));
                 m.setNb_spectateur(rs.getInt("nb_spectateur"));
                 m.setStade(rs.getString("stade"));
+                return m;
+
             }
 
         } catch (SQLException ex) {
             Logger.getLogger(MatchService.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return m;
+        return null;
     }
 
 }

@@ -122,12 +122,14 @@ public class BilletService implements IService<Billet> {
                 b.setMatch(matchService.getOne(rs.getInt("id_match")));
                 b.setBloc(rs.getString("bloc"));
                 b.setPrix(rs.getFloat("prix"));
+                return b;
+
             }
 
         } catch (SQLException ex) {
             Logger.getLogger(MatchService.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return b;
+        return null;
     }
 
 }
