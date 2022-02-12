@@ -47,9 +47,7 @@ public class MatchService implements IService<Match> {
             ps.setDate(10, match.getDate());
             ps.setLong(11, match.getNb_spectateur());
             int result = ps.executeUpdate();
-            if (result == 1) {
-                return true;
-            }
+            return result >= 1;
 
         } catch (SQLException ex) {
             Logger.getLogger(MatchService.class.getName()).log(Level.SEVERE, null, ex);
@@ -77,9 +75,7 @@ public class MatchService implements IService<Match> {
             ps.setInt(12, match.getId());
 
             int result = ps.executeUpdate();
-            if (result == 1) {
-                return true;
-            }
+            return result >= 1;
 
         } catch (SQLException ex) {
             Logger.getLogger(MatchService.class.getName()).log(Level.SEVERE, null, ex);
@@ -96,9 +92,7 @@ public class MatchService implements IService<Match> {
             ps.setInt(1, match.getId());
 
             int result = ps.executeUpdate();
-            if (result == 1) {
-                return true;
-            }
+            return result >= 1;
 
         } catch (SQLException ex) {
             Logger.getLogger(MatchService.class.getName()).log(Level.SEVERE, null, ex);
@@ -146,19 +140,20 @@ public class MatchService implements IService<Match> {
             ps = cnx.prepareStatement(sql);
             ps.setInt(1, id);
             rs = ps.executeQuery();
-            rs.next();
-            m.setDate(rs.getDate("date"));
-            m.setEquipe1(rs.getInt("equipe1"));
-            m.setEquipe2(rs.getInt("equipe2"));
-            m.setId(rs.getInt("id"));
-            m.setId_arbiter1(rs.getInt("id_arbitre1"));
-            m.setId_arbiter2(rs.getInt("id_arbitre2"));
-            m.setId_arbiter3(rs.getInt("id_arbitre3"));
-            m.setId_arbiter4(rs.getInt("id_arbitre4"));
-            m.setNb_but1(rs.getInt("nb_but1"));
-            m.setNb_but2(rs.getInt("nb_but2"));
-            m.setNb_spectateur(rs.getInt("nb_spectateur"));
-            m.setStade(rs.getString("stade"));
+            if (rs.next()) {
+                m.setDate(rs.getDate("date"));
+                m.setEquipe1(rs.getInt("equipe1"));
+                m.setEquipe2(rs.getInt("equipe2"));
+                m.setId(rs.getInt("id"));
+                m.setId_arbiter1(rs.getInt("id_arbitre1"));
+                m.setId_arbiter2(rs.getInt("id_arbitre2"));
+                m.setId_arbiter3(rs.getInt("id_arbitre3"));
+                m.setId_arbiter4(rs.getInt("id_arbitre4"));
+                m.setNb_but1(rs.getInt("nb_but1"));
+                m.setNb_but2(rs.getInt("nb_but2"));
+                m.setNb_spectateur(rs.getInt("nb_spectateur"));
+                m.setStade(rs.getString("stade"));
+            }
 
         } catch (SQLException ex) {
             Logger.getLogger(MatchService.class.getName()).log(Level.SEVERE, null, ex);
