@@ -9,17 +9,13 @@ import java.util.List;
 
 /**
  *
- * @author Houssem Charef
+ * @author moham
  */
 public interface IService<T> {
 
     Boolean insert(T t);
-
     Boolean update(T t);
-
     Boolean delete(T t);
-
     List<T> getAll();
-
     T getOne(int id);
 }

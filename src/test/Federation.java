@@ -5,26 +5,36 @@
  */
 package test;
 
-import entite.Personne;
+import entite.Joueur;
 import utils.DataSource;
-import service.PersonneService;
+import service.JoueurService;
 
 /**
  *
- * @author Houssem Charef
+ * @author moham
  */
 public class Federation {
     
+      /**
+     * @param args the command line arguments
+     */
+    
     public static void main(String[] args) {
-        //        DataSource ds1 = DataSource.getInstance();
-        //
-        //        DataSource ds2 = DataSource.getInstance();
-        //        System.out.println(ds1);
-        //        System.out.println(ds2);
-        Personne p1 = new Personne("houssem", "charef");
-        PersonneService ps = new PersonneService();
-        ps.insertPersonne(p1);
+       
         
+          Joueur j1=new Joueur("Ali","salah","arriere","tun",18,2,7,"rrr",8);
+          JoueurService ps=new JoueurService();
+          
+          Joueur j2=new Joueur("updated","upd","arriere","tun",19,2,7,"rrr",8);
+           Joueur j3=new Joueur("a recherche","u","att","tun",19,2,7,"rrr",8);
+          // p2.setId(5);
+          ps.insert(j3);
+        //  ps.update(p1);
+           //ps.insert(p2);
+          // ps.delete(p2);
+         // System.out.println(ps.getAll());
+          System.out.println("votre joueur est :"+ps.getOne(6));
+         
     }
     
 }
