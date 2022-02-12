@@ -1,7 +1,4 @@
--- phpMyAdmin SQL Dump
--- version 5.1.0
--- https://www.phpmyadmin.net/
---
+﻿
 -- Hôte : 127.0.0.1
 -- Généré le : ven. 11 fév. 2022 à 21:59
 -- Version du serveur :  10.4.18-MariaDB
@@ -124,7 +121,7 @@ CREATE TABLE `orders` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `state` varchar(20) NOT NULL,
-  `date` date NOT NULL DEFAULT current_timestamp()
+  `date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
