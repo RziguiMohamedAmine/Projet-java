@@ -62,7 +62,7 @@ public class JoueurService implements IService<Joueur>{//relation entre entite e
             pst.setFloat(6,j.getTaille());
             pst.setFloat(7,j.getPoids());
             pst.setString(8,j.getImage());
-            pst.setInt(9,j.getId_equipe());
+            pst.setInt(9,j.getEquipe().getId());
             inserted=pst.executeUpdate()>0;
         } catch (SQLException ex) {
             Logger.getLogger(JoueurService.class.getName()).log(Level.SEVERE, null, ex);
@@ -88,7 +88,7 @@ public class JoueurService implements IService<Joueur>{//relation entre entite e
             pst.setFloat(6,j.getTaille());
             pst.setFloat(7,j.getPoids());
             pst.setString(8,j.getImage());
-            pst.setInt(9,j.getId_equipe());
+            pst.setInt(9,j.getEquipe().getId());
             pst.setInt(10,j.getId());
             
             updated=pst.executeUpdate()>0;
@@ -146,10 +146,15 @@ public class JoueurService implements IService<Joueur>{//relation entre entite e
         try {
             pst=conn.prepareStatement(req);
             pst.setInt(1,id);
-            ResultSet resultSet = pst.executeQuery();
-             if (resultSet.next()) {              
-                    j = new Joueur(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4),resultSet.getString(5),resultSet.getInt(6),resultSet.getFloat(7),resultSet.getFloat(8),resultSet.getString(9),resultSet.getInt(10));
-                }
+            EquipeService es =new EquipeService();
+            rs = pst.executeQuery();
+             if (rs.next())
+             {              
+                 j = new Joueur(rs.getInt(1), rs.getString(2), rs.getString(3), 
+                 rs.getString(4),rs.getString(5),rs.getInt(6),rs.getFloat(7),
+                 rs.getFloat(8),rs.getString(9),es.getOne(rs.getInt(1)));
+                
+             }
         } catch (SQLException ex) {
             Logger.getLogger(JoueurService.class.getName()).log(Level.SEVERE, null, ex);
         }

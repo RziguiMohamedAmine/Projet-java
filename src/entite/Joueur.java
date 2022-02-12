@@ -23,12 +23,12 @@ public class Joueur {
     private float taille;
     private float poids;
     private String image;
-    private int id_equipe;
+    private Equipe equipe;
 
       public Joueur() {
     }
 
-    public Joueur(String nom, String prenom, String poste, String nationalite, int age, float taille, float poids, String image, int id_equipe) {
+    public Joueur(String nom, String prenom, String poste, String nationalite, int age, float taille, float poids, String image, Equipe equipe) {
         this.nom = nom;
         this.prenom = prenom;
         this.poste = poste;
@@ -37,10 +37,10 @@ public class Joueur {
         this.taille = taille;
         this.poids = poids;
         this.image = image;
-        this.id_equipe = id_equipe;
+        this.equipe = equipe;
     }
 
-    public Joueur(int id, String nom, String prenom, String poste, String nationalite, int age, float taille, float poids, String image, int id_equipe) {
+    public Joueur(int id, String nom, String prenom, String poste, String nationalite, int age, float taille, float poids, String image, Equipe equipe) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
@@ -50,7 +50,7 @@ public class Joueur {
         this.taille = taille;
         this.poids = poids;
         this.image = image;
-        this.id_equipe = id_equipe;
+        this.equipe = equipe;
     }
 
     public Joueur(int id, String nom, String prenom) {
@@ -66,10 +66,6 @@ public class Joueur {
         this.poste=poste;
     }
 
-    
-    
-    
-    
     public int getId() {
         return id;
     }
@@ -142,15 +138,15 @@ public class Joueur {
         this.image = image;
     }
 
-    public int getId_equipe() {
-        return id_equipe;
+    public Equipe getEquipe() {
+        return equipe;
     }
 
-    public void setId_equipe(int id_equipe) {
-        this.id_equipe = id_equipe;
+    public void setEquipe(Equipe equipe) {
+        this.equipe = equipe;
     }
 
-
+   
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -177,10 +173,12 @@ public class Joueur {
 
     @Override
     public String toString() {
-        return "Joueur{" + "id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", poste=" + poste + ", nationalite=" + nationalite + ", age=" + age + ", taille=" + taille + ", poids=" + poids + ", image=" + image + ", id_equipe=" + id_equipe + '}';
+        return "Joueur{" + "id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", poste=" + poste + ", nationalite=" + nationalite + ", age=" + age + ", taille=" + taille + ", poids=" + poids + ", image=" + image + ", equipe=" + equipe + '}';
     }
 
-   
     
+    
+    
+ 
     
 }
