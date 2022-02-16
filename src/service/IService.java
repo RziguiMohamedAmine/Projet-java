@@ -7,17 +7,14 @@ package service;
 
 import java.util.List;
 
-/**
- *
- * @author Houssem Charef
- */
+
 public interface IService<T> {
 
-    boolean insert(T t);
+    Boolean insert(T t);
 
-    boolean update(T t);
+    Boolean update(T t);
 
-    boolean delete(T t);
+    Boolean delete(T t);
 
     List<T> getAll();
 
