@@ -9,57 +9,37 @@ import java.util.Objects;
 
 /**
  *
- * @author Houssem Charef
+ * @author sof
  */
-public class Personne {
+public class categorie {
+    
+     private int id;
+     private String nom;
 
-    private int id;
-    private String nom;
-    private String prenom;
-
-    public Personne() {
-
+    public categorie() {
     }
 
-    public Personne(String nom, String prenom) {
-        this.nom = nom;
-        this.prenom = prenom;
-    }
-
-    public Personne(int id, String nom, String prenom) {
+    public categorie(int id, String nom) {
         this.id = id;
         this.nom = nom;
-        this.prenom = prenom;
     }
 
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getNom() {
         return nom;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setNom(String nom) {
         this.nom = nom;
     }
 
-    public String getPrenom() {
-        return prenom;
-    }
-
-    public void setPrenom(String prenom) {
-        this.prenom = prenom;
-    }
-
-    @Override
-    public String toString() {
-        return "Personne{" + "id=" + id + ", nom=" + nom + ", prenom=" + prenom + '}';
-    }
 
     @Override
     public boolean equals(Object obj) {
@@ -72,7 +52,7 @@ public class Personne {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Personne other = (Personne) obj;
+        final categorie other = (categorie) obj;
         if (this.id != other.id) {
             return false;
         }
@@ -82,4 +62,10 @@ public class Personne {
         return true;
     }
 
+    @Override
+    public String toString() {
+        return "categorie{" + "id=" + id + ", nom=" + nom + '}';
+    }
+     
+     
 }
