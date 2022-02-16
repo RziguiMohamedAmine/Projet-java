@@ -16,14 +16,14 @@ public class Match {
     private int id, nb_but1, nb_but2;
     private String stade;
     private long nb_spectateur;
-    private int equipe1, equipe2;
+    private Equipe equipe1, equipe2;
     private int id_arbiter1, id_arbiter2, id_arbiter3, id_arbiter4;
     private Date date;
 
     public Match() {
     }
 
-    public Match(int nb_but1, int nb_but2, String stade, long nb_spectateur, int equipe1, int equipe2, int id_arbiter1, int id_arbiter2, int id_arbiter3, int id_arbiter4, Date date) {
+    public Match(int nb_but1, int nb_but2, String stade, long nb_spectateur, Equipe equipe1, Equipe equipe2, int id_arbiter1, int id_arbiter2, int id_arbiter3, int id_arbiter4, Date date) {
         this.nb_but1 = nb_but1;
         this.nb_but2 = nb_but2;
         this.stade = stade;
@@ -37,7 +37,7 @@ public class Match {
         this.date = date;
     }
 
-    public Match(int id, int nb_but1, int nb_but2, String stade, long nb_spectateur, int equipe1, int equipe2, int id_arbiter1, int id_arbiter2, int id_arbiter3, int id_arbiter4, Date date) {
+    public Match(int id, int nb_but1, int nb_but2, String stade, long nb_spectateur, Equipe equipe1, Equipe equipe2, int id_arbiter1, int id_arbiter2, int id_arbiter3, int id_arbiter4, Date date) {
         this.id = id;
         this.nb_but1 = nb_but1;
         this.nb_but2 = nb_but2;
@@ -50,14 +50,6 @@ public class Match {
         this.id_arbiter3 = id_arbiter3;
         this.id_arbiter4 = id_arbiter4;
         this.date = date;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 59 * hash + this.equipe1;
-        hash = 59 * hash + this.equipe2;
-        return hash;
     }
 
     @Override
@@ -129,19 +121,19 @@ public class Match {
         this.nb_spectateur = nb_spectateur;
     }
 
-    public int getEquipe1() {
+    public Equipe getEquipe1() {
         return equipe1;
     }
 
-    public void setEquipe1(int equipe1) {
+    public void setEquipe1(Equipe equipe1) {
         this.equipe1 = equipe1;
     }
 
-    public int getEquipe2() {
+    public Equipe getEquipe2() {
         return equipe2;
     }
 
-    public void setEquipe2(int equipe2) {
+    public void setEquipe2(Equipe equipe2) {
         this.equipe2 = equipe2;
     }
 

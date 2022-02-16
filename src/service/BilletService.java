@@ -6,6 +6,7 @@
 package service;
 
 import entite.Billet;
+import entite.Equipe;
 import entite.Match;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -86,17 +87,30 @@ public class BilletService implements IService<Billet> {
 
     @Override
     public List<Billet> getAll() {
-        String sql = "SELECT * FROM billet";
+        String sql = "SELECT * FROM billet INNER JOIN matchs ON matchs.id = billet.id_match";
         List<Billet> list = new ArrayList<>();
         Billet b = new Billet();
-        MatchService matchService = new MatchService();
+        Match match = new Match();
+
         try {
             ps = cnx.prepareStatement(sql);
             rs = ps.executeQuery();
 
             while (rs.next()) {
-                b.setId(rs.getInt("id"));
-                b.setMatch(matchService.getOne(rs.getInt("id_match")));
+                b.setId(rs.getInt(1));
+                match.setDate(rs.getDate("date"));
+                match.setEquipe1(new Equipe());// equipeservice.getOne(rs.getInt('id_equipe'))
+                match.setEquipe2(new Equipe());// equipeservice.getOne(rs.getInt('id_equipe'))
+                match.setId(rs.getInt("id"));
+                match.setId_arbiter1(rs.getInt("id_arbitre1"));
+                match.setId_arbiter2(rs.getInt("id_arbitre2"));
+                match.setId_arbiter3(rs.getInt("id_arbitre3"));
+                match.setId_arbiter4(rs.getInt("id_arbitre4"));
+                match.setNb_but1(rs.getInt("nb_but1"));
+                match.setNb_but2(rs.getInt("nb_but2"));
+                match.setNb_spectateur(rs.getInt("nb_spectateur"));
+                match.setStade(rs.getString("stade"));
+                b.setMatch(match);
                 b.setBloc(rs.getString("bloc"));
                 b.setPrix(rs.getFloat("prix"));
                 list.add(b);
@@ -110,20 +124,32 @@ public class BilletService implements IService<Billet> {
 
     @Override
     public Billet getOne(int id) {
-        String sql = "SELECT * FROM billet WHERE id=?";
-        Billet b = new Billet();
-        MatchService matchService = new MatchService();
+        String sql = "SELECT * FROM billet INNER JOIN matchs ON matchs.id = billet.id_match WHERE billet.id=?";
+        Billet billet = new Billet();
+        Match match = new Match();
+
         try {
             ps = cnx.prepareStatement(sql);
             ps.setInt(1, id);
             rs = ps.executeQuery();
             if (rs.next()) {
-                b.setId(rs.getInt("id"));
-                b.setMatch(matchService.getOne(rs.getInt("id_match")));
-                b.setBloc(rs.getString("bloc"));
-                b.setPrix(rs.getFloat("prix"));
-                return b;
-
+                billet.setId(rs.getInt(1));
+                match.setDate(rs.getDate("date"));
+                match.setEquipe1(new Equipe()); // equipeservice.getOne(rs.getInt('id_equipe'))
+                match.setEquipe2(new Equipe());// equipeservice.getOne(rs.getInt('id_equipe'))
+                match.setId(rs.getInt("id"));
+                match.setId_arbiter1(rs.getInt("id_arbitre1"));
+                match.setId_arbiter2(rs.getInt("id_arbitre2"));
+                match.setId_arbiter3(rs.getInt("id_arbitre3"));
+                match.setId_arbiter4(rs.getInt("id_arbitre4"));
+                match.setNb_but1(rs.getInt("nb_but1"));
+                match.setNb_but2(rs.getInt("nb_but2"));
+                match.setNb_spectateur(rs.getInt("nb_spectateur"));
+                match.setStade(rs.getString("stade"));
+                billet.setMatch(match);
+                billet.setBloc(rs.getString("bloc"));
+                billet.setPrix(rs.getFloat("prix"));
+                return billet;
             }
 
         } catch (SQLException ex) {
