@@ -5,7 +5,9 @@
  */
 package entite;
 
+import java.util.Date;
 import java.util.Objects;
+
 
 /**
  *
@@ -19,7 +21,7 @@ public class Joueur {
     private String prenom;
     private String poste;
     private String nationalite;
-    private int age;
+    private Date date_naiss;
     private float taille;
     private float poids;
     private String image;
@@ -28,25 +30,25 @@ public class Joueur {
       public Joueur() {
     }
 
-    public Joueur(String nom, String prenom, String poste, String nationalite, int age, float taille, float poids, String image, Equipe equipe) {
+    public Joueur(String nom, String prenom, String poste, String nationalite, Date date, float taille, float poids, String image, Equipe equipe) {
         this.nom = nom;
         this.prenom = prenom;
         this.poste = poste;
         this.nationalite = nationalite;
-        this.age = age;
+        this.date_naiss = date;
         this.taille = taille;
         this.poids = poids;
         this.image = image;
         this.equipe = equipe;
     }
 
-    public Joueur(int id, String nom, String prenom, String poste, String nationalite, int age, float taille, float poids, String image, Equipe equipe) {
+    public Joueur(int id, String nom, String prenom, String poste, String nationalite, Date date, float taille, float poids, String image, Equipe equipe) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
         this.poste = poste;
         this.nationalite = nationalite;
-        this.age = age;
+        this.date_naiss = date;
         this.taille = taille;
         this.poids = poids;
         this.image = image;
@@ -59,6 +61,12 @@ public class Joueur {
         this.prenom = prenom;
     }
 
+     public Joueur(int id, String nom, String prenom,Equipe equipe) {
+        this.id = id;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.equipe = equipe;
+    }
     
      public Joueur(String nom, String prenom,String poste) {
         this.nom = nom;
@@ -106,13 +114,14 @@ public class Joueur {
         this.nationalite = nationalite;
     }
 
-    public int getAge() {
-        return age;
+    public Date getDate_naiss() {
+        return date_naiss;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setDate_naiss(Date date_naiss) {
+        this.date_naiss = date_naiss;
     }
+
 
     public float getTaille() {
         return taille;
@@ -173,9 +182,10 @@ public class Joueur {
 
     @Override
     public String toString() {
-        return "Joueur{" + "id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", poste=" + poste + ", nationalite=" + nationalite + ", age=" + age + ", taille=" + taille + ", poids=" + poids + ", image=" + image + ", equipe=" + equipe + '}';
+        return "Joueur{" + "id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", poste=" + poste + ", nationalite=" + nationalite + ", date_naiss=" + date_naiss + ", taille=" + taille + ", poids=" + poids + ", image=" + image + ", equipe=" + equipe + '}';
     }
 
+   
     
     
     
