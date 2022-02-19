@@ -266,38 +266,38 @@ public class MatchService implements IService<Match> {
 
     }
 
-//    public boolean tirage_au_sort() {
-//        String sql = "SELECT * FROM equipe e1 CROSS JOIN equipe e2 on e2.id<>e1.id";
-//
-////        Set<Match> hashSet = new HashSet<>();
-//        List<Match> l = new ArrayList<>();
-//        Match m = new Match();
-//        try {
-//            ps = cnx.prepareStatement(sql);
-//            rs = ps.executeQuery();
-//
-//            while (rs.next()) {
-////                m.setDate(rs.getDate("date"));
-//                m.setEquipe1(new Equipe(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5)));
-//                m.setEquipe2(new Equipe(rs.getInt(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10)));
-////                m.setId(rs.getInt("id"));
-////                m.setId_arbiter1(rs.getInt("id_arbitre1"));
-////                m.setId_arbiter2(rs.getInt("id_arbitre2"));
-////                m.setId_arbiter3(rs.getInt("id_arbitre3"));
-////                m.setId_arbiter4(rs.getInt("id_arbitre4"));
-////                m.setNb_but1(rs.getInt("nb_but1"));
-////                m.setNb_but2(rs.getInt("nb_but2"));
-////                m.setNb_spectateur(rs.getInt("nb_spectateur"));
-////                m.setStade(rs.getString("stade"));
-//                l.add(m);
-//
+    public boolean tirage_au_sort() {
+        String sql = "SELECT * FROM equipe e1 CROSS JOIN equipe e2 on e2.id<>e1.id";
+
+        Set<Match> hashSet = new HashSet<>();
+        List<Match> l = new ArrayList<>();
+        Match m = new Match();
+        try {
+            ps = cnx.prepareStatement(sql);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                m.setDate(rs.getDate("date"));
+                m.setEquipe1(new Equipe(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5)));
+                m.setEquipe2(new Equipe(rs.getInt(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10)));
+                m.setId(rs.getInt("id"));
+                m.setArbiter1(new Arbitres());
+                m.setArbiter2(new Arbitres());
+                m.setArbiter3(new Arbitres());
+                m.setArbiter4(new Arbitres());
+                m.setNb_but1(rs.getInt("nb_but1"));
+                m.setNb_but2(rs.getInt("nb_but2"));
+                m.setNb_spectateur(rs.getInt("nb_spectateur"));
+                m.setStade(rs.getString("stade"));
+                l.add(m);
+
+            }
+//            for (Match m2 : l) {
+//                System.out.println(m2.getEquipe1().getId() + "  " + m2.getEquipe2().getId());
 //            }
-////            for (Match m2 : l) {
-////                System.out.println(m2.getEquipe1().getId() + "  " + m2.getEquipe2().getId());
-////            }
-//        } catch (SQLException ex) {
-//            Logger.getLogger(MatchService.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        return true;
-//    }
+        } catch (SQLException ex) {
+            Logger.getLogger(MatchService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return true;
+    }
 }
