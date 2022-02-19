@@ -217,6 +217,7 @@ public class JoueurService implements IService<Joueur>{//relation entre entite e
         ") j inner join equipe e1 on e1.id = j.equipe1 inner join equipe e2 on e2.id = j.equipe2";
         List<JoueurMatch> list =new ArrayList<>();
         JoueurMatch jm=new JoueurMatch();
+         EquipeService es =new EquipeService();
         Match m=new Match();
         Joueur j=new Joueur();
         try {
@@ -234,7 +235,7 @@ public class JoueurService implements IService<Joueur>{//relation entre entite e
                 j.setTaille(rs.getFloat("taille"));
                 j.setPoids(rs.getFloat("poids"));
                 j.setImage(rs.getString("image"));
-                j.setEquipe(new Equipe(rs.getInt("id"),rs.getString("nomeq"),rs.getString("logo")));
+                j.setEquipe(new Equipe(rs.getInt("id_equipe"),rs.getString("nomeq"),rs.getString("logo")));
                 
                 m.setId(rs.getInt("id_match"));
                 m.setEquipe1(new Equipe(rs.getInt(20),rs.getString(21),rs.getString(22)));
@@ -247,9 +248,29 @@ public class JoueurService implements IService<Joueur>{//relation entre entite e
                 jm.setRouge(rs.getInt(16));
                 jm.setNb_but(rs.getInt(17));
                
-                int e=jm.getNb_but();
-                System.out.println(e);
                 list.add(jm);
+                int b=jm.getNb_but();
+                int cj=jm.getJaune();
+                int cr=jm.getRouge();
+              
+               
+                float score=0;
+                if(null!=j.getPoste())
+                switch (j.getPoste()) {
+                    case "arriere":
+                        score=b*(float)2.5+(cj*-1)+(cr*-2)+2;
+                        break;
+                    case "milieu":
+                        score=b*(float)2.5+(cj*-1)+(cr*-1)+(float)2.5;
+                        break;
+                    case "attaquant":
+                        score=b*2+(cj*-1)+(cr*-1)+3;
+                        break;
+                    default:
+                        break;
+                }
+                System.out.println("le score de joueur:"+j.getNom()+" est "+score);
+                
                 
             }
         } catch (SQLException ex) {

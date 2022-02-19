@@ -64,7 +64,7 @@ public class Federation {
             
              Joueur j1=new Joueur(1,"xxx","yyy","kk","tun",sdo,2,7,"rrr",e2);
              Joueur j2=new Joueur(3,"joueur2","jjj","arriere","france",sdo,2,7,"tt",e2);
-             Joueur j4=new Joueur("jrelequ","jjj","kk","france",sdo,2,7,"tt",e1);
+             Joueur j4=new Joueur(4,"jrelequ","jjj","attaquant","france",sdo,2,7,"tt",e2);
              Joueur j3=new Joueur("updated","upd","arriere","tunnn",sdo,4,7,"rrr",null);
               
                //js.insert(j1);
@@ -87,12 +87,13 @@ public class Federation {
                //System.out.println(js.getJoueurParPoste("arriere"));
                //System.out.println(js.getJoueurParNat("tun"));
                Match m2 = new Match(6, 10, 20, "stade", 10, e1, e2, 6, 7, 8, 9, sdo);
-                
-              // mss.insert(m2);
+               Match m3 = new Match(5, 10, 20, "stade", 10, e1, e2, 6, 7, 8, 9, sdo); 
+               //mss.insert(m3);
               JoueurMatch jm1 =new JoueurMatch(j1,m2,1,0,3);
+              JoueurMatch jm2 =new JoueurMatch(j4,m3,1,0,3);
               //System.out.println(js.getJoueurLibre());
-             System.out.println(js.getScoreJoueur(j2)); 
-              //jms.insert(jm1);
+             System.out.println(js.getScoreJoueur(j4)); 
+              //jms.insert(jm2);
               
               
               
