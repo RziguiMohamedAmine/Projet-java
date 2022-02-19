@@ -9,6 +9,7 @@ import entite.Billet;
 import entite.Equipe;
 import entite.Match;
 import java.sql.Date;
+import java.util.List;
 import service.BilletService;
 import service.MatchService;
 
@@ -27,23 +28,28 @@ public class FTF_Desktop {
         Equipe e1 = new Equipe(3, "ddd", "ssss", "dddd", "dddd");
         Equipe e2 = new Equipe(1, "ddd", "ssss", "dddd", "dddd");
 
-        Match m2 = new Match(16, 10, 20, "stade", 10, e1, e2, 6, 7, 8, 9, new Date(millis));
+//        Match m2 = new Match(16, 10, 20, "stade", 10, e1, e2, 6, 7, 8, 9, new Date(millis));
 //        ms.insert(m2);
 //        ms.update(m2);
 //        ms.delete(m2);
 //        System.out.println(ms.getAll());
-//        System.out.println(ms.getOne(16));
-        //**************************billet**************************
-        Billet b = new Billet(11, m2, "m33", 10);
+//        System.out.println(ms.getOne(1));
+//        List<Match> list = ms.getMatchsByDate("2022-02-15");
+//        System.out.println(list.size());
+        List<Match> list = ms.getmatchsByEquipe(e2);
+        System.out.println(list);
 
+        //**************************billet**************************
+//        Billet b = new Billet(11, m2, "m33", 10);
         BilletService bs = new BilletService();
 //        bs.insert(b);
 //        bs.update(b);
 //        bs.delete(b);
-//        System.out.println(bs.getAll());
+//        bs.getAll();
 //        System.out.println(bs.getOne(12));
 //        System.out.println(ms.getMatchsByDate("2022-02-16"));
-        System.out.println(ms.getmatchsByEquipe(e2));
+//        System.out.println(ms.getmatchsByEquipe(e2));
+//        System.out.println(ms.tirage_au_sort());
     }
 
 }
