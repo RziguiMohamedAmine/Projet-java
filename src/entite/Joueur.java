@@ -5,7 +5,7 @@
  */
 package entite;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.Objects;
 
 
@@ -40,6 +40,18 @@ public class Joueur {
         this.poids = poids;
         this.image = image;
         this.equipe = equipe;
+    }
+    
+     public Joueur(int id,String nom, String prenom, String poste, String nationalite, Date date, float taille, float poids, String image) {
+         this.id = id;
+         this.nom = nom;
+        this.prenom = prenom;
+        this.poste = poste;
+        this.nationalite = nationalite;
+        this.date_naiss = date;
+        this.taille = taille;
+        this.poids = poids;
+        this.image = image;
     }
 
     public Joueur(int id, String nom, String prenom, String poste, String nationalite, Date date, float taille, float poids, String image, Equipe equipe) {

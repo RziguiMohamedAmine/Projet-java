@@ -6,6 +6,8 @@
 package service;
 import entite.Equipe;
 import entite.Joueur;
+import entite.JoueurMatch;
+import entite.Match;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -63,7 +65,13 @@ public class JoueurService implements IService<Joueur>{//relation entre entite e
             pst.setFloat(6,j.getTaille());
             pst.setFloat(7,j.getPoids());
             pst.setString(8,j.getImage());
-            pst.setInt(9,j.getEquipe().getId());
+            if(j.getEquipe()==null){
+               pst.setNull(9,1);
+
+            }else{
+              pst.setInt(9,j.getEquipe().getId());
+
+            }
             inserted=pst.executeUpdate()>0;
         } catch (SQLException ex) {
             Logger.getLogger(JoueurService.class.getName()).log(Level.SEVERE, null, ex);
@@ -71,7 +79,7 @@ public class JoueurService implements IService<Joueur>{//relation entre entite e
         return inserted;
     }
     
-    
+   
     
     @Override
      public boolean update(Joueur j) 
@@ -129,7 +137,7 @@ public class JoueurService implements IService<Joueur>{//relation entre entite e
             rs=ste.executeQuery(req);
             EquipeService es =new EquipeService();
             while(rs.next())
-            { System.out.println(rs.getInt(1));
+            { 
                 list.add(new Joueur(rs.getInt("id"),rs.getString(2),rs.getString("prenom"),es.getOne(rs.getInt("id_equipe"))));
             }
         } catch (SQLException ex) {
@@ -185,7 +193,7 @@ public class JoueurService implements IService<Joueur>{//relation entre entite e
 
                 list.add(new Joueur(rs.getInt(1),rs.getString("nom"),rs.getString("prenom"), 
                         rs.getString("poste"),rs.getString("nationalite"),rs.getDate("date_naiss"),rs.getFloat("taille"),
-                 rs.getFloat("poids"),rs.getString("image"),e));
+                 rs.getFloat("poids"),rs.getString("image")));
             }
         } catch (SQLException ex) {
             Logger.getLogger(JoueurService.class.getName()).log(Level.SEVERE, null, ex);
@@ -194,19 +202,151 @@ public class JoueurService implements IService<Joueur>{//relation entre entite e
        
         
          }
+      
+      
+      
+      public List<JoueurMatch> getScoreJoueur(Joueur ee) {
+        String req="select * from (\n" +
+        "select j.nom,j.prenom,j.poste,j.nationalite,j.date_naiss,j.taille,j.poids,j.image,j.id_equipe,j.nomeq,j.logo,\n" +
+        "j.id,j.id_joueur,j.id_match,j.carton_jaune,j.carton_rouge,j.nb_but, m.equipe1, m.equipe2 from "+ 
+        "(SELECT j.nom,j.prenom,j.poste,j.nationalite,j.date_naiss,j.taille,j.poids,j.image,j.id_equipe,j.nomeq,j.logo,\n" +
+        "mj.id,mj.id_joueur,mj.id_match,mj.carton_jaune,mj.carton_rouge,mj.nb_but FROM (SELECT j.id id_joueur,j.nom,j.prenom,"+
+        "j.poste,j.nationalite,j.date_naiss,j.taille,j.poids,j.image,e.id id_equipe,e.nomeq,e.logo " +
+        "FROM joueur j INNER JOIN equipe e ON j.id_equipe = e.id  where j.id=?) j  INNER JOIN matchjoueur mj ON mj.id_joueur=j.id_joueur) j\n" +
+        "INNER join matchs m on m.id=j.id_match\n" +
+        ") j inner join equipe e1 on e1.id = j.equipe1 inner join equipe e2 on e2.id = j.equipe2";
+        List<JoueurMatch> list =new ArrayList<>();
+        JoueurMatch jm=new JoueurMatch();
+        Match m=new Match();
+        Joueur j=new Joueur();
+        try {
+            pst=conn.prepareStatement(req);
+            pst.setInt(1,ee.getId());
+            rs=pst.executeQuery();
+            while(rs.next())
+            {
+                j.setId(rs.getInt("id_joueur"));
+                j.setNom(rs.getString("nom"));
+                j.setPrenom(rs.getString("prenom"));
+                j.setPoste(rs.getString("Poste"));
+                j.setNationalite(rs.getString("nationalite"));
+                j.setDate_naiss(rs.getDate("date_naiss"));
+                j.setTaille(rs.getFloat("taille"));
+                j.setPoids(rs.getFloat("poids"));
+                j.setImage(rs.getString("image"));
+                j.setEquipe(new Equipe(rs.getInt("id"),rs.getString("nomeq"),rs.getString("logo")));
+                
+                m.setId(rs.getInt("id_match"));
+                m.setEquipe1(new Equipe(rs.getInt(20),rs.getString(21),rs.getString(22)));
+                m.setEquipe2(new Equipe(rs.getInt(25),rs.getString(26),rs.getString(27)));
+      
+                jm.setId(rs.getInt(12));
+                jm.setJoueur(j);
+                jm.setMatch(m);
+                jm.setJaune(rs.getInt(15));
+                jm.setRouge(rs.getInt(16));
+                jm.setNb_but(rs.getInt(17));
+               
+                int e=jm.getNb_but();
+                System.out.println(e);
+                list.add(jm);
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(JoueurService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+       
+        
+         }
+      
+      
+      
+      
+      
+      
+      
     
     
     
+     public List<Joueur> getJoueurParPoste(String poste) {
+        String req="select * from joueur where poste=?";
+        
+        List<Joueur> list =new ArrayList<>();
+         EquipeService es =new EquipeService();
+        try {
+            pst=conn.prepareStatement(req);
+            pst.setString(1,poste);
+            rs = pst.executeQuery();
+             while (rs.next())
+             {              
+                 list.add(new Joueur(rs.getInt(1), rs.getString(2), rs.getString(3), 
+                 rs.getString(4),rs.getString(5),rs.getDate(6),rs.getFloat(7),
+                 rs.getFloat(8),rs.getString(9),es.getOne(rs.getInt(10))));
+                
+             }
+        } catch (SQLException ex) {
+            Logger.getLogger(JoueurService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+           
+        return list;
+        
+    }
     
     
     
+      public List<Joueur> getJoueurParNat(String nat) {
+        String req="select * from joueur where nationalite=?";
+        
+        List<Joueur> list =new ArrayList<>();
+        EquipeService es =new EquipeService();
+        try {
+            pst=conn.prepareStatement(req);
+            pst.setString(1,nat);
+            rs = pst.executeQuery();
+             while (rs.next())
+             {              
+                 list.add(new Joueur(rs.getInt(1), rs.getString(2), rs.getString(3), 
+                 rs.getString(4),rs.getString(5),rs.getDate(6),rs.getFloat(7),
+                 rs.getFloat(8),rs.getString(9),es.getOne(rs.getInt(10))));
+                
+             }
+        } catch (SQLException ex) {
+            Logger.getLogger(JoueurService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+           
+        return list;
+        
+    }
     
     
     
+     public List<Joueur> getJoueurLibre() {
+        String req="select * from joueur where id_equipe is null";
+        
+        List<Joueur> list =new ArrayList<>();
+        try {
+            pst=conn.prepareStatement(req);
+            rs = pst.executeQuery();
+             while (rs.next())
+             {              
+                 
+                 list.add(new Joueur(rs.getInt(1), rs.getString(2), rs.getString(3), 
+                 rs.getString(4),rs.getString(5),rs.getDate(6),rs.getFloat(7),
+                 rs.getFloat(8) ,rs.getString(9)));
+                
+             }
+        } catch (SQLException ex) {
+            Logger.getLogger(JoueurService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+           
+        return list;
+        
+    }
     
     
     
-    
+     
     
     
     

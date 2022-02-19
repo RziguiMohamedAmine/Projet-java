@@ -40,7 +40,7 @@ public class EquipeService implements IService<Equipe> {
      @Override
     public boolean insert(Equipe e)
     {
-        String req="insert into equipe (nom,logo,nom_entreneur,niveau) values (?,?,?,?)";
+        String req="insert into equipe (nomeq,logo,nom_entreneur,niveau) values (?,?,?,?)";
         Boolean inserted=false;
         try {
             pst=conn.prepareStatement(req);
@@ -60,7 +60,7 @@ public class EquipeService implements IService<Equipe> {
       @Override
      public boolean update(Equipe e) 
     {
-      String req="UPDATE equipe SET nom=?,logo=?,nom_entreneur=?,niveau=? WHERE id=?";
+      String req="UPDATE equipe SET nomeq=?,logo=?,nom_entreneur=?,niveau=? WHERE id=?";
        Boolean updated=false;
         try {
             pst=conn.prepareStatement(req);
@@ -127,7 +127,8 @@ public class EquipeService implements IService<Equipe> {
             pst.setInt(1,id);
             ResultSet resultSet = pst.executeQuery();
              if (resultSet.next()) {              
-                    e = new Equipe(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4),resultSet.getString(5));
+                    e = new Equipe(resultSet.getInt(1), resultSet.getString(2), 
+                          resultSet.getString(3), resultSet.getString(4),resultSet.getString(5));
                 }
         } catch (SQLException ex) {
             Logger.getLogger(JoueurService.class.getName()).log(Level.SEVERE, null, ex);

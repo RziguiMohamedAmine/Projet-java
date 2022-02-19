@@ -36,6 +36,11 @@ public class Equipe {
         this.niveau = niveau;
     }
 
+     public Equipe(int id, String nom, String logo) {
+        this.id = id;
+        this.nom = nom;
+         this.logo = logo;
+    }
     public int getId() {
         return id;
     }

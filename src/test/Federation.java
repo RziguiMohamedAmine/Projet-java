@@ -7,11 +7,15 @@ package test;
 
 import entite.Equipe;
 import entite.Joueur;
+import entite.JoueurMatch;
+import entite.Match;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.sql.Date;
 import service.EquipeService;
+import service.JoueurMatchService;
 import service.JoueurService;
+import service.MatchService;
 
 /**
  *
@@ -27,7 +31,8 @@ public class Federation {
        
             EquipeService es=new EquipeService();
             JoueurService js=new JoueurService();
-            
+            JoueurMatchService jms=new JoueurMatchService();
+            MatchService mss = new MatchService();
             
             Equipe e1=new Equipe(1,"ca","evvr","rfr","rrvr");
             Equipe e2=new Equipe(2,"est","zhyr","rnyy","ryrn");
@@ -57,10 +62,10 @@ public class Federation {
            java.sql.Date sdo=new java.sql.Date(ms);
        
             
-             Joueur j1=new Joueur("xxx","yyy","kk","tun",sdo,2,7,"rrr",e2);
-             Joueur j2=new Joueur("joueur2","jjj","arriere","france",sdo,2,7,"tt",e2);
-             Joueur j4=new Joueur("jrelequ","jjj","arriere","france",sdo,2,7,"tt",e3);
-             Joueur j3=new Joueur("updated","upd","arriere","tunnn",sdo,4,7,"rrr",e2);
+             Joueur j1=new Joueur(1,"xxx","yyy","kk","tun",sdo,2,7,"rrr",e2);
+             Joueur j2=new Joueur(3,"joueur2","jjj","arriere","france",sdo,2,7,"tt",e2);
+             Joueur j4=new Joueur("jrelequ","jjj","kk","france",sdo,2,7,"tt",e1);
+             Joueur j3=new Joueur("updated","upd","arriere","tunnn",sdo,4,7,"rrr",null);
               
                //js.insert(j1);
                //js.insert(j2); 
@@ -77,9 +82,17 @@ public class Federation {
               //System.out.println(js.getAll());
               //System.out.println("votre joueur est :"+js.getOne(3));
               //***********************
-              //        ²²²²System.out.println("vos joueurs :"+js.getjoueurbyequipe(e2));
+              //System.out.println("les joueurs d'equipe "+e2.getNom()+" sont:"+js.getjoueurbyequipe(e2));
   
-              
+               //System.out.println(js.getJoueurParPoste("arriere"));
+               //System.out.println(js.getJoueurParNat("tun"));
+               Match m2 = new Match(6, 10, 20, "stade", 10, e1, e2, 6, 7, 8, 9, sdo);
+                
+              // mss.insert(m2);
+              JoueurMatch jm1 =new JoueurMatch(j1,m2,1,0,3);
+              //System.out.println(js.getJoueurLibre());
+             System.out.println(js.getScoreJoueur(j2)); 
+              //jms.insert(jm1);
               
               
               
