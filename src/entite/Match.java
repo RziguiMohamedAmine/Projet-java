@@ -5,7 +5,7 @@
  */
 package entite;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 /**
@@ -19,12 +19,13 @@ public class Match {
     private long nb_spectateur;
     private Equipe equipe1, equipe2;
     private Arbitres arbiter1, arbiter2, arbiter3, arbiter4;
-    private Date date;
+    private Timestamp date;
+    private String saison;
 
     public Match() {
     }
 
-    public Match(int nb_but1, int nb_but2, String stade, long nb_spectateur, Equipe equipe1, Equipe equipe2, Arbitres id_arbiter1, Arbitres id_arbiter2, Arbitres id_arbiter3, Arbitres id_arbiter4, Date date) {
+    public Match(int nb_but1, int nb_but2, String stade, long nb_spectateur, Equipe equipe1, Equipe equipe2, Arbitres id_arbiter1, Arbitres id_arbiter2, Arbitres id_arbiter3, Arbitres id_arbiter4, Timestamp date) {
         this.nb_but1 = nb_but1;
         this.nb_but2 = nb_but2;
         this.stade = stade;
@@ -38,7 +39,7 @@ public class Match {
         this.date = date;
     }
 
-    public Match(int id, int nb_but1, int nb_but2, String stade, long nb_spectateur, Equipe equipe1, Equipe equipe2, Arbitres id_arbiter1, Arbitres id_arbiter2, Arbitres id_arbiter3, Arbitres id_arbiter4, Date date) {
+    public Match(int id, int nb_but1, int nb_but2, String stade, long nb_spectateur, Equipe equipe1, Equipe equipe2, Arbitres id_arbiter1, Arbitres id_arbiter2, Arbitres id_arbiter3, Arbitres id_arbiter4, Timestamp date) {
         this.id = id;
         this.nb_but1 = nb_but1;
         this.nb_but2 = nb_but2;
@@ -51,6 +52,22 @@ public class Match {
         this.arbiter3 = id_arbiter3;
         this.arbiter4 = id_arbiter4;
         this.date = date;
+    }
+
+    public Match(int id, int nb_but1, int nb_but2, String stade, long nb_spectateur, Equipe equipe1, Equipe equipe2, Arbitres id_arbiter1, Arbitres id_arbiter2, Arbitres id_arbiter3, Arbitres id_arbiter4, Timestamp date, String saison) {
+        this.id = id;
+        this.nb_but1 = nb_but1;
+        this.nb_but2 = nb_but2;
+        this.stade = stade;
+        this.nb_spectateur = nb_spectateur;
+        this.equipe1 = equipe1;
+        this.equipe2 = equipe2;
+        this.arbiter1 = id_arbiter1;
+        this.arbiter2 = id_arbiter2;
+        this.arbiter3 = id_arbiter3;
+        this.arbiter4 = id_arbiter4;
+        this.date = date;
+        this.saison = saison;
     }
 
     @Override
@@ -175,12 +192,20 @@ public class Match {
         this.arbiter4 = arbiter4;
     }
 
-    public Date getDate() {
+    public Timestamp getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(Timestamp date) {
         this.date = date;
+    }
+
+    public String getSaison() {
+        return saison;
+    }
+
+    public void setSaison(String saison) {
+        this.saison = saison;
     }
 
 }

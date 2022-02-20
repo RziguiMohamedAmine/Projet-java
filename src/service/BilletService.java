@@ -113,7 +113,7 @@ public class BilletService implements IService<Billet> {
                 match.setNb_but1(rs.getInt("nb_but1"));
                 match.setNb_but2(rs.getInt("nb_but2"));
                 match.setStade(rs.getString("stade"));
-                match.setDate(rs.getDate("date"));
+                match.setDate(rs.getTimestamp("date"));
                 match.setNb_spectateur(rs.getInt("nb_spectateur"));
                 match.setEquipe1(new Equipe(rs.getInt("id_equipe1"), rs.getString("nom_equipe1"), rs.getString("logo_equipe1"), rs.getString("entreneur_equipe1"), rs.getString("niveau_equipe1")));
                 match.setEquipe2(new Equipe(rs.getInt("id_equipe2"), rs.getString("nom_equipe2"), rs.getString("logo_equipe2"), rs.getString("entreneur_equipe2"), rs.getString("niveau_equipe2")));
@@ -158,7 +158,7 @@ public class BilletService implements IService<Billet> {
                 match.setNb_but1(rs.getInt("nb_but1"));
                 match.setNb_but2(rs.getInt("nb_but2"));
                 match.setStade(rs.getString("stade"));
-                match.setDate(rs.getDate("date"));
+                match.setDate(rs.getTimestamp("date"));
                 match.setNb_spectateur(rs.getInt("nb_spectateur"));
                 match.setEquipe1(new Equipe(rs.getInt("id_equipe1"), rs.getString("nom_equipe1"), rs.getString("logo_equipe1"), rs.getString("entreneur_equipe1"), rs.getString("niveau_equipe1")));
                 match.setEquipe2(new Equipe(rs.getInt("id_equipe2"), rs.getString("nom_equipe2"), rs.getString("logo_equipe2"), rs.getString("entreneur_equipe2"), rs.getString("niveau_equipe2")));

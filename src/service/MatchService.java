@@ -9,16 +9,15 @@ import entite.Arbitres;
 import entite.Equipe;
 import entite.Match;
 import entite.Roles;
+import java.sql.Timestamp;
 import java.util.List;
 import utils.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
-import java.sql.Date;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,7 +27,7 @@ import java.util.logging.Logger;
  */
 public class MatchService implements IService<Match> {
 
-    private Connection cnx;
+    private final Connection cnx;
     private PreparedStatement ps;
     private ResultSet rs;
 
@@ -41,7 +40,6 @@ public class MatchService implements IService<Match> {
         String sql = "insert into matchs values(null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             ps = cnx.prepareStatement(sql);
-            System.out.println(match);
             ps.setInt(1, match.getEquipe1().getId());
             ps.setInt(2, match.getEquipe2().getId());
             ps.setInt(3, match.getNb_but1());
@@ -51,7 +49,7 @@ public class MatchService implements IService<Match> {
             ps.setInt(7, match.getArbiter2().getId());
             ps.setInt(8, match.getArbiter3().getId());
             ps.setInt(9, match.getArbiter4().getId());
-            ps.setDate(10, match.getDate());
+            ps.setTimestamp(10, match.getDate());
             ps.setLong(11, match.getNb_spectateur());
             int result = ps.executeUpdate();
             return result >= 1;
@@ -65,7 +63,25 @@ public class MatchService implements IService<Match> {
     @Override
     public boolean update(Match match) {
         String sql = "UPDATE matchs SET equipe1=?,equipe2=?,nb_but1=?,nb_but2=?,stade=?,id_arbitre1=?,"
-                + "id_arbitre2=?,id_arbitre3=?,id_arbitre4=?,date=?,nb_spectateur=? WHERE id=?";
+                + "id_arbitre2=?,id_arbitre3=?,id_arbitre4=?,date=?,nb_spectateur=? WHERE id=?; ";
+
+        String sql_win = "UPDATE classment SET nb_totale_but=nb_totale_but+? , nb_point=nb_point+3, nb_win=nb_win+1 WHERE id_equipe=? and saison like ?;";
+
+        String sql_draw = "UPDATE classment SET nb_totale_but=nb_totale_but+? , nb_point=nb_point+1, nb_draw=nb_draw+1 WHERE id_equipe=? and saison like ?;";
+
+        String sql_lose = "UPDATE classment SET nb_totale_but=nb_totale_but+? , nb_lose=nb_lose+1 WHERE id_equipe=? and saison like ?;";
+
+        if (match.getNb_but1() > match.getNb_but2()) {
+            sql = sql + sql_win + sql_lose;
+
+        } else if (match.getNb_but1() < match.getNb_but2()) {
+            sql = sql + sql_lose + sql_win;
+
+        } else {
+            sql = sql + sql_draw + sql_draw;
+
+        }
+
         try {
             ps = cnx.prepareStatement(sql);
             ps.setInt(1, match.getEquipe1().getId());
@@ -77,9 +93,15 @@ public class MatchService implements IService<Match> {
             ps.setInt(7, match.getArbiter2().getId());
             ps.setInt(8, match.getArbiter3().getId());
             ps.setInt(9, match.getArbiter4().getId());
-            ps.setDate(10, match.getDate());
+            ps.setTimestamp(10, match.getDate());
             ps.setLong(11, match.getNb_spectateur());
             ps.setInt(12, match.getId());
+            ps.setInt(13, match.getNb_but1());
+            ps.setInt(14, match.getEquipe1().getId());
+            ps.setString(15, match.getSaison());
+            ps.setInt(16, match.getNb_but2());
+            ps.setInt(17, match.getEquipe2().getId());
+            ps.setString(18, match.getSaison());
 
             int result = ps.executeUpdate();
             return result >= 1;
@@ -129,7 +151,7 @@ public class MatchService implements IService<Match> {
                 match.setNb_but1(rs.getInt("nb_but1"));
                 match.setNb_but2(rs.getInt("nb_but2"));
                 match.setStade(rs.getString("stade"));
-                match.setDate(rs.getDate("date"));
+                match.setDate(rs.getTimestamp("date"));
                 match.setNb_spectateur(rs.getInt("nb_spectateur"));
                 match.setEquipe1(new Equipe(rs.getInt("id_equipe1"), rs.getString("nom_equipe1"), rs.getString("logo_equipe1"), rs.getString("entreneur_equipe1"), rs.getString("niveau_equipe1")));
                 match.setEquipe2(new Equipe(rs.getInt("id_equipe2"), rs.getString("nom_equipe2"), rs.getString("logo_equipe2"), rs.getString("entreneur_equipe2"), rs.getString("niveau_equipe2")));
@@ -167,7 +189,7 @@ public class MatchService implements IService<Match> {
                 match.setNb_but1(rs.getInt("nb_but1"));
                 match.setNb_but2(rs.getInt("nb_but2"));
                 match.setStade(rs.getString("stade"));
-                match.setDate(rs.getDate("date"));
+                match.setDate(rs.getTimestamp("date"));
                 match.setNb_spectateur(rs.getInt("nb_spectateur"));
                 match.setEquipe1(new Equipe(rs.getInt("id_equipe1"), rs.getString("nom_equipe1"), rs.getString("logo_equipe1"), rs.getString("entreneur_equipe1"), rs.getString("niveau_equipe1")));
                 match.setEquipe2(new Equipe(rs.getInt("id_equipe2"), rs.getString("nom_equipe2"), rs.getString("logo_equipe2"), rs.getString("entreneur_equipe2"), rs.getString("niveau_equipe2")));
@@ -185,7 +207,7 @@ public class MatchService implements IService<Match> {
         return null;
     }
 
-    public List<Match> getMatchsByDate(String date) {
+    public List<Match> getMatchsByDate(Timestamp date) {
         String sql = "select * from (SELECT m.id id_match,m.nb_but1,m.nb_but2, m.stade, m.id_arbitre1, b1.nom nom_arbitre1, b1.prenom prenom_arbitre1, b1.id_role role_arbitre1, b1.image image_arbitre1, "
                 + "b1.age age_arbitre1 , m.id_arbitre2, b2.nom nom_arbitre2, b2.prenom prenom_arbitre2, b2.id_role role_arbitre2, b2.image image_arbitre2, b2.age age_arbitre2 , m.id_arbitre3, b3.nom nom_arbitre3, "
                 + "b3.prenom prenom_arbitre3, b3.id_role role_arbitre3, b3.image image_arbitre3, b3.age age_arbitre3 , m.id_arbitre4, b4.nom nom_arbitre4, b4.prenom prenom_arbitre4, b4.id_role role_arbitre4, "
@@ -198,8 +220,7 @@ public class MatchService implements IService<Match> {
         Match match = new Match();
         try {
             ps = cnx.prepareStatement(sql);
-            Date d = Date.valueOf(date);
-            ps.setDate(1, d);
+            ps.setTimestamp(1, date);
             rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -207,7 +228,7 @@ public class MatchService implements IService<Match> {
                 match.setNb_but1(rs.getInt("nb_but1"));
                 match.setNb_but2(rs.getInt("nb_but2"));
                 match.setStade(rs.getString("stade"));
-                match.setDate(rs.getDate("date"));
+                match.setDate(rs.getTimestamp("date"));
                 match.setNb_spectateur(rs.getInt("nb_spectateur"));
                 match.setEquipe1(new Equipe(rs.getInt("id_equipe1"), rs.getString("nom_equipe1"), rs.getString("logo_equipe1"), rs.getString("entreneur_equipe1"), rs.getString("niveau_equipe1")));
                 match.setEquipe2(new Equipe(rs.getInt("id_equipe2"), rs.getString("nom_equipe2"), rs.getString("logo_equipe2"), rs.getString("entreneur_equipe2"), rs.getString("niveau_equipe2")));
@@ -247,7 +268,7 @@ public class MatchService implements IService<Match> {
                 match.setNb_but1(rs.getInt("nb_but1"));
                 match.setNb_but2(rs.getInt("nb_but2"));
                 match.setStade(rs.getString("stade"));
-                match.setDate(rs.getDate("date"));
+                match.setDate(rs.getTimestamp("date"));
                 match.setNb_spectateur(rs.getInt("nb_spectateur"));
                 match.setEquipe1(new Equipe(rs.getInt("id_equipe1"), rs.getString("nom_equipe1"), rs.getString("logo_equipe1"), rs.getString("entreneur_equipe1"), rs.getString("niveau_equipe1")));
                 match.setEquipe2(new Equipe(rs.getInt("id_equipe2"), rs.getString("nom_equipe2"), rs.getString("logo_equipe2"), rs.getString("entreneur_equipe2"), rs.getString("niveau_equipe2")));
@@ -266,35 +287,100 @@ public class MatchService implements IService<Match> {
 
     }
 
-    public boolean tirage_au_sort() {
-        String sql = "SELECT * FROM equipe e1 CROSS JOIN equipe e2 on e2.id<>e1.id";
+    public boolean FoundInRound(Match matchToInsert, List<Match> matchList, int nbrMatchParRound) {
+        Match match = new Match();
+        int listLong = matchList.size();
+        int indexFirstMatchInRound = (listLong / nbrMatchParRound) * nbrMatchParRound;
+        for (int i = indexFirstMatchInRound; i < listLong; i++) {
+            match = matchList.get(i);
+            if (match.getEquipe1().equals(matchToInsert.getEquipe1())
+                    || match.getEquipe2().equals(matchToInsert.getEquipe2())
+                    || match.getEquipe2().equals(matchToInsert.getEquipe1())
+                    || match.getEquipe1().equals(matchToInsert.getEquipe2())) {
 
-        Set<Match> hashSet = new HashSet<>();
-        List<Match> l = new ArrayList<>();
-        Match m = new Match();
-        try {
-            ps = cnx.prepareStatement(sql);
-            rs = ps.executeQuery();
-
-            while (rs.next()) {
-                m.setDate(rs.getDate("date"));
-                m.setEquipe1(new Equipe(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5)));
-                m.setEquipe2(new Equipe(rs.getInt(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10)));
-                m.setId(rs.getInt("id"));
-                m.setArbiter1(new Arbitres());
-                m.setArbiter2(new Arbitres());
-                m.setArbiter3(new Arbitres());
-                m.setArbiter4(new Arbitres());
-                m.setNb_but1(rs.getInt("nb_but1"));
-                m.setNb_but2(rs.getInt("nb_but2"));
-                m.setNb_spectateur(rs.getInt("nb_spectateur"));
-                m.setStade(rs.getString("stade"));
-                l.add(m);
+                return true;
 
             }
-//            for (Match m2 : l) {
-//                System.out.println(m2.getEquipe1().getId() + "  " + m2.getEquipe2().getId());
-//            }
+        }
+        return false;
+    }
+
+    public List<Match> reverseListOrderAndEquipe(List<Match> matchSortedList) {
+        List<Match> matchSortedReverse = new ArrayList<>(matchSortedList);
+        Collections.reverse(matchSortedReverse);
+        for (Match match : matchSortedReverse) {
+            Equipe e1 = match.getEquipe1();
+            match.setEquipe1(match.getEquipe2());
+            match.setEquipe2(e1);
+        }
+        return matchSortedReverse;
+    }
+
+    public boolean tirage_au_sort(String saison, Timestamp DateDebut) {
+        String sql = "INSERT INTO matchs(equipe1, equipe2, nb_but1, nb_but2, stade, id_arbitre1, id_arbitre2, id_arbitre3, id_arbitre4, date, nb_spectateur, saision) VALUES ";
+        EquipeService equipeService = new EquipeService();
+        List<Equipe> equipeList = new ArrayList<>(equipeService.getAll());
+
+        List<Match> matchList = new ArrayList<>();
+        List<Match> matchSortedList = new ArrayList<>();
+
+        try {
+            for (int i = 0; i < equipeList.size(); i++) {
+                for (int j = i + 1; j < equipeList.size(); j++) {
+                    Match match = new Match();
+
+                    match.setEquipe1(equipeList.get(i));
+                    match.setEquipe2(equipeList.get(j));
+                    match.setNb_but1(-1);
+                    match.setNb_but2(-1);
+                    match.setSaison(saison);
+
+                    match.setArbiter1(new Arbitres(6));
+                    match.setArbiter2(new Arbitres(6));
+                    match.setArbiter3(new Arbitres(6));
+                    match.setArbiter4(new Arbitres(6));
+
+                    match.setNb_spectateur(10000);
+                    match.setDate(new Timestamp(23333333));
+                    match.setStade("sssss");
+
+                    matchList.add(match);
+                }
+            }
+
+            Collections.shuffle(matchList);
+
+            int nombreRound = matchList.size() / (equipeList.size() / 2);
+            int nbrMatchParRound = equipeList.size() / 2;
+            for (int i = 0; i < nombreRound; i++) {
+                for (int j = 0; j < nbrMatchParRound; j++) {
+                    int compteur = 0;
+                    while (FoundInRound(matchList.get(compteur), matchSortedList, nbrMatchParRound)) {
+                        compteur++;
+                    }
+                    if (!FoundInRound(matchList.get(compteur), matchSortedList, nbrMatchParRound)) {
+                        matchSortedList.add(matchList.get(compteur));
+                        matchList.remove(compteur);
+                    }
+                }
+            }
+
+            List<Match> matchSortedReverse = reverseListOrderAndEquipe(matchSortedList);
+            matchSortedList.addAll(matchSortedReverse);
+            for (Match m : matchSortedList) {
+                sql += "(" + m.getEquipe1().getId() + "," + m.getEquipe2().getId() + ", " + m.getNb_but1() + ", " + m.getNb_but2() + ",'"
+                        + m.getStade() + "'," + m.getArbiter1().getId() + "," + m.getArbiter2().getId() + "," + m.getArbiter3().getId() + ","
+                        + m.getArbiter4().getId() + ",'" + m.getDate() + "'," + m.getNb_spectateur() + ",'" + m.getSaison() + "'),";
+            }
+            sql = sql.substring(0, sql.length() - 1);
+            sql += ";INSERT INTO classment( id_equipe,saison) VALUES ";
+            for (Equipe e : equipeList) {
+                sql += "(" + e.getId() + ",'" + saison + "'),";
+            }
+            sql = sql.substring(0, sql.length() - 1);
+            ps = cnx.prepareStatement(sql);
+            ps.executeUpdate();
+
         } catch (SQLException ex) {
             Logger.getLogger(MatchService.class.getName()).log(Level.SEVERE, null, ex);
         }
