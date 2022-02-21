@@ -16,6 +16,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.logging.Level;
@@ -37,7 +38,7 @@ public class MatchService implements IService<Match> {
 
     @Override
     public boolean insert(Match match) {
-        String sql = "insert into matchs values(null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "insert into matchs values(null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             ps = cnx.prepareStatement(sql);
             ps.setInt(1, match.getEquipe1().getId());
@@ -51,6 +52,7 @@ public class MatchService implements IService<Match> {
             ps.setInt(9, match.getArbiter4().getId());
             ps.setTimestamp(10, match.getDate());
             ps.setLong(11, match.getNb_spectateur());
+            ps.setInt(12, match.getRound());
             int result = ps.executeUpdate();
             return result >= 1;
 
@@ -287,50 +289,51 @@ public class MatchService implements IService<Match> {
 
     }
 
-    public boolean FoundInRound(Match matchToInsert, List<Match> matchList, int nbrMatchParRound) {
-        Match match = new Match();
-        int listLong = matchList.size();
-        int indexFirstMatchInRound = (listLong / nbrMatchParRound) * nbrMatchParRound;
-        for (int i = indexFirstMatchInRound; i < listLong; i++) {
-            match = matchList.get(i);
-            if (match.getEquipe1().equals(matchToInsert.getEquipe1())
-                    || match.getEquipe2().equals(matchToInsert.getEquipe2())
-                    || match.getEquipe2().equals(matchToInsert.getEquipe1())
-                    || match.getEquipe1().equals(matchToInsert.getEquipe2())) {
+    public List<Match> reverseListOrderAndEquipe(List<Match> matchList, int nbRound) {
+        List<Match> matchListReverse = new ArrayList<>();
+        matchListReverse.addAll(matchList);
+        Collections.reverse(matchListReverse);
 
-                return true;
-
-            }
-        }
-        return false;
-    }
-
-    public List<Match> reverseListOrderAndEquipe(List<Match> matchSortedList) {
-        List<Match> matchSortedReverse = new ArrayList<>(matchSortedList);
-        Collections.reverse(matchSortedReverse);
-        for (Match match : matchSortedReverse) {
+        for (Match match : matchListReverse) {
             Equipe e1 = match.getEquipe1();
             match.setEquipe1(match.getEquipe2());
             match.setEquipe2(e1);
+            match.setRound(nbRound + match.getRound());
         }
-        return matchSortedReverse;
+
+        return matchListReverse;
     }
 
-    public boolean tirage_au_sort(String saison, Timestamp DateDebut) {
-        String sql = "INSERT INTO matchs(equipe1, equipe2, nb_but1, nb_but2, stade, id_arbitre1, id_arbitre2, id_arbitre3, id_arbitre4, date, nb_spectateur, saision) VALUES ";
+    public boolean tirage_au_sort(String saison, Timestamp DateDebut) throws SQLException {
+        String sql = "INSERT INTO matchs(equipe1, equipe2, nb_but1, nb_but2, stade, id_arbitre1, id_arbitre2, id_arbitre3, id_arbitre4, date, nb_spectateur, saision, round) VALUES ";
         EquipeService equipeService = new EquipeService();
         List<Equipe> equipeList = new ArrayList<>(equipeService.getAll());
 
+        List<Equipe> equipeList1 = new ArrayList<>();
+        List<Equipe> equipeList2 = new ArrayList<>();
         List<Match> matchList = new ArrayList<>();
-        List<Match> matchSortedList = new ArrayList<>();
 
         try {
-            for (int i = 0; i < equipeList.size(); i++) {
-                for (int j = i + 1; j < equipeList.size(); j++) {
-                    Match match = new Match();
 
-                    match.setEquipe1(equipeList.get(i));
-                    match.setEquipe2(equipeList.get(j));
+            for (int i = 0; i < equipeList.size() / 2; i++) {
+                equipeList1.add(equipeList.get(i));
+                equipeList2.add(equipeList.get(equipeList.size() - i - 1));
+            }
+            int nombreRound = equipeList.size() - 1;
+            int nbrMatchParRound = equipeList.size() / 2;
+            for (Equipe e : equipeList1) {
+                System.out.print(e.getId() + " ");
+            }
+            System.out.println("");
+            for (Equipe e : equipeList2) {
+                System.out.print(e.getId() + " ");
+            }
+            System.out.println("");
+            for (int i = 0; i < nombreRound; i++) {
+                for (int j = 0; j < nbrMatchParRound; j++) {
+                    Match match = new Match();
+                    match.setEquipe1(equipeList1.get(j));
+                    match.setEquipe2(equipeList2.get(j));
                     match.setNb_but1(-1);
                     match.setNb_but2(-1);
                     match.setSaison(saison);
@@ -343,47 +346,228 @@ public class MatchService implements IService<Match> {
                     match.setNb_spectateur(10000);
                     match.setDate(new Timestamp(23333333));
                     match.setStade("sssss");
-
+                    match.setRound(i + 1);
                     matchList.add(match);
                 }
-            }
+                Equipe equipe1 = equipeList1.get(equipeList2.size() - 1);
+                Equipe equipe2 = equipeList2.get(0);
 
-            Collections.shuffle(matchList);
+                for (int k = 0; k <= equipeList2.size() / 2; k++) {
 
-            int nombreRound = matchList.size() / (equipeList.size() / 2);
-            int nbrMatchParRound = equipeList.size() / 2;
-            for (int i = 0; i < nombreRound; i++) {
-                for (int j = 0; j < nbrMatchParRound; j++) {
-                    int compteur = 0;
-                    while (FoundInRound(matchList.get(compteur), matchSortedList, nbrMatchParRound)) {
-                        compteur++;
-                    }
-                    if (!FoundInRound(matchList.get(compteur), matchSortedList, nbrMatchParRound)) {
-                        matchSortedList.add(matchList.get(compteur));
-                        matchList.remove(compteur);
-                    }
+                    equipeList2.set(k, equipeList2.get(k + 1));
                 }
-            }
+                for (int k = equipeList2.size() - 1; k > 1; k--) {
+                    equipeList1.set(k,
+                            equipeList1.get(k - 1));
 
-            List<Match> matchSortedReverse = reverseListOrderAndEquipe(matchSortedList);
-            matchSortedList.addAll(matchSortedReverse);
-            for (Match m : matchSortedList) {
+                }
+
+                equipeList1.set(1, equipe2);
+                equipeList2.set(equipeList2.size() - 1, equipe1);
+//                for (Equipe e : equipeList1) {
+//                    System.out.print(e.getId() + " ");
+//                }
+//                System.out.println("");
+//                for (Equipe e : equipeList2) {
+//                    System.out.print(e.getId() + " ");
+//                }
+//                System.out.println("");
+            }
+            List<Match> matchListReverse = reverseListOrderAndEquipe(matchList, nombreRound);
+
+            matchList.addAll(matchListReverse);
+            for (Match m : matchList) {
                 sql += "(" + m.getEquipe1().getId() + "," + m.getEquipe2().getId() + ", " + m.getNb_but1() + ", " + m.getNb_but2() + ",'"
                         + m.getStade() + "'," + m.getArbiter1().getId() + "," + m.getArbiter2().getId() + "," + m.getArbiter3().getId() + ","
-                        + m.getArbiter4().getId() + ",'" + m.getDate() + "'," + m.getNb_spectateur() + ",'" + m.getSaison() + "'),";
+                        + m.getArbiter4().getId() + ",'" + m.getDate() + "'," + m.getNb_spectateur() + ",'" + m.getSaison() + "'," + m.getRound() + "),";
             }
+
             sql = sql.substring(0, sql.length() - 1);
-            sql += ";INSERT INTO classment( id_equipe,saison) VALUES ";
-            for (Equipe e : equipeList) {
-                sql += "(" + e.getId() + ",'" + saison + "'),";
-            }
-            sql = sql.substring(0, sql.length() - 1);
+//            sql += ";INSERT INTO classment( id_equipe,saison) VALUES ";
+//            for (Equipe e : equipeList) {
+//                sql += "(" + e.getId() + ",'" + saison + "'),";
+//            }
+//            sql = sql.substring(0, sql.length() - 1);
             ps = cnx.prepareStatement(sql);
             ps.executeUpdate();
 
         } catch (SQLException ex) {
             Logger.getLogger(MatchService.class.getName()).log(Level.SEVERE, null, ex);
+
         }
+
         return true;
     }
+//    public boolean FoundInRound(Match matchToInsert, List<Match> matchList, int nbrMatchParRound) {
+//        int listLong = matchList.size();
+//        Match match = new Match();
+//        int indexFirstMatchInRound = ((listLong / nbrMatchParRound) * nbrMatchParRound);
+//
+//        if (indexFirstMatchInRound % nbrMatchParRound == 0) {
+//            return false;
+//        }
+//
+//        for (int i = indexFirstMatchInRound; i < listLong; i++) {
+//            match = matchList.get(i);
+////            System.out.println(match.getEquipe1().getId() + " " + match.getEquipe2().getId());
+////            System.out.println(matchToInsert.getEquipe1().getId() + " " + matchToInsert.getEquipe2().getId());
+//
+//            if (match.getEquipe1().equals(matchToInsert.getEquipe1())
+//                    || match.getEquipe1().equals(matchToInsert.getEquipe2())
+//                    || match.getEquipe2().equals(matchToInsert.getEquipe1())
+//                    || match.getEquipe2().equals(matchToInsert.getEquipe2())) {
+////                System.out.println(true);
+//                return true;
+//            }
+//        }
+////        System.out.println("false");
+//        return false;
+//    }
+//    public boolean FoundInRound(Match matchToInsert, List<Match> matchList, int round) {
+//        int listLong = matchList.size();
+//        Match match = new Match();
+////        int indexFirstMatchInRound = ((listLong / nbrMatchParRound) * nbrMatchParRound);
+////
+//
+//        for (int i = 0; i < listLong; i++) {
+//            match = matchList.get(i);
+////            System.out.println(match.getEquipe1().getId() + " " + match.getEquipe2().getId());
+////            System.out.println(matchToInsert.getEquipe1().getId() + " " + matchToInsert.getEquipe2().getId());
+//
+//            if (match.getRound() == round) {
+////                System.out.println(match.getRound());
+//                if (match.getEquipe1().getId() == matchToInsert.getEquipe1().getId()
+//                        || match.getEquipe1().getId() == matchToInsert.getEquipe2().getId()
+//                        || match.getEquipe2().getId() == matchToInsert.getEquipe2().getId()
+//                        || match.getEquipe2().getId() == matchToInsert.getEquipe1().getId()) {
+////                System.out.println(true);
+//                    return true;
+//                }
+//            }
+//
+//        }
+////        System.out.println("false");
+//        return false;
+//    }
+//
+//    public List<Match> reverseListOrderAndEquipe(List<Match> matchSortedList) {
+//        List<Match> matchSortedReverse = new ArrayList<>(matchSortedList);
+//        Collections.reverse(matchSortedReverse);
+//        for (Match match : matchSortedReverse) {
+//            Equipe e1 = match.getEquipe1();
+//            match.setEquipe1(match.getEquipe2());
+//            match.setEquipe2(e1);
+//        }
+//        return matchSortedReverse;
+//    }
+//
+//    public boolean tirage_au_sort(String saison, Timestamp DateDebut) throws SQLException {
+//        String sql = "INSERT INTO matchs(equipe1, equipe2, nb_but1, nb_but2, stade, id_arbitre1, id_arbitre2, id_arbitre3, id_arbitre4, date, nb_spectateur, saision, round) VALUES ";
+//        EquipeService equipeService = new EquipeService();
+//        List<Equipe> equipeList = new ArrayList<>(equipeService.getAll());
+//
+//        List<Match> matchList = new ArrayList<>();
+//        List<Match> matchSortedList = new ArrayList<>();
+//        Timestamp match_date = DateDebut;
+//
+//        try {
+//            for (int i = 0; i < equipeList.size(); i++) {
+//                for (int j = i; j < equipeList.size(); j++) {
+//                    if (i != j) {
+//                        Match match = new Match();
+//
+//                        match.setEquipe1(equipeList.get(i));
+//                        match.setEquipe2(equipeList.get(j));
+//                        match.setNb_but1(-1);
+//                        match.setNb_but2(-1);
+//                        match.setSaison(saison);
+//
+//                        match.setArbiter1(new Arbitres(6));
+//                        match.setArbiter2(new Arbitres(6));
+//                        match.setArbiter3(new Arbitres(6));
+//                        match.setArbiter4(new Arbitres(6));
+//
+//                        match.setNb_spectateur(10000);
+//                        match.setDate(new Timestamp(23333333));
+//                        match.setStade("sssss");
+//
+//                        matchList.add(match);
+//                    }
+//                }
+//            }
+//
+////            Collections.shuffle(matchList);
+//            int nombreRound = matchList.size() / (equipeList.size() / 2);
+//            int nbrMatchParRound = equipeList.size() / 2;
+//
+//            for (int i = 0; i < nombreRound; i++) {
+//                int round = i + 1;
+//                for (int j = 0; j < nbrMatchParRound; j++) {
+//                    int compteur = 0;
+//                    System.out.println("-----------------------------------------");
+//                    while (FoundInRound(matchList.get(compteur), matchSortedList, round)) {
+//                        System.out.println(compteur);
+//                        compteur++;
+//                    }
+//                    if (!FoundInRound(matchList.get(compteur), matchSortedList, round)) {
+//                        Match match_to_add = matchList.get(compteur);
+//                        match_to_add.setRound(round);
+//                        match_to_add.setDate(match_date);
+//                        matchSortedList.add(match_to_add);
+//                        matchList.remove(compteur);
+////                        System.out.println(matchList);
+//                        if (j == 1 || j == 5) {
+//                            Instant date = match_date.toInstant();
+//                            date = date.plusSeconds(24 * 3600);
+//                            match_date = Timestamp.from(date);
+//
+//                        } else {
+//                            Instant date = match_date.toInstant();
+//                            date = date.plusSeconds(2 * 3600);
+//                            match_date = Timestamp.from(date);
+//                        }
+//                    }
+//
+//                    Instant date = match_date.toInstant();
+//                    date = date.plusSeconds((5 * 24 * 3600) - 2 * 3600);
+//                    match_date = Timestamp.from(date);
+//                }
+//
+//            }
+////            List<Match> matchSortedReverse = reverseListOrderAndEquipe(matchSortedList);
+////            matchSortedList.addAll(matchSortedReverse);
+//            for (Match m : matchSortedList) {
+//                sql += "(" + m.getEquipe1().getId() + "," + m.getEquipe2().getId() + ", " + m.getNb_but1() + ", " + m.getNb_but2() + ",'"
+//                        + m.getStade() + "'," + m.getArbiter1().getId() + "," + m.getArbiter2().getId() + "," + m.getArbiter3().getId() + ","
+//                        + m.getArbiter4().getId() + ",'" + m.getDate() + "'," + m.getNb_spectateur() + ",'" + m.getSaison() + "'," + m.getRound() + "),";
+//            }
+//            sql = sql.substring(0, sql.length() - 1);
+////            sql += ";INSERT INTO classment( id_equipe,saison) VALUES ";
+////            for (Equipe e : equipeList) {
+////                sql += "(" + e.getId() + ",'" + saison + "'),";
+////            }
+////            sql = sql.substring(0, sql.length() - 1);
+//            ps = cnx.prepareStatement(sql);
+//            ps.executeUpdate();
+//
+//        } catch (SQLException ex) {
+//            Logger.getLogger(MatchService.class.getName()).log(Level.SEVERE, null, ex);
+//
+//        } finally {
+////            for (Match m : matchSortedList) {
+////                sql += "(" + m.getEquipe1().getId() + "," + m.getEquipe2().getId() + ", " + m.getNb_but1() + ", " + m.getNb_but2() + ",'"
+////                        + m.getStade() + "'," + m.getArbiter1().getId() + "," + m.getArbiter2().getId() + "," + m.getArbiter3().getId() + ","
+////                        + m.getArbiter4().getId() + ",'" + m.getDate() + "'," + m.getNb_spectateur() + ",'" + m.getSaison() + "'," + m.getRound() + "),";
+////            }
+////            sql = sql.substring(0, sql.length() - 1);
+//////            sql += ";INSERT INTO classment( id_equipe,saison) VALUES ";
+//////            for (Equipe e : equipeList) {
+//////                sql += "(" + e.getId() + ",'" + saison + "'),";
+//////            }
+//////            sql = sql.substring(0, sql.length() - 1);
+////            ps = cnx.prepareStatement(sql);
+////            ps.executeUpdate();
+//        }
+//        return true;
+//    }
 }
