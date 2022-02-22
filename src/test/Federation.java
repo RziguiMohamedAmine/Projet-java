@@ -89,11 +89,11 @@ public class Federation {
                Match m2 = new Match(6, 10, 20, "stade", 10, e1, e2, 6, 7, 8, 9, sdo);
                Match m3 = new Match(5, 10, 20, "stade", 10, e1, e2, 6, 7, 8, 9, sdo); 
                //mss.insert(m3);
-              JoueurMatch jm1 =new JoueurMatch(j1,m2,1,0,3);
-              JoueurMatch jm2 =new JoueurMatch(j4,m3,1,0,3);
+              JoueurMatch jm1 =new JoueurMatch(j2,m3,1,0,3);
+              JoueurMatch jm2 =new JoueurMatch(j4,m2,1,0,3);
               //System.out.println(js.getJoueurLibre());
-             System.out.println(js.getScoreJoueur(j4)); 
-              //jms.insert(jm2);
+               System.out.println(js.getScoreJoueur(j4)); 
+             // jms.insert(jm2);
               
               
               

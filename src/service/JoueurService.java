@@ -216,6 +216,8 @@ public class JoueurService implements IService<Joueur>{//relation entre entite e
         "INNER join matchs m on m.id=j.id_match\n" +
         ") j inner join equipe e1 on e1.id = j.equipe1 inner join equipe e2 on e2.id = j.equipe2";
         List<JoueurMatch> list =new ArrayList<>();
+         List<Float> listscore =new ArrayList<>();
+         
         JoueurMatch jm=new JoueurMatch();
          EquipeService es =new EquipeService();
         Match m=new Match();
@@ -248,7 +250,7 @@ public class JoueurService implements IService<Joueur>{//relation entre entite e
                 jm.setRouge(rs.getInt(16));
                 jm.setNb_but(rs.getInt(17));
                
-                list.add(jm);
+                list.add(new JoueurMatch(rs.getInt(12),j,m,rs.getInt(15),rs.getInt(16),rs.getInt(17)));
                 int b=jm.getNb_but();
                 int cj=jm.getJaune();
                 int cr=jm.getRouge();
@@ -269,13 +271,15 @@ public class JoueurService implements IService<Joueur>{//relation entre entite e
                     default:
                         break;
                 }
-                System.out.println("le score de joueur:"+j.getNom()+" est "+score);
+                listscore.add(score);
+                
                 
                 
             }
         } catch (SQLException ex) {
             Logger.getLogger(JoueurService.class.getName()).log(Level.SEVERE, null, ex);
         }
+        System.out.println("le score de joueur dans les defferents matchs est:"+listscore);
         return list;
        
         
