@@ -304,7 +304,7 @@ public class MatchService implements IService<Match> {
         return matchListReverse;
     }
 
-    public boolean tirage_au_sort(String saison, Timestamp DateDebut) throws SQLException {
+    public boolean tirage_au_sort(String saison, Timestamp DateDebut) {
         String sql = "INSERT INTO matchs(equipe1, equipe2, nb_but1, nb_but2, stade, id_arbitre1, id_arbitre2, id_arbitre3, id_arbitre4, date, nb_spectateur, saision, round) VALUES ";
         EquipeService equipeService = new EquipeService();
         List<Equipe> equipeList = new ArrayList<>(equipeService.getAll());
@@ -321,14 +321,14 @@ public class MatchService implements IService<Match> {
             }
             int nombreRound = equipeList.size() - 1;
             int nbrMatchParRound = equipeList.size() / 2;
-            for (Equipe e : equipeList1) {
-                System.out.print(e.getId() + " ");
-            }
-            System.out.println("");
-            for (Equipe e : equipeList2) {
-                System.out.print(e.getId() + " ");
-            }
-            System.out.println("");
+//            for (Equipe e : equipeList1) {
+//                System.out.print(e.getId() + " ");
+//            }
+//            System.out.println("");
+//            for (Equipe e : equipeList2) {
+//                System.out.print(e.getId() + " ");
+//            }
+//            System.out.println("");
             for (int i = 0; i < nombreRound; i++) {
                 for (int j = 0; j < nbrMatchParRound; j++) {
                     Match match = new Match();
@@ -352,7 +352,7 @@ public class MatchService implements IService<Match> {
                 Equipe equipe1 = equipeList1.get(equipeList2.size() - 1);
                 Equipe equipe2 = equipeList2.get(0);
 
-                for (int k = 0; k <= equipeList2.size() / 2; k++) {
+                for (int k = 0; k < equipeList2.size() - 1; k++) {
 
                     equipeList2.set(k, equipeList2.get(k + 1));
                 }
@@ -365,17 +365,19 @@ public class MatchService implements IService<Match> {
                 equipeList1.set(1, equipe2);
                 equipeList2.set(equipeList2.size() - 1, equipe1);
 //                for (Equipe e : equipeList1) {
-//                    System.out.print(e.getId() + " ");
+//                    System.out.print(e.getId() + "     ");
 //                }
 //                System.out.println("");
 //                for (Equipe e : equipeList2) {
-//                    System.out.print(e.getId() + " ");
+//                    System.out.print(e.getId() + "     ");
 //                }
 //                System.out.println("");
-            }
-            List<Match> matchListReverse = reverseListOrderAndEquipe(matchList, nombreRound);
+//                System.out.println("------------------------------------------------------");
 
-            matchList.addAll(matchListReverse);
+            }
+//            List<Match> matchListReverse = reverseListOrderAndEquipe(matchList, nombreRound);
+//
+//            matchList.addAll(matchListReverse);
             for (Match m : matchList) {
                 sql += "(" + m.getEquipe1().getId() + "," + m.getEquipe2().getId() + ", " + m.getNb_but1() + ", " + m.getNb_but2() + ",'"
                         + m.getStade() + "'," + m.getArbiter1().getId() + "," + m.getArbiter2().getId() + "," + m.getArbiter3().getId() + ","
@@ -383,11 +385,11 @@ public class MatchService implements IService<Match> {
             }
 
             sql = sql.substring(0, sql.length() - 1);
-//            sql += ";INSERT INTO classment( id_equipe,saison) VALUES ";
-//            for (Equipe e : equipeList) {
-//                sql += "(" + e.getId() + ",'" + saison + "'),";
-//            }
-//            sql = sql.substring(0, sql.length() - 1);
+            sql += ";INSERT INTO classment( id_equipe,saison) VALUES ";
+            for (Equipe e : equipeList) {
+                sql += "(" + e.getId() + ",'" + saison + "'),";
+            }
+            sql = sql.substring(0, sql.length() - 1);
             ps = cnx.prepareStatement(sql);
             ps.executeUpdate();
 

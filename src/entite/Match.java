@@ -21,6 +21,7 @@ public class Match {
     private Arbitres arbiter1, arbiter2, arbiter3, arbiter4;
     private Timestamp date;
     private String saison;
+    private int round;
 
     public Match() {
     }
@@ -101,7 +102,7 @@ public class Match {
 
     @Override
     public String toString() {
-        return "Match{" + "id=" + id + ", nb_but1=" + nb_but1 + ", nb_but2=" + nb_but2 + ", stade=" + stade + ", nb_spectateur=" + nb_spectateur + ", equipe1=" + equipe1 + ", equipe2=" + equipe2 + ", arbiter1=" + arbiter1 + ", arbiter2=" + arbiter2 + ", arbiter3=" + arbiter3 + ", arbiter4=" + arbiter4 + ", date=" + date + '}';
+        return "Match{" + "id=" + id + ", nb_but1=" + nb_but1 + ", nb_but2=" + nb_but2 + ", stade=" + stade + ", nb_spectateur=" + nb_spectateur + ", equipe1=" + equipe1 + ", equipe2=" + equipe2 + ", arbiter1=" + arbiter1 + ", arbiter2=" + arbiter2 + ", arbiter3=" + arbiter3 + ", arbiter4=" + arbiter4 + ", date=" + date + ", saison=" + saison + ", round=" + round + '}';
     }
 
     public String getStade() {
@@ -206,6 +207,14 @@ public class Match {
 
     public void setSaison(String saison) {
         this.saison = saison;
+    }
+
+    public int getRound() {
+        return round;
+    }
+
+    public void setRound(int round) {
+        this.round = round;
     }
 
 }

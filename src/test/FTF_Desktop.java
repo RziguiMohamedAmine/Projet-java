@@ -12,6 +12,7 @@ import entite.Match;
 import java.sql.Timestamp;
 import java.sql.Date;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import service.BilletService;
@@ -59,9 +60,9 @@ public class FTF_Desktop {
 //        System.out.println(bs.getOne(12));
 //        System.out.println(ms.getMatchsByDate("2022-02-16"));
 //        System.out.println(ms.getmatchsByEquipe(e2));
-//        System.out.println(ms.tirage_au_sort("20202021", new Timestamp(millis)));
-        ClassmentService cs = new ClassmentService();
-        System.out.println(cs.getAllBySaison("20202021"));
+        System.out.println(ms.tirage_au_sort("20202021", new Timestamp(millis)));
+//        ClassmentService cs = new ClassmentService();
+//        System.out.println(cs.getAllBySaison("20202021"));
 
     }
 
