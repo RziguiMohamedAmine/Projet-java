@@ -22,4 +22,5 @@ public interface IService<T> {
     List<T> getAll();
 
     T getOne(int id);
+    //boolean verification(T t);
 }

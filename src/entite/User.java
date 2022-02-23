@@ -19,34 +19,31 @@ String prenom;
 String email;
 String pass;
 String tel;
-int id_role;
+String role;
 String image;
 
-    public User(String nom, String prenom, String email, String pass, String tel, int id_role, String image) {
+    public User(String nom, String prenom, String email, String pass, String tel, String role, String image) {
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;
         this.pass = pass;
         this.tel = tel;
-        this.id_role = id_role;
+        this.role = role;
         this.image = image;
     }
 
 
-public User(int id, String nom, String prenom, String email, String pass, String tel, int id_role, String image) {
+    public User(int id, String nom, String prenom, String email, String pass, String tel, String role, String image) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;
         this.pass = pass;
         this.tel = tel;
-        this.id_role = id_role;
+        this.role = role;
         this.image = image;
     }
 
-    
-
-    
     public int getId() {
         return id;
     }
@@ -95,12 +92,12 @@ public User(int id, String nom, String prenom, String email, String pass, String
         this.tel = tel;
     }
 
-    public int getId_role() {
-        return id_role;
+    public String getRole() {
+        return role;
     }
 
-    public void setId_role(int id_role) {
-        this.id_role = id_role;
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public String getImage() {
@@ -113,15 +110,15 @@ public User(int id, String nom, String prenom, String email, String pass, String
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 79 * hash + this.id;
-        hash = 79 * hash + Objects.hashCode(this.nom);
-        hash = 79 * hash + Objects.hashCode(this.prenom);
-        hash = 79 * hash + Objects.hashCode(this.email);
-        hash = 79 * hash + Objects.hashCode(this.pass);
-        hash = 79 * hash + Objects.hashCode(this.tel);
-        hash = 79 * hash + this.id_role;
-        hash = 79 * hash + Objects.hashCode(this.image);
+        int hash = 5;
+        hash = 67 * hash + this.id;
+        hash = 67 * hash + Objects.hashCode(this.nom);
+        hash = 67 * hash + Objects.hashCode(this.prenom);
+        hash = 67 * hash + Objects.hashCode(this.email);
+        hash = 67 * hash + Objects.hashCode(this.pass);
+        hash = 67 * hash + Objects.hashCode(this.tel);
+        hash = 67 * hash + Objects.hashCode(this.role);
+        hash = 67 * hash + Objects.hashCode(this.image);
         return hash;
     }
 
@@ -140,7 +137,6 @@ public User(int id, String nom, String prenom, String email, String pass, String
         if (this.id != other.id) {
             return false;
         }
-       
         if (!Objects.equals(this.nom, other.nom)) {
             return false;
         }
@@ -156,14 +152,24 @@ public User(int id, String nom, String prenom, String email, String pass, String
         if (!Objects.equals(this.tel, other.tel)) {
             return false;
         }
-       
+        if (!Objects.equals(this.role, other.role)) {
+            return false;
+        }
+        if (!Objects.equals(this.image, other.image)) {
+            return false;
+        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "User{" + "id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", email=" + email + ", pass=" + pass + ", tel=" + tel + ", id_role=" + id_role + ", image=" + image + '}';
+        return "User{" + "id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", email=" + email + ", pass=" + pass + ", tel=" + tel + ", role=" + role + ", image=" + image + '}';
     }
+
+    
+
+    
+   
     
     
 
