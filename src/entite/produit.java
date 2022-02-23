@@ -31,6 +31,14 @@ public class produit {
         this.description = description;
         this.id_cat = id_cat;
     }
+     public produit(String nom, String image, float prix, String description, int id_cat) {
+     
+        this.nom = nom;
+        this.image = image;
+        this.prix = prix;
+        this.description = description;
+        this.id_cat = id_cat;
+    }
 
     public int getId() {
         return id;

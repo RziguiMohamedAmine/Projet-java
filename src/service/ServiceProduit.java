@@ -21,6 +21,8 @@ public class ServiceProduit implements IService<produit>{
     
      private Connection conn;
      private Statement ste;
+     PreparedStatement pst;
+      ResultSet rs;
 
     public ServiceProduit() {
         conn = DataSource.getInstance().getCnx();
@@ -109,7 +111,51 @@ public class ServiceProduit implements IService<produit>{
 
     @Override
     public produit getOne(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String req="select * from produit where id=?";
+        produit p=null;
+        try {
+            pst= conn.prepareStatement(req);
+            pst.setInt(1,id);
+                       
+            rs = pst.executeQuery();
+             if (rs.next())
+             {              
+                 p = new produit(rs.getInt(1), rs.getString(2),rs.getString(3),rs.getFloat(4),rs.getString(5),rs.getInt(6));     
+             }
+             
+        } catch (SQLException ex) {
+            Logger.getLogger(ServiceCategorie.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
+        return p;
+
     }
+    
+    
+    
+     public produit getOnebyname(String nom) {
+        String req="select * from produit where nom=?";
+        produit p=null;
+        try {
+            pst= conn.prepareStatement(req);
+            pst.setString(1,nom);
+                       
+            rs = pst.executeQuery();
+             if (rs.next())
+             {              
+                 p = new produit(rs.getInt(1), rs.getString(2),rs.getString(3),rs.getFloat(4),rs.getString(5),rs.getInt(6));     
+             }
+             
+        } catch (SQLException ex) {
+            Logger.getLogger(ServiceCategorie.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
+        return p;
+
+    }
+    
+    
+    
+    
 
  }

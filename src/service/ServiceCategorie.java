@@ -21,6 +21,8 @@ public class ServiceCategorie implements IService<categorie> {
     
     private Connection conn;
      private Statement ste;
+      PreparedStatement pst;
+      ResultSet rs;
 
     public ServiceCategorie() {
         conn = DataSource.getInstance().getCnx();
@@ -50,12 +52,12 @@ public class ServiceCategorie implements IService<categorie> {
          
        
            try {
-             PreparedStatement ps = conn.prepareStatement(req);
-             ps.setString(1, t.getNom());
+             pst= conn.prepareStatement(req);
+             pst.setString(1, t.getNom());
              
-             ps.setInt(6, t.getId());
+             pst.setInt(6, t.getId());
              
-             update=ps.executeUpdate()>0;
+             update=pst.executeUpdate()>0;
              
          } catch (SQLException ex) {
              Logger.getLogger(ServiceCategorie.class.getName()).log(Level.SEVERE, null, ex);
@@ -69,9 +71,9 @@ public class ServiceCategorie implements IService<categorie> {
         boolean del=false;
            String req="delete from categorie where id = ?";
         try {
-             PreparedStatement ps = conn.prepareStatement(req);
-             ps.setInt(1, t.getId());
-             del=ps.executeUpdate()>0;
+            pst = conn.prepareStatement(req);
+             pst.setInt(1, t.getId());
+             del=pst.executeUpdate()>0;
          } catch (SQLException ex) {
              Logger.getLogger(ServiceCategorie.class.getName()).log(Level.SEVERE, null, ex);
          } return del;
@@ -85,8 +87,8 @@ public class ServiceCategorie implements IService<categorie> {
             
         String req ="select * from categorie";
         
-        Statement st = conn.createStatement();
-        ResultSet rs = st.executeQuery(req);
+         ste = conn.createStatement();
+        ResultSet rs = ste.executeQuery(req);
          
         while(rs.next()){
          categorie p= new categorie();
@@ -104,7 +106,23 @@ public class ServiceCategorie implements IService<categorie> {
 
     @Override
     public categorie getOne(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String req="select * from categorie where id=?";
+        categorie c=null;
+        try {
+            pst= conn.prepareStatement(req);
+            pst.setInt(1,id);
+                       
+            rs = pst.executeQuery();
+             if (rs.next())
+             {              
+                 c = new categorie(rs.getInt(1), rs.getString(2));     
+             }
+             
+        } catch (SQLException ex) {
+            Logger.getLogger(ServiceCategorie.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
+        return c;
     }
     
 }
