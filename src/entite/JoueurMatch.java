@@ -20,6 +20,11 @@ public class JoueurMatch {
     public JoueurMatch() {
     }
 
+    public JoueurMatch(Joueur joueur, int nb_but) {
+        this.joueur = joueur;
+        this.nb_but = nb_but;
+    }
+
     
     
     public JoueurMatch(int id, Joueur joueur, Match match, int jaune, int rouge, int nb_but) {

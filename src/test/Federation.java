@@ -9,6 +9,7 @@ import entite.Equipe;
 import entite.Joueur;
 import entite.JoueurMatch;
 import entite.Match;
+import entite.Transfert;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.sql.Date;
@@ -16,6 +17,7 @@ import service.EquipeService;
 import service.JoueurMatchService;
 import service.JoueurService;
 import service.MatchService;
+import service.TransfertService;
 
 /**
  *
@@ -33,6 +35,9 @@ public class Federation {
             JoueurService js=new JoueurService();
             JoueurMatchService jms=new JoueurMatchService();
             MatchService mss = new MatchService();
+            TransfertService ts=new TransfertService();
+            
+            
             
             Equipe e1=new Equipe(1,"ca","evvr","rfr","rrvr");
             Equipe e2=new Equipe(2,"est","zhyr","rnyy","ryrn");
@@ -92,11 +97,11 @@ public class Federation {
               JoueurMatch jm1 =new JoueurMatch(j2,m3,1,0,3);
               JoueurMatch jm2 =new JoueurMatch(j4,m2,1,0,3);
               //System.out.println(js.getJoueurLibre());
-               System.out.println(js.getScoreJoueur(j4)); 
+              // System.out.println(js.getScoreJoueur(j4)); 
              // jms.insert(jm2);
-              
-              
-              
+              System.out.println("top scorers:"+js.TopScorer());
+              Transfert t=new Transfert(e2, e3, j2);
+              //ts.insert(t);
               
     }
     

@@ -79,6 +79,12 @@ public class Joueur {
         this.prenom = prenom;
         this.equipe = equipe;
     }
+     
+      public Joueur(String nom) {
+
+        this.nom = nom;
+      
+    }
     
      public Joueur(String nom, String prenom,String poste) {
         this.nom = nom;

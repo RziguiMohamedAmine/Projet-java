@@ -279,7 +279,7 @@ public class JoueurService implements IService<Joueur>{//relation entre entite e
         } catch (SQLException ex) {
             Logger.getLogger(JoueurService.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.println("le score de joueur dans les defferents matchs est:"+listscore);
+        System.out.println("le score de joueur "+j.getNom()+" dans les defferents matchs est:"+listscore);
         return list;
        
         
@@ -288,7 +288,44 @@ public class JoueurService implements IService<Joueur>{//relation entre entite e
       
       
       
+       
+    public List<JoueurMatch> TopScorer() {
+        String req="select joueur.*, sum(m.nb_but) as "
+             + "\"somme\" from joueur INNER join matchjoueur m on joueur.id=m.id_joueur GROUP by joueur.id order by somme DESC LIMIT 3";
+        List<JoueurMatch> list =new ArrayList<>();
       
+        
+        try {
+            pst=conn.prepareStatement(req);
+            rs = pst.executeQuery();
+               
+            while(rs.next())
+            { 
+                  Match m=new Match();
+                  Joueur j=new Joueur();
+                  JoueurMatch jm=new JoueurMatch();
+                  
+                j.setId(rs.getInt("id"));
+                j.setNom(rs.getString("nom"));
+                j.setPrenom(rs.getString("prenom"));
+                j.setPoste(rs.getString("Poste"));
+                j.setNationalite(rs.getString("nationalite"));
+                j.setDate_naiss(rs.getDate("date_naiss"));
+                j.setTaille(rs.getFloat("taille"));
+                j.setPoids(rs.getFloat("poids"));
+                j.setImage(rs.getString("image"));   
+                jm.setJoueur(j);
+                
+                jm.setNb_but(rs.getInt("somme"));
+                list.add(new JoueurMatch(j,rs.getInt("somme")));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(JoueurService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+       
+        
+         }
       
       
     
