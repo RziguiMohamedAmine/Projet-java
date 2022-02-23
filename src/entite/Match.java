@@ -217,4 +217,8 @@ public class Match {
         this.round = round;
     }
 
+    public void getEquipe1(Equipe equipe2) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

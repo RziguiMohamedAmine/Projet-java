@@ -290,16 +290,28 @@ public class MatchService implements IService<Match> {
     }
 
     public List<Match> reverseListOrderAndEquipe(List<Match> matchList, int nbRound) {
-        List<Match> matchListReverse = new ArrayList<>();
-        matchListReverse.addAll(matchList);
-        Collections.reverse(matchListReverse);
 
-        for (Match match : matchListReverse) {
-            Equipe e1 = match.getEquipe1();
-            match.setEquipe1(match.getEquipe2());
-            match.setEquipe2(e1);
-            match.setRound(nbRound + match.getRound());
+        List<Match> matchListReverse = new ArrayList<>();
+
+        for (Match match : matchList) {
+            Match match2 = new Match();
+            match2.setArbiter1(match.getArbiter1());
+            match2.setArbiter2(match.getArbiter2());
+            match2.setArbiter3(match.getArbiter3());
+            match2.setArbiter4(match.getArbiter4());
+            match2.setDate(Timestamp.from(match.getDate().toInstant().plusSeconds(3600 * 24 * 7 * 20)));
+            match2.setEquipe1(match.getEquipe2());
+            match2.setEquipe2(match.getEquipe1());
+            match2.setId(match.getId());
+            match2.setNb_but1(match.getNb_but1());
+            match2.setNb_but2(match.getNb_but2());
+            match2.setNb_spectateur(match.getNb_spectateur());
+            match2.setRound(nbRound + match.getRound());
+            match2.setSaison(match.getSaison());
+            match2.setStade(match.getStade());
+            matchListReverse.add(match2);
         }
+        Collections.reverse(matchListReverse);
 
         return matchListReverse;
     }
@@ -312,6 +324,7 @@ public class MatchService implements IService<Match> {
         List<Equipe> equipeList1 = new ArrayList<>();
         List<Equipe> equipeList2 = new ArrayList<>();
         List<Match> matchList = new ArrayList<>();
+        Instant roundDate = DateDebut.toInstant();
 
         try {
 
@@ -330,6 +343,8 @@ public class MatchService implements IService<Match> {
 //            }
 //            System.out.println("");
             for (int i = 0; i < nombreRound; i++) {
+                Instant matchDate = roundDate;
+
                 for (int j = 0; j < nbrMatchParRound; j++) {
                     Match match = new Match();
                     match.setEquipe1(equipeList1.get(j));
@@ -344,10 +359,16 @@ public class MatchService implements IService<Match> {
                     match.setArbiter4(new Arbitres(6));
 
                     match.setNb_spectateur(10000);
-                    match.setDate(new Timestamp(23333333));
+                    match.setDate(Timestamp.from(matchDate));
                     match.setStade("sssss");
                     match.setRound(i + 1);
                     matchList.add(match);
+                    if (j % 3 == 0) {
+                        matchDate = roundDate.plusSeconds(3600 * 24 * (j / 3));
+                    } else {
+                        matchDate = matchDate.plusSeconds(3600 * 2);
+
+                    }
                 }
                 Equipe equipe1 = equipeList1.get(equipeList2.size() - 1);
                 Equipe equipe2 = equipeList2.get(0);
@@ -364,6 +385,7 @@ public class MatchService implements IService<Match> {
 
                 equipeList1.set(1, equipe2);
                 equipeList2.set(equipeList2.size() - 1, equipe1);
+                roundDate = roundDate.plusSeconds(3600 * 24 * 7);
 //                for (Equipe e : equipeList1) {
 //                    System.out.print(e.getId() + "     ");
 //                }
@@ -373,11 +395,10 @@ public class MatchService implements IService<Match> {
 //                }
 //                System.out.println("");
 //                System.out.println("------------------------------------------------------");
-
             }
-//            List<Match> matchListReverse = reverseListOrderAndEquipe(matchList, nombreRound);
-//
-//            matchList.addAll(matchListReverse);
+
+            List<Match> matchListReverse = new ArrayList<>(reverseListOrderAndEquipe(matchList, nombreRound));
+            matchList.addAll(matchListReverse);
             for (Match m : matchList) {
                 sql += "(" + m.getEquipe1().getId() + "," + m.getEquipe2().getId() + ", " + m.getNb_but1() + ", " + m.getNb_but2() + ",'"
                         + m.getStade() + "'," + m.getArbiter1().getId() + "," + m.getArbiter2().getId() + "," + m.getArbiter3().getId() + ","

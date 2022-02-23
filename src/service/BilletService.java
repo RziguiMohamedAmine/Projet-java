@@ -178,4 +178,36 @@ public class BilletService implements IService<Billet> {
         return null;
     }
 
+    public boolean billet_disponible(Match m) {
+
+        String sql = "select count(*) < (SELECT nb_spectateur from matchs where id = ?) billet_disponible from billet where id_match = ?;";
+        boolean billetDisponible = false;
+        try {
+            ps = cnx.prepareStatement(sql);
+            ps.setInt(1, m.getId());
+            ps.setInt(2, m.getId());
+
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                billetDisponible = rs.getBoolean("billet_disponible");
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(MatchService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return billetDisponible;
+
+    }
+
+    public boolean reserverBillet(Billet billet) {
+        if (billet_disponible(billet.getMatch())) {
+            this.insert(billet);
+            Mailing mail = new Mailing();
+            mail.envoyerMail("charef.houssem@esprit.tn", billet);
+            return true;
+        }
+
+        return false;
+    }
+
 }
