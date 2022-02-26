@@ -84,7 +84,7 @@ public class Federation {
                //j3.setId(2);
                //js.delete(j3);
               //****************************
-              //System.out.println(js.getAll());
+              System.out.println(js.getAll());
               //System.out.println("votre joueur est :"+js.getOne(3));
               //***********************
               //System.out.println("les joueurs d'equipe "+e2.getNom()+" sont:"+js.getjoueurbyequipe(e2));
@@ -99,7 +99,7 @@ public class Federation {
               //System.out.println(js.getJoueurLibre());
               // System.out.println(js.getScoreJoueur(j4)); 
              // jms.insert(jm2);
-              System.out.println("top scorers:"+js.TopScorer());
+             // System.out.println("top scorers:"+js.TopScorer());
               Transfert t=new Transfert(e2, e3, j2);
               //ts.insert(t);
               

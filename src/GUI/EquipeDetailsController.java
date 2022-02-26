@@ -37,6 +37,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Callback;
@@ -72,8 +73,6 @@ public class EquipeDetailsController implements Initializable {
     @FXML
     private TableColumn<Equipe,String> edit;
     
-    @FXML
-    private ImageView ftfview;
     @FXML
     private ImageView logoview;
     @FXML
@@ -117,7 +116,6 @@ public class EquipeDetailsController implements Initializable {
         
        
          refreshTable();
-       
          
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
         nom.setCellValueFactory(new PropertyValueFactory<>("nom"));
@@ -247,7 +245,6 @@ public class EquipeDetailsController implements Initializable {
     
     
     
-    @FXML
     private void Close(MouseEvent event) 
     {
          Stage stage =(Stage)((Node)event.getSource()).getScene().getWindow();
@@ -282,8 +279,23 @@ public class EquipeDetailsController implements Initializable {
         
     }
     
-  
+    private StackPane contentArea;
    
+
+    @FXML
+    private void getlogo(ActionEvent event) 
+    {
+          JFileChooser chooser=new JFileChooser();
+        chooser.showOpenDialog(null);
+        File f=chooser.getSelectedFile();
+        String filename=f.getAbsolutePath();
+        logoupdate.setText(filename);
+        Image image;
+          
+    }
+    
+
+    
     
     
 }

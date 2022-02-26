@@ -138,7 +138,7 @@ public class JoueurService implements IService<Joueur>{//relation entre entite e
             EquipeService es =new EquipeService();
             while(rs.next())
             { 
-                list.add(new Joueur(rs.getInt("id"),rs.getString(2),rs.getString("prenom"),es.getOne(rs.getInt("id_equipe"))));
+                list.add(new Joueur(rs.getInt("id"),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getDate(6),rs.getFloat(7),rs.getFloat(8),rs.getString(9),es.getOne(rs.getInt("id_equipe"))));
             }
         } catch (SQLException ex) {
             Logger.getLogger(JoueurService.class.getName()).log(Level.SEVERE, null, ex);

@@ -28,6 +28,12 @@ public class Equipe {
         this.niveau = niveau;
     }
 
+    
+     public Equipe(String nom) {
+        this.nom = nom;
+      
+    }
+
     public Equipe(int id, String nom, String logo, String nom_entreneur, String niveau) {
         this.id = id;
         this.nom = nom;

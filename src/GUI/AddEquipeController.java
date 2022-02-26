@@ -7,12 +7,19 @@ package GUI;
 
 import entite.Equipe;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -20,6 +27,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -47,7 +55,7 @@ public class AddEquipeController implements Initializable {
     private Button logobtn;
     @FXML
     private ImageView logov;
-
+   
     /**
      * Initializes the controller class.
      */
@@ -56,12 +64,34 @@ public class AddEquipeController implements Initializable {
         // TODO
     }    
 
+   
+   
+
     @FXML
-    private void save(MouseEvent event) {
-        String name =nomeqfld.getText();
+    private void getlogo(ActionEvent event)
+    {
+        JFileChooser chooser=new JFileChooser();
+        chooser.showOpenDialog(null);
+        File f=chooser.getSelectedFile();
+        String filename=f.getAbsolutePath();
+        logofld.setText(filename);
+        Image image;
+          try {
+              image = new Image(new FileInputStream(filename));
+               logov.setImage(image);
+          } catch (FileNotFoundException ex) {
+              Logger.getLogger(AddEquipeController.class.getName()).log(Level.SEVERE, null, ex);
+          }
+          
+    }
+
+    @FXML
+    private void save(ActionEvent event) {
+            String name =nomeqfld.getText();
         String logo =logofld.getText();
         String coach=coachfld.getText();
         String level=levelfld.getText();
+        
         if(name.isEmpty()||logo.isEmpty()||coach.isEmpty()||level.isEmpty())
         {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -74,32 +104,23 @@ public class AddEquipeController implements Initializable {
             
             Equipe e=new Equipe(name,logo,coach,level);
             es.insert(e);
-              Stage stage =(Stage)((Node)event.getSource()).getScene().getWindow();
-             stage.close();
-             //ec.initialize(url, rb);
+            clean();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setContentText("Equipe Ajouté");
+            alert.showAndWait();
+            
         }
     }
+    
 
-   
-
-    @FXML
-    private void getlogo(ActionEvent event)
-    {
-        JFileChooser chooser=new JFileChooser();
-        chooser.showOpenDialog(null);
-        File f=chooser.getSelectedFile();
-        String filename=f.getAbsolutePath();
-        logofld.setText(filename);
+    private void clean() {
+       nomeqfld.setText(null);
+        logofld.setText(null);
+        coachfld.setText(null);
+       levelfld.setText(null);
         
-////        Image getAbsolutePath=null;
-////        ImageIcon icon=new ImageIcon(filename);
-         Image image=new Image(getClass().getResourceAsStream("Images/est.png"));
-          logov.setImage(image);
-//        logov.setVisible(true);
     }
-    
-    
-   
 
   
     

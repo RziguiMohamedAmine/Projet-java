@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="470.0" prefWidth="683.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.AddjoueurController">
+   <children>
+      <HBox prefHeight="73.0" prefWidth="683.0" style="-fx-background-color: #fc0307;" />
+      <Pane layoutY="74.0" prefHeight="470.0" prefWidth="683.0">
+         <children>
+            <Text layoutX="69.0" layoutY="235.0" lineSpacing="3.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date de naissance" wrappingWidth="175.47850799560547">
+               <font>
+                  <Font name="Arial Bold" size="17.0" />
+               </font>
+            </Text>
+            <Text layoutX="69.0" layoutY="312.0" lineSpacing="4.0" strokeType="OUTSIDE" strokeWidth="0.0" text="poids" wrappingWidth="62.3388671875">
+               <font>
+                  <Font name="Arial Bold" size="17.0" />
+               </font>
+            </Text>
+            <Text layoutX="69.0" layoutY="273.0" lineSpacing="4.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Taille">
+               <font>
+                  <Font name="Arial Bold" size="17.0" />
+               </font>
+            </Text>
+            <Text layoutX="69.0" layoutY="355.0" lineSpacing="4.0" strokeType="OUTSIDE" strokeWidth="0.0" text="image" wrappingWidth="97.33673858642578">
+               <font>
+                  <Font name="Arial Bold" size="17.0" />
+               </font>
+            </Text>
+            <TextField fx:id="nom" layoutX="245.0" layoutY="37.0" />
+            <TextField fx:id="prenom" layoutX="245.0" layoutY="85.0" />
+            <TextField fx:id="poste" layoutX="245.0" layoutY="134.0" />
+            <TextField fx:id="nation" layoutX="245.0" layoutY="175.0" />
+            <TextField fx:id="date" layoutX="245.0" layoutY="216.0" />
+            <TextField fx:id="taille" layoutX="245.0" layoutY="255.0" />
+            <TextField fx:id="poids" layoutX="245.0" layoutY="294.0" />
+            <TextField fx:id="image" layoutX="245.0" layoutY="336.0" />
+            <Text layoutX="70.0" layoutY="194.0" lineSpacing="4.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nationalite">
+               <font>
+                  <Font name="Arial Bold" size="17.0" />
+               </font>
+            </Text>
+            <Text layoutX="68.0" layoutY="152.0" lineSpacing="4.0" strokeType="OUTSIDE" strokeWidth="0.0" text="poste">
+               <font>
+                  <Font name="Arial Bold" size="17.0" />
+               </font>
+            </Text>
+            <Text layoutX="69.0" layoutY="103.0" lineSpacing="4.0" strokeType="OUTSIDE" strokeWidth="0.0" text="prenom">
+               <font>
+                  <Font name="Arial Bold" size="17.0" />
+               </font>
+            </Text>
+            <Button layoutX="131.0" layoutY="394.0" mnemonicParsing="false" onAction="#save" prefHeight="42.0" prefWidth="115.0" style="-fx-background-color: #ecfc03;" text="Save">
+               <font>
+                  <Font name="Century Gothic" size="21.0" />
+               </font>
+            </Button>
+            <Button fx:id="update" layoutX="442.0" layoutY="386.0" mnemonicParsing="false" onMouseClicked="#updatee" prefHeight="42.0" prefWidth="121.0" style="-fx-background-color: #00E676;" text="Update">
+               <font>
+                  <Font name="Century Gothic" size="21.0" />
+               </font>
+            </Button>
+            <Button layoutX="442.0" layoutY="336.0" mnemonicParsing="false" onAction="#get_image" prefHeight="25.0" prefWidth="87.0" text="Parcourir" />
+            <ImageView fx:id="imagev" fitHeight="124.0" fitWidth="136.0" layoutX="503.0" layoutY="177.0" pickOnBounds="true" preserveRatio="true" />
+            <ComboBox fx:id="equipe" layoutX="488.0" layoutY="62.0" onAction="#select" prefWidth="150.0" />
+            <Text layoutX="488.0" layoutY="43.0" lineSpacing="4.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Equipe" wrappingWidth="97.33673858642578">
+               <font>
+                  <Font name="Arial Bold" size="17.0" />
+               </font>
+            </Text>
+            <TextField fx:id="equipenom" layoutX="488.0" layoutY="110.0" />
+         </children>
+      </Pane>
+      <Text layoutX="71.0" layoutY="128.0" lineSpacing="4.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nom" wrappingWidth="97.33673858642578">
+         <font>
+            <Font name="Arial Bold" size="17.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>

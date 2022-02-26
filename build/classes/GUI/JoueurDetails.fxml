@@ -1,14 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.net.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.JoueurDetailsController">
-    <stylesheets>
-        <URL value="@joueurdetails.css"/>
-    </stylesheets>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="526.0" prefWidth="1131.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.JoueurDetailsController">
+   <children>
+      <TableView fx:id="joueurTable" layoutY="24.0" prefHeight="410.0" prefWidth="875.0">
+         <columns>
+            <TableColumn fx:id="nom" prefWidth="75.0" text="nom" />
+            <TableColumn fx:id="prenom" prefWidth="75.0" text="prenom" />
+            <TableColumn fx:id="poste" prefWidth="75.0" text="poste" />
+            <TableColumn fx:id="nation" prefWidth="75.0" text="nation" />
+            <TableColumn fx:id="date" prefWidth="120.0" text="date de naissance" />
+            <TableColumn fx:id="taille" text="taille" />
+            <TableColumn fx:id="poids" prefWidth="120.0" text="poids" />
+            <TableColumn fx:id="image" prefWidth="75.0" text="image" />
+            <TableColumn fx:id="id_eq" prefWidth="75.0" text="nom equipe" />
+            <TableColumn fx:id="edit" prefWidth="100.0" text="edit" />
+         </columns>
+      </TableView>
+      <ImageView fx:id="imagev" fitHeight="150.0" fitWidth="134.0" layoutX="894.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true" />
+   </children>
 </AnchorPane>

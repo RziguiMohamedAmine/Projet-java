@@ -92,6 +92,8 @@ public class Joueur {
         this.poste=poste;
     }
 
+   
+
     public int getId() {
         return id;
     }

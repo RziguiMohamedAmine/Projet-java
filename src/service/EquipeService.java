@@ -117,6 +117,25 @@ public class EquipeService implements IService<Equipe> {
         
          }
     
+ 
+    public List<Equipe> getAllNom() {
+        String req="select *from equipe ";
+        List<Equipe> list =new ArrayList<>();
+        try {
+            ste=conn.createStatement();
+            rs=ste.executeQuery(req);
+            while(rs.next())
+            {
+                list.add(new Equipe(rs.getString("nomeq")));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(JoueurService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+       
+        
+         }
+    
     
      @Override
     public Equipe getOne(int id) {
