@@ -12,8 +12,8 @@
 
 <AnchorPane id="AnchorPane" prefHeight="470.0" prefWidth="683.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.AddjoueurController">
    <children>
-      <HBox prefHeight="73.0" prefWidth="683.0" style="-fx-background-color: #fc0307;" />
-      <Pane layoutY="74.0" prefHeight="470.0" prefWidth="683.0">
+      <HBox prefHeight="74.0" prefWidth="1023.0" style="-fx-background-color: #7d7576;" />
+      <Pane layoutY="74.0" prefHeight="470.0" prefWidth="974.0">
          <children>
             <Text layoutX="69.0" layoutY="235.0" lineSpacing="3.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date de naissance" wrappingWidth="175.47850799560547">
                <font>
@@ -63,13 +63,13 @@
                   <Font name="Century Gothic" size="21.0" />
                </font>
             </Button>
-            <Button fx:id="update" layoutX="442.0" layoutY="386.0" mnemonicParsing="false" onMouseClicked="#updatee" prefHeight="42.0" prefWidth="121.0" style="-fx-background-color: #00E676;" text="Update">
+            <Button fx:id="update" layoutX="442.0" layoutY="386.0" mnemonicParsing="false" onAction="#updatee" prefHeight="42.0" prefWidth="121.0" style="-fx-background-color: #00E676;" text="Update">
                <font>
                   <Font name="Century Gothic" size="21.0" />
                </font>
             </Button>
             <Button layoutX="442.0" layoutY="336.0" mnemonicParsing="false" onAction="#get_image" prefHeight="25.0" prefWidth="87.0" text="Parcourir" />
-            <ImageView fx:id="imagev" fitHeight="124.0" fitWidth="136.0" layoutX="503.0" layoutY="177.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="imagev" fitHeight="181.0" fitWidth="198.0" layoutX="683.0" layoutY="84.0" pickOnBounds="true" preserveRatio="true" />
             <ComboBox fx:id="equipe" layoutX="488.0" layoutY="62.0" onAction="#select" prefWidth="150.0" />
             <Text layoutX="488.0" layoutY="43.0" lineSpacing="4.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Equipe" wrappingWidth="97.33673858642578">
                <font>

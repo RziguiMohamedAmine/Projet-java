@@ -14,6 +14,7 @@ import java.net.URL;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -72,7 +73,7 @@ public class AddjoueurController implements Initializable {
     private ComboBox<Equipe> equipe;
     @FXML
     private TextField equipenom;
-
+    int idjoueur;
     
     /**
      * Initializes the controller class.
@@ -141,26 +142,7 @@ public class AddjoueurController implements Initializable {
         
     }
 
-     
-    @FXML
-    private void updatee(MouseEvent event) {
-         int id=joueur.getId();
-         String nome =nom.getText();
-         String prenome =prenom.getText();
-         String postee=poste.getText();
-         String natione=nation.getText();
-         String datenaiss=date.getText();
-         String taillee = taille.getText();
-         String Poidse = poids.getText();
-         String imagee = image.getText();
-         
-      
-         //  Joueur j=new Joueur(nome,prenome,postee,natione,datenaiss,taillee,Poidse,image);
-           //j.setId(id);
-           // js.update(j);
-             clean();
-    }
-    
+   
       private void clean() {
         nom.setText(null);
         prenom.setText(null);
@@ -170,6 +152,7 @@ public class AddjoueurController implements Initializable {
         taille.setText(null);
         poids.setText(null);
         image.setText(null);
+        equipenom.setText(null);
     }
 
     @FXML
@@ -196,5 +179,51 @@ public class AddjoueurController implements Initializable {
         equipenom.setText(e);
        
     }
+    
+    
+     void setTextField(int id,String nome, String prenome, String postee, String nationalite, Date datee, float taillee, float poidse, String imagee, Equipe equipee) 
+     {
+        idjoueur=id;
+        nom.setText(nome);
+        prenom.setText(prenome);
+        poste.setText(postee);
+        nation.setText(nationalite);
+        date.setText(String.valueOf(datee));
+        taille.setText(String.valueOf(taillee));
+        poids.setText(String.valueOf(poidse));
+        image.setText(imagee);
+        equipenom.setText(String.valueOf(equipee));
+        
+
+    }
+
+    @FXML
+    private void updatee(ActionEvent event) throws ParseException {
+       
+        
+        String nome =nom.getText();
+         String prenome =prenom.getText();
+         String postee=poste.getText();
+         String natione=nation.getText();
+           SimpleDateFormat sd=new SimpleDateFormat("yyyy-MM-dd");
+           String dob=date.getText();
+           java.util.Date dn=sd.parse(dob);
+           long ms=dn.getTime();
+           java.sql.Date sdo=new java.sql.Date(ms);      
+         Float taillee = Float.parseFloat(taille.getText());
+         Float Poidse = Float.parseFloat(poids.getText());
+         String imagee = image.getText();
+         //String equipee = equipenom.getText();
+         
+         
+        Equipe e=equipe.getSelectionModel().getSelectedItem();
+        equipenom.setText(String.valueOf(e));
+           Joueur j=new Joueur(nome,prenome,postee,natione,sdo,taillee,Poidse,imagee,e);
+           j.setId(idjoueur);
+            js.update(j);
+             clean();
+         
+    }
+    
     
 }

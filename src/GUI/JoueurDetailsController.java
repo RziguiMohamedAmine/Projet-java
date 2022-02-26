@@ -11,6 +11,7 @@ import entite.Equipe;
 import entite.Joueur;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.util.ResourceBundle;
@@ -20,8 +21,11 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -30,6 +34,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Callback;
 import service.EquipeService;
 import service.JoueurService;
@@ -151,9 +157,28 @@ public class JoueurDetailsController implements Initializable {
                          editIcon.setOnMouseClicked((MouseEvent event) -> {
                             
                              joueur = joueurTable.getSelectionModel().getSelectedItem();
-                          //   getSelected(joueur.getNom(),joueur.getPrenom(),joueur.getPoste(),joueur.getNationalite(),
-                            //         joueur.getDate_naiss(),joueur.getTaille(),joueur.getPoids(),joueur.getImage(),joueur.getEquipe());
+                           
+                               FXMLLoader loader = new FXMLLoader ();
+                            loader.setLocation(getClass().getResource("Addjoueur.fxml"));
+                            try {
+                                loader.load();
+                            } catch (IOException ex) {
+                                Logger.getLogger(JoueurDetailsController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
                             
+                            AddjoueurController addjoueurController = loader.getController();
+                           
+                            addjoueurController.setTextField(joueur.getId(),joueur.getNom(),joueur.getPrenom(),joueur.getPoste(),joueur.getNationalite(),
+                                    joueur.getDate_naiss(),joueur.getTaille(),joueur.getPoids(),joueur.getImage(),joueur.getEquipe());
+                         
+                            Parent parent = loader.getRoot();
+                            Stage stage = new Stage();
+                            stage.setScene(new Scene(parent));
+                            stage.initStyle(StageStyle.UTILITY);
+                            stage.show();
+                            
+                             
+                             
                            
 
                         });
@@ -195,19 +220,6 @@ public class JoueurDetailsController implements Initializable {
     }
     
     
-//        void getSelected( String nom, String prenom, String poste, String nationalite, Date date, float taille, float poids, String image, Equipe equipe) {
-//
-//        
-//        nomupdate.setText(nom);
-//        logoupdate.setText(prenom);
-//        coachupdate.setText(poste);
-//        levelupdate.setText(nationalite);
-//        levelupdate.setText(date);
-//        levelupdate.setText(taille);
-//        levelupdate.setText(poids);
-//        levelupdate.setText(image);
-//        levelupdate.setText(equipe);
-//    }
-//    
+   
     
 }
