@@ -12,10 +12,9 @@ import java.util.Objects;
  * @author R I B
  */
 public class Roles {
-
-    private int id;
-    private String role;
-    private String Descp;
+   private int id ;
+   private String role ;
+   private String Descp ; 
 
     public Roles() {
     }
@@ -61,7 +60,7 @@ public class Roles {
 
     @Override
     public String toString() {
-        return "Roles{\n" + "id=" + id + ", role=" + role + ", Descp=" + Descp + '}';
+        return "Roles{\n\t" + "id=" + id + ", role=" + role + ", Descp=" + Descp + '}';
     }
 
     @Override
@@ -93,5 +92,5 @@ public class Roles {
         }
         return true;
     }
-
+   
 }

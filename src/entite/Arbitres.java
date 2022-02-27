@@ -6,6 +6,8 @@
 package entite;
 
 import java.util.Objects;
+import entite.Roles;
+//Rolesimport javax.management.relation.Role;
 
 /**
  *
@@ -13,12 +15,13 @@ import java.util.Objects;
  */
 public class Arbitres {
 
-    int id;
-    String nom;
-    String prenom;
-    Roles id_role;
-    String image;
-    int age;
+    private int id;
+    private String nom;
+    private String prenom;
+    private Roles id_role;
+    private String image;
+    private int age;
+    private int Avis;
 
     public Arbitres(int id, String nom, String prenom, Roles id_role, String image, int age) {
         this.id = id;
@@ -29,6 +32,16 @@ public class Arbitres {
         this.age = age;
     }
 
+    public Arbitres(int id, String nom, String prenom, Roles id_role, String image, int age, int Avis) {
+        this.id = id;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.id_role = id_role;
+        this.image = image;
+        this.age = age;
+        this.Avis = Avis;
+    }
+
     public Arbitres() {
     }
 
@@ -36,12 +49,19 @@ public class Arbitres {
         this.id = id;
     }
 
-    public Arbitres(String nom, String prenom, Roles id_role, String image, int age) {
+    public Arbitres(String nom, String prenom, Roles id_role, String image, int age, int Avis) {
         this.nom = nom;
         this.prenom = prenom;
         this.id_role = id_role;
         this.image = image;
         this.age = age;
+        this.Avis = Avis;
+    }
+
+    public Arbitres(int id, String nom, String prenom) {
+        this.id = id;
+        this.nom = nom;
+        this.prenom = prenom;
     }
 
     public int getId() {
@@ -92,9 +112,17 @@ public class Arbitres {
         this.age = age;
     }
 
+    public int getAvis() {
+        return Avis;
+    }
+
+    public void setAvis(int Avis) {
+        this.Avis = Avis;
+    }
+
     @Override
     public String toString() {
-        return "\nArbitres{" + "id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", id_role=" + id_role + ", image=" + image + ", age=" + age + '}';
+        return "Arbitres{" + "id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", id_role=" + id_role + ", image=" + image + ", age=" + age + ", Avis=" + Avis + '}';
     }
 
     @Override
@@ -118,10 +146,10 @@ public class Arbitres {
         if (this.id != other.id) {
             return false;
         }
-        if (this.id_role != other.id_role) {
+        if (this.age != other.age) {
             return false;
         }
-        if (this.age != other.age) {
+        if (this.Avis != other.Avis) {
             return false;
         }
         if (!Objects.equals(this.nom, other.nom)) {
@@ -131,6 +159,9 @@ public class Arbitres {
             return false;
         }
         if (!Objects.equals(this.image, other.image)) {
+            return false;
+        }
+        if (!Objects.equals(this.id_role, other.id_role)) {
             return false;
         }
         return true;

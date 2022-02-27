@@ -40,6 +40,22 @@ public class Match {
         this.date = date;
     }
 
+    public Match(int nb_but1, int nb_but2, String stade, long nb_spectateur, Equipe equipe1, Equipe equipe2, Arbitres id_arbiter1, Arbitres id_arbiter2, Arbitres id_arbiter3, Arbitres id_arbiter4, Timestamp date, String saison, int Round) {
+        this.nb_but1 = nb_but1;
+        this.nb_but2 = nb_but2;
+        this.stade = stade;
+        this.nb_spectateur = nb_spectateur;
+        this.equipe1 = equipe1;
+        this.equipe2 = equipe2;
+        this.arbiter1 = id_arbiter1;
+        this.arbiter2 = id_arbiter2;
+        this.arbiter3 = id_arbiter3;
+        this.arbiter4 = id_arbiter4;
+        this.date = date;
+        this.saison = saison;
+        this.round = Round;
+    }
+
     public Match(int id, int nb_but1, int nb_but2, String stade, long nb_spectateur, Equipe equipe1, Equipe equipe2, Arbitres id_arbiter1, Arbitres id_arbiter2, Arbitres id_arbiter3, Arbitres id_arbiter4, Timestamp date) {
         this.id = id;
         this.nb_but1 = nb_but1;
@@ -69,6 +85,23 @@ public class Match {
         this.arbiter4 = id_arbiter4;
         this.date = date;
         this.saison = saison;
+    }
+
+    public Match(int id, int nb_but1, int nb_but2, String stade, long nb_spectateur, Equipe equipe1, Equipe equipe2, Arbitres arbiter1, Arbitres arbiter2, Arbitres arbiter3, Arbitres arbiter4, Timestamp date, String saison, int round) {
+        this.id = id;
+        this.nb_but1 = nb_but1;
+        this.nb_but2 = nb_but2;
+        this.stade = stade;
+        this.nb_spectateur = nb_spectateur;
+        this.equipe1 = equipe1;
+        this.equipe2 = equipe2;
+        this.arbiter1 = arbiter1;
+        this.arbiter2 = arbiter2;
+        this.arbiter3 = arbiter3;
+        this.arbiter4 = arbiter4;
+        this.date = date;
+        this.saison = saison;
+        this.round = round;
     }
 
     @Override

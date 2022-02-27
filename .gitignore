@@ -7,3 +7,5 @@ nbactions.xml
 nb-configuration.xml
 /src/entite/Equipe.java
 /src/entite/Joueur.java
+/src/entite/Arbitres.java
+/src/entite/Role.java
