@@ -6,6 +6,7 @@
 package entite;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Objects;
 
 
@@ -21,7 +22,7 @@ public class Joueur {
     private String prenom;
     private String poste;
     private String nationalite;
-    private Date date_naiss;
+    private LocalDate date_naiss;
     private float taille;
     private float poids;
     private String image;
@@ -30,7 +31,7 @@ public class Joueur {
       public Joueur() {
     }
 
-    public Joueur(String nom, String prenom, String poste, String nationalite, Date date, float taille, float poids, String image, Equipe equipe) {
+    public Joueur(String nom, String prenom, String poste, String nationalite, LocalDate date, float taille, float poids, String image, Equipe equipe) {
         this.nom = nom;
         this.prenom = prenom;
         this.poste = poste;
@@ -42,7 +43,7 @@ public class Joueur {
         this.equipe = equipe;
     }
     
-     public Joueur(int id,String nom, String prenom, String poste, String nationalite, Date date, float taille, float poids, String image) {
+     public Joueur(int id,String nom, String prenom, String poste, String nationalite, LocalDate date, float taille, float poids, String image) {
          this.id = id;
          this.nom = nom;
         this.prenom = prenom;
@@ -54,7 +55,18 @@ public class Joueur {
         this.image = image;
     }
 
-    public Joueur(int id, String nom, String prenom, String poste, String nationalite, Date date, float taille, float poids, String image, Equipe equipe) {
+      public Joueur(String nom, String prenom, String poste, String nationalite, LocalDate date, float taille, float poids, String image) {
+         this.id = id;
+         this.nom = nom;
+        this.prenom = prenom;
+        this.poste = poste;
+        this.nationalite = nationalite;
+        this.date_naiss = date;
+        this.taille = taille;
+        this.poids = poids;
+        this.image = image;
+    }
+    public Joueur(int id, String nom, String prenom, String poste, String nationalite, LocalDate date, float taille, float poids, String image, Equipe equipe) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
@@ -134,11 +146,11 @@ public class Joueur {
         this.nationalite = nationalite;
     }
 
-    public Date getDate_naiss() {
+    public LocalDate getDate_naiss() {
         return date_naiss;
     }
 
-    public void setDate_naiss(Date date_naiss) {
+    public void setDate_naiss(LocalDate date_naiss) {
         this.date_naiss = date_naiss;
     }
 

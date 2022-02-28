@@ -86,6 +86,10 @@ public class EquipeDetailsController implements Initializable {
     private TextField coachupdate;
     @FXML
     private TextField levelupdate;
+    @FXML
+    private TableColumn<Equipe,String> stade;
+    @FXML
+    private TextField stadeupdate;
 
     /**
      * Initializes the controller class.
@@ -122,7 +126,7 @@ public class EquipeDetailsController implements Initializable {
         logo.setCellValueFactory(new PropertyValueFactory<>("logo"));
         coach.setCellValueFactory(new PropertyValueFactory<>("nom_entreneur"));
         level.setCellValueFactory(new PropertyValueFactory<>("niveau"));
-        
+        stade.setCellValueFactory(new PropertyValueFactory<>("stade"));
         
         Callback<TableColumn<Equipe, String>, TableCell<Equipe, String>> cellFoctory = (TableColumn<Equipe, String> param) -> {
             // make cell containing buttons
@@ -139,7 +143,8 @@ public class EquipeDetailsController implements Initializable {
 
                         FontAwesomeIconView deleteIcon = new FontAwesomeIconView(FontAwesomeIcon.TRASH);
                         FontAwesomeIconView editIcon = new FontAwesomeIconView(FontAwesomeIcon.PENCIL_SQUARE);
-                        FontAwesomeIconView logoIcon = new FontAwesomeIconView(FontAwesomeIcon.PLUS_CIRCLE);
+                        FontAwesomeIconView logoIcon = new FontAwesomeIconView(FontAwesomeIcon.IMAGE);
+                        FontAwesomeIconView SquadIcon = new FontAwesomeIconView(FontAwesomeIcon.USERS);
                         deleteIcon.setStyle(
                                 " -fx-cursor: hand ;"
                                 + "-glyph-size:28px;"
@@ -156,7 +161,11 @@ public class EquipeDetailsController implements Initializable {
                                 + "-glyph-size:28px;"
                                 + "-fx-fill:#00E676;"
                         );
-                        
+                        SquadIcon.setStyle(
+                                " -fx-cursor: hand ;"
+                                + "-glyph-size:28px;"
+                                + "-fx-fill:#00E676;"
+                        );
                         deleteIcon.setOnMouseClicked((MouseEvent event) -> {
                             
                            
@@ -168,11 +177,35 @@ public class EquipeDetailsController implements Initializable {
                          editIcon.setOnMouseClicked((MouseEvent event) -> {
                             
                              equipe = equipeTable.getSelectionModel().getSelectedItem();
-                             getSelected(equipe.getNom(),equipe.getLogo(),equipe.getNom_entreneur(),equipe.getNiveau());
+                             getSelected(equipe.getNom(),equipe.getLogo(),equipe.getNom_entreneur(),equipe.getNiveau(),equipe.getStade());
                             
                            
 
                         });
+                         
+                          SquadIcon.setOnMouseClicked((MouseEvent event) -> {
+                            
+                             equipe = equipeTable.getSelectionModel().getSelectedItem();                                        
+                            FXMLLoader loader = new FXMLLoader ();
+                            loader.setLocation(getClass().getResource("Squad.fxml"));
+                            
+                            try {
+                                loader.load();
+                               
+                            } catch (IOException ex) {
+                                Logger.getLogger(JoueurDetailsController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                               SquadController SquadController = loader.getController();                          
+                           SquadController.setTextField(equipe.getId(),equipe.getNom(),equipe.getLogo(),equipe.getNom_entreneur(),equipe.getNiveau(),equipe.getStade());
+                           
+                            Parent parent = loader.getRoot();
+                            Stage stage = new Stage();
+                            stage.setScene(new Scene(parent));
+                            stage.initStyle(StageStyle.UTILITY);
+                            stage.show();
+                          
+
+                        }); 
                          
                           logoIcon.setOnMouseClicked((MouseEvent event) -> {
                             
@@ -188,11 +221,12 @@ public class EquipeDetailsController implements Initializable {
                         });
                          
                          
-                        HBox managebtn = new HBox(editIcon, deleteIcon,logoIcon);
+                        HBox managebtn = new HBox(editIcon, deleteIcon,logoIcon,SquadIcon);
                         managebtn.setStyle("-fx-alignment:center");
                         HBox.setMargin(deleteIcon, new Insets(2, 2, 0, 3));
                         HBox.setMargin(editIcon, new Insets(2, 3, 0, 2));
                         HBox.setMargin(logoIcon, new Insets(2, 3, 0, 2));
+                        HBox.setMargin(SquadIcon, new Insets(2, 3, 0, 2));
                         setGraphic(managebtn);
 
                         setText(null);
@@ -232,13 +266,14 @@ public class EquipeDetailsController implements Initializable {
     }
     
     
-      void getSelected(String name, String logo, String coach,String level) {
+      void getSelected(String name, String logo, String coach,String level,String stade) {
 
         
         nomupdate.setText(name);
         logoupdate.setText(logo);
         coachupdate.setText(coach);
         levelupdate.setText(level);
+        stadeupdate.setText(stade);
 
     }
     
@@ -262,8 +297,8 @@ public class EquipeDetailsController implements Initializable {
          String logo =logoupdate.getText();
          String coach=coachupdate.getText();
          String level=levelupdate.getText();
-      
-           Equipe e=new Equipe(name,logo,coach,level);
+         String stade=stadeupdate.getText();
+           Equipe e=new Equipe(name,logo,coach,level,stade);
            e.setId(id);
             es.update(e);
              refreshTable();  
@@ -276,7 +311,7 @@ public class EquipeDetailsController implements Initializable {
         logoupdate.setText(null);
         coachupdate.setText(null);
         levelupdate.setText(null);
-        
+        stadeupdate.setText(null);
     }
     
     private StackPane contentArea;

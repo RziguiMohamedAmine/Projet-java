@@ -128,7 +128,9 @@ public class JoueurDetailsController implements Initializable {
 
                         FontAwesomeIconView deleteIcon = new FontAwesomeIconView(FontAwesomeIcon.TRASH);
                         FontAwesomeIconView editIcon = new FontAwesomeIconView(FontAwesomeIcon.PENCIL_SQUARE);
-                        FontAwesomeIconView logoIcon = new FontAwesomeIconView(FontAwesomeIcon.PLUS_CIRCLE);
+                        FontAwesomeIconView logoIcon = new FontAwesomeIconView(FontAwesomeIcon.IMAGE);
+                        FontAwesomeIconView MatchIcon = new FontAwesomeIconView(FontAwesomeIcon.FUTBOL_ALT);
+                   
                         deleteIcon.setStyle(
                                 " -fx-cursor: hand ;"
                                 + "-glyph-size:28px;"
@@ -141,6 +143,11 @@ public class JoueurDetailsController implements Initializable {
                         );
                         
                         logoIcon.setStyle(
+                                " -fx-cursor: hand ;"
+                                + "-glyph-size:28px;"
+                                + "-fx-fill:#00E676;"
+                        );
+                         MatchIcon.setStyle(
                                 " -fx-cursor: hand ;"
                                 + "-glyph-size:28px;"
                                 + "-fx-fill:#00E676;"
@@ -177,10 +184,6 @@ public class JoueurDetailsController implements Initializable {
                             stage.initStyle(StageStyle.UTILITY);
                             stage.show();
                             
-                             
-                             
-                           
-
                         });
                          
                           logoIcon.setOnMouseClicked((MouseEvent event) -> {
@@ -196,13 +199,43 @@ public class JoueurDetailsController implements Initializable {
                             }
                                                      
                         });
+                          
+                          MatchIcon.setOnMouseClicked((MouseEvent event) -> {
+                            
+                             joueur = joueurTable.getSelectionModel().getSelectedItem();
+                             FXMLLoader loader = new FXMLLoader ();
+                            loader.setLocation(getClass().getResource("MatchPlayed.fxml"));
+                            
+                            try {
+                                loader.load();
+                            } catch (IOException ex) {
+                                Logger.getLogger(JoueurDetailsController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            
+                            MatchPlayedController matchController = loader.getController();
+                           
+                            matchController.setTextField(joueur.getId(),joueur.getNom(),joueur.getPrenom(),joueur.getPoste(),joueur.getNationalite(),
+                                    joueur.getDate_naiss(),joueur.getTaille(),joueur.getPoids(),joueur.getImage(),joueur.getEquipe());
+                              System.out.println(joueur);
+                            Parent parent = loader.getRoot();
+                            Stage stage = new Stage();
+                            stage.setScene(new Scene(parent));
+                            stage.initStyle(StageStyle.UTILITY);
+                            stage.show();
+                            
+                             
+                             
+                           
+
+                        }); 
                          
                          
-                        HBox managebtn = new HBox(editIcon, deleteIcon,logoIcon);
+                        HBox managebtn = new HBox(editIcon, deleteIcon,logoIcon,MatchIcon);
                         managebtn.setStyle("-fx-alignment:center");
                         HBox.setMargin(deleteIcon, new Insets(2, 2, 0, 3));
                         HBox.setMargin(editIcon, new Insets(2, 3, 0, 2));
                         HBox.setMargin(logoIcon, new Insets(2, 3, 0, 2));
+                        HBox.setMargin(MatchIcon, new Insets(2, 3, 0, 2));
                         setGraphic(managebtn);
 
                         setText(null);

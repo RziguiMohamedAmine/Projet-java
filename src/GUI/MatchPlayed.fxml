@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.MatchPlayedController">
+    <stylesheets>
+        <URL value="@joueurdetails.css" />
+    </stylesheets>
+    <children>
+      <TableView fx:id="matchTable" layoutX="14.0" layoutY="42.0" prefHeight="494.0" prefWidth="843.0" styleClass="joueurTable">
+        <columns>
+          <TableColumn fx:id="match" prefWidth="150.0" text="match" />
+          <TableColumn fx:id="date" prefWidth="250.0" text="Date" />
+            <TableColumn fx:id="equipe" prefWidth="110.0" text="Equipe" />
+            <TableColumn fx:id="but" prefWidth="110.0" text="Buts" />
+            <TableColumn fx:id="jaune" prefWidth="110.0" text="Carton Jaune" />
+            <TableColumn fx:id="rouge" prefWidth="110.0" text="Carton Rouge" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

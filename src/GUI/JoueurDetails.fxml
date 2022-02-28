@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="526.0" prefWidth="1131.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.JoueurDetailsController">
-   <children>
-      <TableView fx:id="joueurTable" layoutY="24.0" prefHeight="410.0" prefWidth="875.0">
+     <stylesheets>
+        <URL value="@joueurdetails.css" />
+    </stylesheets>
+    <children>
+      <TableView fx:id="joueurTable" layoutY="25.0" prefHeight="410.0" prefWidth="905.0" styleClass="joueurTable">
          <columns>
             <TableColumn fx:id="nom" prefWidth="75.0" text="nom" />
             <TableColumn fx:id="prenom" prefWidth="75.0" text="prenom" />
@@ -18,9 +22,9 @@
             <TableColumn fx:id="poids" prefWidth="120.0" text="poids" />
             <TableColumn fx:id="image" prefWidth="75.0" text="image" />
             <TableColumn fx:id="id_eq" prefWidth="75.0" text="nom equipe" />
-            <TableColumn fx:id="edit" prefWidth="100.0" text="edit" />
+            <TableColumn fx:id="edit" prefWidth="150.0" text="edit" />
          </columns>
       </TableView>
-      <ImageView fx:id="imagev" fitHeight="150.0" fitWidth="134.0" layoutX="894.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="imagev" fitHeight="150.0" fitWidth="134.0" layoutX="948.0" layoutY="80.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>

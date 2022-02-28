@@ -14,6 +14,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeView;
+import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -27,6 +31,7 @@ public class HomeController implements Initializable {
 
     @FXML
     private StackPane contentArea;
+//    private TreeView<String> treeview;
 
     /**
      * Initializes the controller class.
@@ -37,14 +42,24 @@ public class HomeController implements Initializable {
             Parent fxml=FXMLLoader.load(getClass().getResource("EquipeDetails.fxml"));
             contentArea.getChildren().removeAll();
             contentArea.getChildren().setAll(fxml);
+            
+            
+            // TreeItem<String> rootItem = new TreeItem("Gestion Equipes");
+            // TreeItem<String> branch1 = new TreeItem("Add Transfert");
+             
+            // TreeItem<String> branch2 = new TreeItem<>("Joueurs");                       
+            // rootItem.getChildren().addAll(branch1,branch2);
+            //  rootItem.getChildren().add(branch1);
+           //  treeview.setRoot(rootItem);
+             
         }catch(IOException ex)
         {
             System.out.println(ex.getMessage());
         }
+    
     }    
 
-    
-    
+ 
     
     
     
@@ -114,4 +129,14 @@ public class HomeController implements Initializable {
         }
     }
     
+   
+    
+
+
+    
+
+    
+
+
+
 }

@@ -14,10 +14,12 @@
       <TextField fx:id="logofld" layoutX="163.0" layoutY="117.0" prefHeight="25.0" prefWidth="182.0" />
       <Text layoutX="109.0" layoutY="178.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Coach" />
       <TextField fx:id="coachfld" layoutX="163.0" layoutY="161.0" prefHeight="25.0" prefWidth="182.0" />
-      <Text layoutX="117.0" layoutY="223.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Level" wrappingWidth="43.30035400390625" />
+      <Text layoutX="108.0" layoutY="223.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Level" wrappingWidth="43.30035400390625" />
       <TextField fx:id="levelfld" layoutX="163.0" layoutY="206.0" prefHeight="25.0" prefWidth="182.0" />
-      <Button layoutX="200.0" layoutY="272.0" mnemonicParsing="false" onAction="#save" prefHeight="25.0" prefWidth="89.0" text="Save" />
+      <Button layoutX="198.0" layoutY="302.0" mnemonicParsing="false" onAction="#save" prefHeight="25.0" prefWidth="89.0" text="Save" />
       <Button fx:id="logobtn" layoutX="389.0" layoutY="117.0" mnemonicParsing="false" onAction="#getlogo" text="parcourir" />
       <ImageView fx:id="logov" fitHeight="123.0" fitWidth="134.0" layoutX="554.0" layoutY="63.0" pickOnBounds="true" preserveRatio="true" />
+      <Text layoutX="112.0" layoutY="269.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Stade" wrappingWidth="43.30035400390625" />
+      <TextField fx:id="stadefld" layoutX="158.0" layoutY="252.0" prefHeight="25.0" prefWidth="182.0" />
    </children>
 </Pane>

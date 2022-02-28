@@ -55,6 +55,8 @@ public class AddEquipeController implements Initializable {
     private Button logobtn;
     @FXML
     private ImageView logov;
+    @FXML
+    private TextField stadefld;
    
     /**
      * Initializes the controller class.
@@ -91,6 +93,7 @@ public class AddEquipeController implements Initializable {
         String logo =logofld.getText();
         String coach=coachfld.getText();
         String level=levelfld.getText();
+        String stade=stadefld.getText();
         
         if(name.isEmpty()||logo.isEmpty()||coach.isEmpty()||level.isEmpty())
         {
@@ -102,7 +105,7 @@ public class AddEquipeController implements Initializable {
         else
         {
             
-            Equipe e=new Equipe(name,logo,coach,level);
+            Equipe e=new Equipe(name,logo,coach,level,stade);
             es.insert(e);
             clean();
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -119,7 +122,7 @@ public class AddEquipeController implements Initializable {
         logofld.setText(null);
         coachfld.setText(null);
        levelfld.setText(null);
-        
+        stadefld.setText(null);
     }
 
   

@@ -122,8 +122,8 @@ public class MatchService implements IService<Match> {
 
             while (rs.next()) {
                 m.setDate(rs.getDate("date"));
-                m.setEquipe1(new Equipe(rs.getInt(13), rs.getString(14), rs.getString(15), rs.getString(16), rs.getString(17)));
-                m.setEquipe2(new Equipe(rs.getInt(18), rs.getString(19), rs.getString(20), rs.getString(21), rs.getString(22)));
+                m.setEquipe1(new Equipe(rs.getInt(13), rs.getString(14), rs.getString(15), rs.getString(16), rs.getString(17),rs.getString("stade")));
+                m.setEquipe2(new Equipe(rs.getInt(18), rs.getString(19), rs.getString(20), rs.getString(21), rs.getString(22),rs.getString("stade")));
                 m.setId(rs.getInt("id"));
                 m.setId_arbiter1(rs.getInt("id_arbitre1"));
                 m.setId_arbiter2(rs.getInt("id_arbitre2"));
@@ -157,8 +157,8 @@ public class MatchService implements IService<Match> {
             rs = ps.executeQuery();
             if (rs.next()) {
                 m.setDate(rs.getDate("date"));
-                m.setEquipe1(new Equipe(rs.getInt(13), rs.getString(14), rs.getString(15), rs.getString(16), rs.getString(17)));
-                m.setEquipe2(new Equipe(rs.getInt(18), rs.getString(19), rs.getString(20), rs.getString(21), rs.getString(22)));
+                m.setEquipe1(new Equipe(rs.getInt(13), rs.getString(14), rs.getString(15), rs.getString(16), rs.getString(17),rs.getString("stade")));
+                m.setEquipe2(new Equipe(rs.getInt(18), rs.getString(19), rs.getString(20), rs.getString(21), rs.getString(22),rs.getString("stade")));
                 m.setId(rs.getInt("id"));
                 m.setId_arbiter1(rs.getInt("id_arbitre1"));
                 m.setId_arbiter2(rs.getInt("id_arbitre2"));
@@ -194,8 +194,8 @@ public class MatchService implements IService<Match> {
 
             while (rs.next()) {
                 m.setDate(rs.getDate("date"));
-                m.setEquipe1(new Equipe(rs.getInt(13), rs.getString(14), rs.getString(15), rs.getString(16), rs.getString(17)));
-                m.setEquipe2(new Equipe(rs.getInt(18), rs.getString(19), rs.getString(20), rs.getString(21), rs.getString(22)));
+                m.setEquipe1(new Equipe(rs.getInt(13), rs.getString(14), rs.getString(15), rs.getString(16), rs.getString(17),rs.getString("stade")));
+                m.setEquipe2(new Equipe(rs.getInt(18), rs.getString(19), rs.getString(20), rs.getString(21), rs.getString(22),rs.getString("stade")));
                 m.setId(rs.getInt("id"));
                 m.setId_arbiter1(rs.getInt("id_arbitre1"));
                 m.setId_arbiter2(rs.getInt("id_arbitre2"));
@@ -229,8 +229,8 @@ public class MatchService implements IService<Match> {
 
             while (rs.next()) {
                 m.setDate(rs.getDate("date"));
-                m.setEquipe1(new Equipe(rs.getInt(13), rs.getString(14), rs.getString(15), rs.getString(16), rs.getString(17)));
-                m.setEquipe2(new Equipe(rs.getInt(18), rs.getString(19), rs.getString(20), rs.getString(21), rs.getString(22)));
+                m.setEquipe1(new Equipe(rs.getInt(13), rs.getString(14), rs.getString(15), rs.getString(16), rs.getString(17),rs.getString("stade")));
+                m.setEquipe2(new Equipe(rs.getInt(18), rs.getString(19), rs.getString(20), rs.getString(21), rs.getString(22),rs.getString("stade")));
                 m.setId(rs.getInt("id"));
                 m.setId_arbiter1(rs.getInt("id_arbitre1"));
                 m.setId_arbiter2(rs.getInt("id_arbitre2"));

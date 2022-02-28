@@ -41,7 +41,7 @@ public class MainFx extends Application {
                 primaryStage.setX(event.getScreenX()-x);
                 primaryStage.setY(event.getSceneY()-y);
                 });
-            Scene scene = new Scene(root,1200,750);
+            Scene scene = new Scene(root,1500,750);
             scene.setFill(Color.TRANSPARENT);
             primaryStage.setScene(scene);
             

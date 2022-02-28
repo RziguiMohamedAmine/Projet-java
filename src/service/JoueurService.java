@@ -9,6 +9,7 @@ import entite.Joueur;
 import entite.JoueurMatch;
 import entite.Match;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -61,7 +62,7 @@ public class JoueurService implements IService<Joueur>{//relation entre entite e
             pst.setString(2,j.getPrenom());
             pst.setString(3,j.getPoste());
             pst.setString(4,j.getNationalite());
-            pst.setDate(5, (Date) j.getDate_naiss());
+            pst.setObject(5,j.getDate_naiss());
             pst.setFloat(6,j.getTaille());
             pst.setFloat(7,j.getPoids());
             pst.setString(8,j.getImage());
@@ -93,7 +94,7 @@ public class JoueurService implements IService<Joueur>{//relation entre entite e
             pst.setString(2,j.getPrenom());
             pst.setString(3,j.getPoste());
             pst.setString(4,j.getNationalite());
-            pst.setDate(5, (Date) j.getDate_naiss());
+            pst.setObject(5,j.getDate_naiss());
             pst.setFloat(6,j.getTaille());
             pst.setFloat(7,j.getPoids());
             pst.setString(8,j.getImage());
@@ -138,7 +139,7 @@ public class JoueurService implements IService<Joueur>{//relation entre entite e
             EquipeService es =new EquipeService();
             while(rs.next())
             { 
-                list.add(new Joueur(rs.getInt("id"),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getDate(6),rs.getFloat(7),rs.getFloat(8),rs.getString(9),es.getOne(rs.getInt("id_equipe"))));
+                list.add(new Joueur(rs.getInt("id"),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getObject(6,LocalDate.class),rs.getFloat(7),rs.getFloat(8),rs.getString(9),es.getOne(rs.getInt("id_equipe"))));
             }
         } catch (SQLException ex) {
             Logger.getLogger(JoueurService.class.getName()).log(Level.SEVERE, null, ex);
@@ -161,7 +162,7 @@ public class JoueurService implements IService<Joueur>{//relation entre entite e
              if (rs.next())
              {              
                  j = new Joueur(rs.getInt(1), rs.getString(2), rs.getString(3), 
-                 rs.getString(4),rs.getString(5),rs.getDate(6),rs.getFloat(7),
+                 rs.getString(4),rs.getString(5),rs.getObject(6,LocalDate.class),rs.getFloat(7),
                  rs.getFloat(8),rs.getString(9),es.getOne(rs.getInt(1)));
                 
              }
@@ -190,9 +191,10 @@ public class JoueurService implements IService<Joueur>{//relation entre entite e
                 e.setLogo(rs.getString("logo"));
                 e.setNom_entreneur(rs.getString("nom_entreneur"));
                 e.setNiveau(rs.getString("niveau"));
-
-                list.add(new Joueur(rs.getInt(1),rs.getString("nom"),rs.getString("prenom"), 
-                        rs.getString("poste"),rs.getString("nationalite"),rs.getDate("date_naiss"),rs.getFloat("taille"),
+                e.setNiveau(rs.getString("stade"));
+                 
+                list.add(new Joueur(rs.getString("nom"),rs.getString("prenom"), 
+                        rs.getString("poste"),rs.getString("nationalite"),rs.getObject("date_naiss",LocalDate.class),rs.getFloat("taille"),
                  rs.getFloat("poids"),rs.getString("image")));
             }
         } catch (SQLException ex) {
@@ -208,7 +210,7 @@ public class JoueurService implements IService<Joueur>{//relation entre entite e
       public List<JoueurMatch> getScoreJoueur(Joueur ee) {
         String req="select * from (\n" +
         "select j.nom,j.prenom,j.poste,j.nationalite,j.date_naiss,j.taille,j.poids,j.image,j.id_equipe,j.nomeq,j.logo,\n" +
-        "j.id,j.id_joueur,j.id_match,j.carton_jaune,j.carton_rouge,j.nb_but, m.equipe1, m.equipe2 from "+ 
+        "j.id,j.id_joueur,j.id_match,j.carton_jaune,j.carton_rouge,j.nb_but, m.equipe1, m.equipe2,m.date from "+ 
         "(SELECT j.nom,j.prenom,j.poste,j.nationalite,j.date_naiss,j.taille,j.poids,j.image,j.id_equipe,j.nomeq,j.logo,\n" +
         "mj.id,mj.id_joueur,mj.id_match,mj.carton_jaune,mj.carton_rouge,mj.nb_but FROM (SELECT j.id id_joueur,j.nom,j.prenom,"+
         "j.poste,j.nationalite,j.date_naiss,j.taille,j.poids,j.image,e.id id_equipe,e.nomeq,e.logo " +
@@ -233,16 +235,16 @@ public class JoueurService implements IService<Joueur>{//relation entre entite e
                 j.setPrenom(rs.getString("prenom"));
                 j.setPoste(rs.getString("Poste"));
                 j.setNationalite(rs.getString("nationalite"));
-                j.setDate_naiss(rs.getDate("date_naiss"));
+                j.setDate_naiss(rs.getObject("date_naiss",LocalDate.class));
                 j.setTaille(rs.getFloat("taille"));
                 j.setPoids(rs.getFloat("poids"));
                 j.setImage(rs.getString("image"));
-                j.setEquipe(new Equipe(rs.getInt("id_equipe"),rs.getString("nomeq"),rs.getString("logo")));
+                j.setEquipe(new Equipe(rs.getInt("id_equipe"),rs.getString("nomeq"),rs.getString("logo"),rs.getString("nom_entreneur"),rs.getString("niveau"),rs.getString("stade")));
                 
                 m.setId(rs.getInt("id_match"));
-                m.setEquipe1(new Equipe(rs.getInt(20),rs.getString(21),rs.getString(22)));
-                m.setEquipe2(new Equipe(rs.getInt(25),rs.getString(26),rs.getString(27)));
-      
+                m.setEquipe1(new Equipe(rs.getInt(18),rs.getString(22),rs.getString(23),rs.getString("nom_entreneur"),rs.getString("niveau"),rs.getString("stade")));
+                m.setEquipe2(new Equipe(rs.getInt(19),rs.getString(27),rs.getString(28),rs.getString("nom_entreneur"),rs.getString("niveau"),rs.getString("stade")));
+                m.setDate(rs.getDate("date"));
                 jm.setId(rs.getInt(12));
                 jm.setJoueur(j);
                 jm.setMatch(m);
@@ -251,6 +253,9 @@ public class JoueurService implements IService<Joueur>{//relation entre entite e
                 jm.setNb_but(rs.getInt(17));
                
                 list.add(new JoueurMatch(rs.getInt(12),j,m,rs.getInt(15),rs.getInt(16),rs.getInt(17)));
+               
+                
+                
                 int b=jm.getNb_but();
                 int cj=jm.getJaune();
                 int cr=jm.getRouge();
@@ -310,7 +315,7 @@ public class JoueurService implements IService<Joueur>{//relation entre entite e
                 j.setPrenom(rs.getString("prenom"));
                 j.setPoste(rs.getString("Poste"));
                 j.setNationalite(rs.getString("nationalite"));
-                j.setDate_naiss(rs.getDate("date_naiss"));
+                j.setDate_naiss(rs.getObject("date_naiss",LocalDate.class));
                 j.setTaille(rs.getFloat("taille"));
                 j.setPoids(rs.getFloat("poids"));
                 j.setImage(rs.getString("image"));   
@@ -343,7 +348,7 @@ public class JoueurService implements IService<Joueur>{//relation entre entite e
              while (rs.next())
              {              
                  list.add(new Joueur(rs.getInt(1), rs.getString(2), rs.getString(3), 
-                 rs.getString(4),rs.getString(5),rs.getDate(6),rs.getFloat(7),
+                 rs.getString(4),rs.getString(5),rs.getObject(6,LocalDate.class),rs.getFloat(7),
                  rs.getFloat(8),rs.getString(9),es.getOne(rs.getInt(10))));
                 
              }
@@ -369,7 +374,7 @@ public class JoueurService implements IService<Joueur>{//relation entre entite e
              while (rs.next())
              {              
                  list.add(new Joueur(rs.getInt(1), rs.getString(2), rs.getString(3), 
-                 rs.getString(4),rs.getString(5),rs.getDate(6),rs.getFloat(7),
+                 rs.getString(4),rs.getString(5),rs.getObject(6,LocalDate.class),rs.getFloat(7),
                  rs.getFloat(8),rs.getString(9),es.getOne(rs.getInt(10))));
                 
              }
@@ -394,7 +399,7 @@ public class JoueurService implements IService<Joueur>{//relation entre entite e
              {              
                  
                  list.add(new Joueur(rs.getInt(1), rs.getString(2), rs.getString(3), 
-                 rs.getString(4),rs.getString(5),rs.getDate(6),rs.getFloat(7),
+                 rs.getString(4),rs.getString(5),rs.getObject("date_naiss",LocalDate.class),rs.getFloat(7),
                  rs.getFloat(8) ,rs.getString(9)));
                 
              }

@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane id="AnchorPane" prefHeight="750.0" prefWidth="1200.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.HomeController">
+<BorderPane id="AnchorPane" prefHeight="750.0" prefWidth="1500.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.HomeController">
     <stylesheets>
         <URL value="@joueurdetails.css" />
     </stylesheets>
@@ -38,7 +38,7 @@
                   <Image url="@../Images/Logo_FTF.png" />
                </image>
             </ImageView>
-            <FontAwesomeIconView glyphName="CLOSE" layoutX="1162.0" layoutY="39.0" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#Close" size="30" />
+            <FontAwesomeIconView glyphName="CLOSE" layoutX="1470.0" layoutY="27.0" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#Close" size="30" />
          </children>
       </Pane>
    </top>
@@ -101,11 +101,6 @@
                      </font>
                   </Button>
                   <Button layoutX="11.0" layoutY="317.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: #AAB2BD;" text="Gestion des Panier">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Button>
-                  <Button layoutX="11.0" layoutY="356.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: #AAB2BD;" text="Button">
                      <font>
                         <Font size="14.0" />
                      </font>

@@ -40,7 +40,7 @@ public class EquipeService implements IService<Equipe> {
      @Override
     public boolean insert(Equipe e)
     {
-        String req="insert into equipe (nomeq,logo,nom_entreneur,niveau) values (?,?,?,?)";
+        String req="insert into equipe (nomeq,logo,nom_entreneur,niveau,stade) values (?,?,?,?,?)";
         Boolean inserted=false;
         try {
             pst=conn.prepareStatement(req);
@@ -48,6 +48,7 @@ public class EquipeService implements IService<Equipe> {
             pst.setString(2,e.getLogo());
             pst.setString(3,e.getNom_entreneur());
             pst.setString(4,e.getNiveau());
+            pst.setString(5,e.getStade());
         
             inserted=pst.executeUpdate()>0;
         } catch (SQLException ex) {
@@ -60,7 +61,7 @@ public class EquipeService implements IService<Equipe> {
       @Override
      public boolean update(Equipe e) 
     {
-      String req="UPDATE equipe SET nomeq=?,logo=?,nom_entreneur=?,niveau=? WHERE id=?";
+      String req="UPDATE equipe SET nomeq=?,logo=?,nom_entreneur=?,niveau=?,stade=? WHERE id=?";
        Boolean updated=false;
         try {
             pst=conn.prepareStatement(req);
@@ -69,7 +70,8 @@ public class EquipeService implements IService<Equipe> {
             pst.setString(2,e.getLogo());
             pst.setString(3,e.getNom_entreneur());
             pst.setString(4,e.getNiveau());
-            pst.setInt(5,e.getId());
+             pst.setString(5,e.getStade());
+            pst.setInt(6,e.getId());
            
             updated=pst.executeUpdate()>0;
         } catch (SQLException ex) {
@@ -107,7 +109,7 @@ public class EquipeService implements IService<Equipe> {
             rs=ste.executeQuery(req);
             while(rs.next())
             {
-                list.add(new Equipe(rs.getInt("id"),rs.getString(2),rs.getString("logo"),rs.getString(4),rs.getString(5)));
+                list.add(new Equipe(rs.getInt("id"),rs.getString(2),rs.getString("logo"),rs.getString(4),rs.getString(5),rs.getString(6)));
             }
         } catch (SQLException ex) {
             Logger.getLogger(JoueurService.class.getName()).log(Level.SEVERE, null, ex);
@@ -147,7 +149,7 @@ public class EquipeService implements IService<Equipe> {
             ResultSet resultSet = pst.executeQuery();
              if (resultSet.next()) {              
                     e = new Equipe(resultSet.getInt(1), resultSet.getString(2), 
-                          resultSet.getString(3), resultSet.getString(4),resultSet.getString(5));
+                          resultSet.getString(3), resultSet.getString(4),resultSet.getString(5),resultSet.getString(6));
                 }
         } catch (SQLException ex) {
             Logger.getLogger(JoueurService.class.getName()).log(Level.SEVERE, null, ex);

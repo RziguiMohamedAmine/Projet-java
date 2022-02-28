@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -39,7 +40,6 @@
             <TextField fx:id="prenom" layoutX="245.0" layoutY="85.0" />
             <TextField fx:id="poste" layoutX="245.0" layoutY="134.0" />
             <TextField fx:id="nation" layoutX="245.0" layoutY="175.0" />
-            <TextField fx:id="date" layoutX="245.0" layoutY="216.0" />
             <TextField fx:id="taille" layoutX="245.0" layoutY="255.0" />
             <TextField fx:id="poids" layoutX="245.0" layoutY="294.0" />
             <TextField fx:id="image" layoutX="245.0" layoutY="336.0" />
@@ -77,6 +77,7 @@
                </font>
             </Text>
             <TextField fx:id="equipenom" layoutX="488.0" layoutY="110.0" />
+            <DatePicker fx:id="dat" layoutX="244.0" layoutY="217.0" />
          </children>
       </Pane>
       <Text layoutX="71.0" layoutY="128.0" lineSpacing="4.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nom" wrappingWidth="97.33673858642578">

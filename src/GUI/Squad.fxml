@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="932.0" style="-fx-background-color: #95999e;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.SquadController">
+    <stylesheets>
+        <URL value="@joueurdetails.css" />
+    </stylesheets>
+    <children>
+      <TableView fx:id="joueurTable" layoutX="14.0" layoutY="147.0" prefHeight="438.0" prefWidth="721.0" styleClass="joueurTable">
+        <columns>
+          <TableColumn fx:id="nom" prefWidth="75.0" text="Nom" />
+          <TableColumn fx:id="prenom" prefWidth="75.0" text="Prenom" />
+            <TableColumn fx:id="poste" prefWidth="75.0" text="Poste" />
+            <TableColumn fx:id="nation" prefWidth="75.0" text="Nationalité" />
+            <TableColumn fx:id="date" prefWidth="120.0" text="Date de Naissance" />
+            <TableColumn fx:id="taille" prefWidth="75.0" text="Taille" />
+            <TableColumn fx:id="poids" prefWidth="75.0" text="Poids" />
+            <TableColumn fx:id="image" prefWidth="75.0" text="Image" />
+            <TableColumn fx:id="edit" prefWidth="75.0" text="Edit" />
+        </columns>
+      </TableView>
+      <ImageView fx:id="imagev" fitHeight="150.0" fitWidth="154.0" layoutX="753.0" layoutY="110.0" pickOnBounds="true" preserveRatio="true" />
+      <HBox alignment="CENTER" prefHeight="82.0" prefWidth="932.0" style="-fx-background-color: #fc0307;">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Squad">
+               <font>
+                  <Font name="Arial Bold" size="40.0" />
+               </font>
+            </Text>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

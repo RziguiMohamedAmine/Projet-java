@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.TransfertDetailsController">
+  <stylesheets>
+        <URL value="@joueurdetails.css" />
+    </stylesheets>
+    <children>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="1054.0" style="-fx-background-color: #fc1219;">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Liste des Transferts">
+               <font>
+                  <Font name="Arial Bold" size="54.0" />
+               </font>
+            </Text>
+         </children>
+      </HBox>
+      <TableView fx:id="joueurTable" layoutX="133.0" layoutY="148.0" prefHeight="426.0" prefWidth="522.0" styleClass="joueurTable">
+        <columns>
+          <TableColumn fx:id="nom" prefWidth="100.0" text="Nom" />
+          <TableColumn fx:id="prenom" prefWidth="100.0" text="Prenom" />
+            <TableColumn fx:id="ancien" prefWidth="150.0" text="Ancien Equipe" />
+            <TableColumn fx:id="nouveau" prefWidth="150.0" text="Nouveau Equipe" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

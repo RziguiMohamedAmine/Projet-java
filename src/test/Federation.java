@@ -13,6 +13,10 @@ import entite.Transfert;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.Month;
+//import javafx.util.converter.LocalDateStringConverter;
+//import java.time.LocalDateTime;
 import service.EquipeService;
 import service.JoueurMatchService;
 import service.JoueurService;
@@ -30,6 +34,7 @@ public class Federation {
      */
     
     public static void main(String[] args) throws ParseException {
+      //  LocalDate ddd = new LocalDate
        
             EquipeService es=new EquipeService();
             JoueurService js=new JoueurService();
@@ -39,9 +44,9 @@ public class Federation {
             
             
             
-            Equipe e1=new Equipe(1,"ca","evvr","rfr","rrvr");
-            Equipe e2=new Equipe(2,"est","zhyr","rnyy","ryrn");
-            Equipe e3=new Equipe(3,"ess","vervzr22","vverv","rrvzr") ;
+            Equipe e1=new Equipe(1,"ca","evvr","rfr","rrvr","ss");
+            Equipe e2=new Equipe(2,"est","zhyr","rnyy","ryrn","dd");
+            Equipe e3=new Equipe(3,"ess","vervzr22","vverv","rrvzr","svr") ;
             
             //es.insert(e1);
             //es.insert(e2); 
@@ -66,13 +71,14 @@ public class Federation {
            long ms=dn.getTime();
            java.sql.Date sdo=new java.sql.Date(ms);
        
-            
-             Joueur j1=new Joueur(1,"xxx","yyy","kk","tun",sdo,2,7,"rrr",e2);
-             Joueur j2=new Joueur(3,"joueur2","jjj","arriere","france",sdo,2,7,"tt",e2);
-             Joueur j4=new Joueur(4,"jrelequ","jjj","attaquant","france",sdo,2,7,"tt",e2);
-             Joueur j3=new Joueur("updated","upd","arriere","tunnn",sdo,4,7,"rrr",null);
+             LocalDate dd=LocalDate.of(2022,Month.JANUARY,25);
+         
+             Joueur j1=new Joueur(1,"xxx","yyy","kk","tun",dd,2,7,"rrr",e2);
+             Joueur j2=new Joueur(3,"joueur2","jjj","arriere","france",dd,2,7,"tt",e2);
+             Joueur j4=new Joueur(4,"jrelequ","jjj","attaquant","france",dd,2,7,"tt",e2);
+             Joueur j3=new Joueur("updated","upd","arriere","tunnn",dd,4,7,"rrr",null);
               
-               //js.insert(j1);
+               js.insert(j1);
                //js.insert(j2); 
                //js.insert(j4);
               
@@ -84,7 +90,7 @@ public class Federation {
                //j3.setId(2);
                //js.delete(j3);
               //****************************
-              System.out.println(js.getAll());
+              //System.out.println(js.getAll());
               //System.out.println("votre joueur est :"+js.getOne(3));
               //***********************
               //System.out.println("les joueurs d'equipe "+e2.getNom()+" sont:"+js.getjoueurbyequipe(e2));
@@ -97,9 +103,9 @@ public class Federation {
               JoueurMatch jm1 =new JoueurMatch(j2,m3,1,0,3);
               JoueurMatch jm2 =new JoueurMatch(j4,m2,1,0,3);
               //System.out.println(js.getJoueurLibre());
-              // System.out.println(js.getScoreJoueur(j4)); 
+               System.out.println(js.getScoreJoueur(j4)); 
              // jms.insert(jm2);
-             // System.out.println("top scorers:"+js.TopScorer());
+             //System.out.println("top scorers:"+js.TopScorer());
               Transfert t=new Transfert(e2, e3, j2);
               //ts.insert(t);
               

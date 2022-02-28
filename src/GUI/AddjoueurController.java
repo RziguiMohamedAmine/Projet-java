@@ -5,6 +5,7 @@
  */
 package GUI;
 
+
 import entite.Equipe;
 import entite.Joueur;
 import java.io.File;
@@ -28,6 +29,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -74,6 +76,8 @@ public class AddjoueurController implements Initializable {
     @FXML
     private TextField equipenom;
     int idjoueur;
+    @FXML
+    private DatePicker dat;
     
     /**
      * Initializes the controller class.
@@ -106,11 +110,10 @@ public class AddjoueurController implements Initializable {
          String prenome =prenom.getText();
          String postee=poste.getText();
          String natione=nation.getText();
-           SimpleDateFormat sd=new SimpleDateFormat("yyyy-MM-dd");
-           String dob=date.getText();
-           java.util.Date dn=sd.parse(dob);
-           long ms=dn.getTime();
-           java.sql.Date sdo=new java.sql.Date(ms);      
+          
+           Date d=Date.valueOf(dat.getValue());
+           LocalDate datenaissance = dat.getValue();
+      
          Float taillee = Float.parseFloat(taille.getText());
          Float Poidse = Float.parseFloat(poids.getText());
          String imagee = image.getText();
@@ -130,7 +133,7 @@ public class AddjoueurController implements Initializable {
         else
         {
             
-            Joueur j=new Joueur(nome,prenome,postee,natione,sdo,taillee,Poidse,imagee,e);
+            Joueur j=new Joueur(nome,prenome,postee,natione,datenaissance,taillee,Poidse,imagee,e);
             js.insert(j);
             clean();
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -181,14 +184,15 @@ public class AddjoueurController implements Initializable {
     }
     
     
-     void setTextField(int id,String nome, String prenome, String postee, String nationalite, Date datee, float taillee, float poidse, String imagee, Equipe equipee) 
+     void setTextField(int id,String nome, String prenome, String postee, String nationalite, LocalDate datee, float taillee, float poidse, String imagee, Equipe equipee) 
      {
         idjoueur=id;
         nom.setText(nome);
         prenom.setText(prenome);
         poste.setText(postee);
-        nation.setText(nationalite);
-        date.setText(String.valueOf(datee));
+        nation.setText(nationalite);      
+         dat.setValue(datee);
+        //dat.setText(String.valueOf(datee));
         taille.setText(String.valueOf(taillee));
         poids.setText(String.valueOf(poidse));
         image.setText(imagee);
@@ -205,11 +209,10 @@ public class AddjoueurController implements Initializable {
          String prenome =prenom.getText();
          String postee=poste.getText();
          String natione=nation.getText();
-           SimpleDateFormat sd=new SimpleDateFormat("yyyy-MM-dd");
-           String dob=date.getText();
-           java.util.Date dn=sd.parse(dob);
-           long ms=dn.getTime();
-           java.sql.Date sdo=new java.sql.Date(ms);      
+         
+         Date d=Date.valueOf(dat.getValue());
+         LocalDate datenaissance = dat.getValue(); 
+         
          Float taillee = Float.parseFloat(taille.getText());
          Float Poidse = Float.parseFloat(poids.getText());
          String imagee = image.getText();
@@ -218,7 +221,7 @@ public class AddjoueurController implements Initializable {
          
         Equipe e=equipe.getSelectionModel().getSelectedItem();
         equipenom.setText(String.valueOf(e));
-           Joueur j=new Joueur(nome,prenome,postee,natione,sdo,taillee,Poidse,imagee,e);
+           Joueur j=new Joueur(nome,prenome,postee,natione,datenaissance,taillee,Poidse,imagee,e);
            j.setId(idjoueur);
             js.update(j);
              clean();

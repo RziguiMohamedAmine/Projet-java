@@ -17,15 +17,16 @@ public class Equipe {
     private String logo;
     private String nom_entreneur;
     private String niveau;
-
+    private String stade;
     public Equipe() {
     }
 
-    public Equipe(String nom, String logo, String nom_entreneur, String niveau) {
+    public Equipe(String nom, String logo, String nom_entreneur, String niveau,String stade) {
         this.nom = nom;
         this.logo = logo;
         this.nom_entreneur = nom_entreneur;
         this.niveau = niveau;
+        this.stade=stade;
     }
 
     
@@ -34,18 +35,20 @@ public class Equipe {
       
     }
 
-    public Equipe(int id, String nom, String logo, String nom_entreneur, String niveau) {
+    public Equipe(int id, String nom, String logo, String nom_entreneur, String niveau,String stade) {
         this.id = id;
         this.nom = nom;
         this.logo = logo;
         this.nom_entreneur = nom_entreneur;
         this.niveau = niveau;
+        this.stade=stade;
     }
 
-     public Equipe(int id, String nom, String logo) {
+     public Equipe(int id, String nom, String logo,String stade) {
         this.id = id;
         this.nom = nom;
-         this.logo = logo;
+        this.logo = logo;
+        this.stade=stade;
     }
     public int getId() {
         return id;
@@ -87,7 +90,15 @@ public class Equipe {
         this.niveau = niveau;
     }
 
-  
+    public String getStade() {
+        return stade;
+    }
+
+    public void setStade(String stade) {
+        this.stade = stade;
+    }
+
+   
 
     @Override
     public boolean equals(Object obj) {
@@ -112,10 +123,10 @@ public class Equipe {
 
     @Override
     public String toString() {
-        return "Equipe{" + "id=" + id + ", nom=" + nom + ", logo=" + logo + ", nom_entreneur=" + nom_entreneur + ", niveau=" + niveau + '}';
+        return "Equipe{" + "id=" + id + ", nom=" + nom + ", logo=" + logo + ", nom_entreneur=" + nom_entreneur + ", niveau=" + niveau + ", stade=" + stade + '}';
     }
-    
-    
+
+  
     
     
     

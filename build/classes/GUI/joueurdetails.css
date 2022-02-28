@@ -1,6 +1,32 @@
 /*
  * Empty Stylesheet file.
  */
+.btn:hover{
+    -fx-cursor:hand ;
+}
+.joueurTable {
+    -fx-background-color:#79d9cf;
+    -fx-background-radius:14 14 0 0;
+    -fx-background-margin-left: 90px;
+    }
+.joueurTable .column-header-background{
+        -fx-background-color: #79d9cf;
+        -fx-background-radius:14;
+        -fx-background-insets: 0 0 10 0;
+         -fx-background-margin-left: 90px;
+        
+        
+    }
+.joueurTable .column-header, .table-view .filler{
+        -fx-size:50px;
+        -fx-border-width: 0 0 10 0;
+        -fx-background-color:transparent;
+         -fx-background-margin-left: 90px;
+    }
+    
+.joueurTable.column-header .label {
+        -fx-text-fill: white ;
+    }
 
 .mainFxmlClass {
 
