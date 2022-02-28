@@ -5,6 +5,7 @@
  */
 package service;
 
+import entite.categorie;
 import java.sql.*;
 import utils.DataSource;
 import entite.produit;
@@ -32,13 +33,16 @@ public class ServiceProduit implements IService<produit>{
     @Override
     public boolean insert(produit t) {
           boolean insert=false;
-        String req = "insert into produit (nom,image,prix,description,id_cat) values ('" + t.getNom() + "',"
-        + "'" + t.getImage()+ "','" + t.getPrix()+ "','" + t.getDescription()+ "','" + t.getId_cat()+ "')";
-          
+        String req = "insert into produit (nom,image,prix,description,id_cat) values (?,?,?,?,? )";
        try {
-      
-            ste = conn.createStatement();
-            insert=ste.executeUpdate(req)>0;
+                        PreparedStatement ps = conn.prepareStatement(req);
+
+               ps.setString(1, t.getNom());
+             ps.setString(2, t.getImage());
+             ps.setFloat(3, t.getPrix());
+             ps.setString(4, t.getDescription());
+             ps.setInt(5, t.getCat().getId());
+            insert=ps.executeUpdate()>0;
 
         } catch (SQLException ex) {
             Logger.getLogger(ServiceProduit.class.getName()).log(Level.SEVERE, null, ex);
@@ -58,7 +62,7 @@ public class ServiceProduit implements IService<produit>{
              ps.setString(2, t.getImage());
              ps.setFloat(3, t.getPrix());
              ps.setString(4, t.getDescription());
-             ps.setInt(5, t.getId_cat());
+             ps.setInt(5, t.getCat().getId());
              ps.setInt(6, t.getId());
              
              update=ps.executeUpdate()>0;
@@ -88,21 +92,21 @@ public class ServiceProduit implements IService<produit>{
         
         try {
             
-        String req ="select * from produit";
+        String req ="SELECT p.id id_produit, p.nom nom_produit, p.image,p.prix ,"
+                + "p.description, p.id_cat, c.nom nom_cat FROM produit p JOIN categorie c on p.id_cat=c.id";
         
         Statement st = conn.createStatement();
         ResultSet rs = st.executeQuery(req);
          
         while(rs.next()){
          produit p= new produit();
-         p.setId(rs.getInt("id"));
-         p.setNom(rs.getString("nom"));
+         p.setId(rs.getInt("id_produit"));
+         p.setNom(rs.getString("nom_produit"));
          p.setPrix(rs.getFloat("prix"));
          p.setDescription(rs.getString("description"));
-         p.setId_cat(rs.getInt("id_cat"));
+         categorie c= new categorie(rs.getInt("id_cat"), rs.getString("nom_cat"));
+         p.setCat(c);
          list.add(p);
-         
-         
         }
         } catch (SQLException ex) {
              Logger.getLogger(ServiceProduit.class.getName()).log(Level.SEVERE, null, ex);
@@ -111,7 +115,8 @@ public class ServiceProduit implements IService<produit>{
 
     @Override
     public produit getOne(int id) {
-        String req="select * from produit where id=?";
+        String req="SELECT p.id id_produit, p.nom nom_produit, p.image,p.prix ,"
+                + "p.description, p.id_cat, c.nom nom_categorie FROM produit p JOIN categorie c on p.id_cat=c.id where p.id=?";
         produit p=null;
         try {
             pst= conn.prepareStatement(req);
@@ -119,8 +124,9 @@ public class ServiceProduit implements IService<produit>{
                        
             rs = pst.executeQuery();
              if (rs.next())
-             {              
-                 p = new produit(rs.getInt(1), rs.getString(2),rs.getString(3),rs.getFloat(4),rs.getString(5),rs.getInt(6));     
+             {       
+                 categorie c= new categorie(rs.getInt("id_categorie"), rs.getString("nom_categorie"));
+                 p = new produit(rs.getInt(1), rs.getString(2),rs.getString(3),rs.getFloat(4),rs.getString(5),c);     
              }
              
         } catch (SQLException ex) {
@@ -134,7 +140,8 @@ public class ServiceProduit implements IService<produit>{
     
     
      public produit getOnebyname(String nom) {
-        String req="select * from produit where nom=?";
+        String req="SELECT p.id id_produit, p.nom nom_produit, p.image,p.prix ,"
+                + "p.description, p.id_cat, c.nom nom_categorie FROM produit p JOIN categorie c on p.id_cat=c.id where p.nom=?";
         produit p=null;
         try {
             pst= conn.prepareStatement(req);
@@ -142,8 +149,9 @@ public class ServiceProduit implements IService<produit>{
                        
             rs = pst.executeQuery();
              if (rs.next())
-             {              
-                 p = new produit(rs.getInt(1), rs.getString(2),rs.getString(3),rs.getFloat(4),rs.getString(5),rs.getInt(6));     
+             {     
+                categorie c= new categorie(rs.getInt("id_categorie"), rs.getString("nom_categorie"));
+                 p = new produit(rs.getInt(1), rs.getString(2),rs.getString(3),rs.getFloat(4),rs.getString(5),c);     
              }
              
         } catch (SQLException ex) {

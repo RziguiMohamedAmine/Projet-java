@@ -8,6 +8,7 @@ import java.sql.*;
 import utils.DataSource;
 import entite.Avis;
 import entite.User;
+import entite.categorie;
 import entite.produit;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +65,7 @@ public class ServiceAvis implements IService<Avis>{
 
     }
     public List<Avis> getAvisByProduit(int id){
-        String  req="SELECT id_avis, id_user, id_produit, avis, user.id id_user, user.nom user_nom, prenom, email, pass, tel, role, user.image user_image, produit.id id_produit, produit.nom produit_nom, produit.image image_produit, prix, description, id_cat FROM `avis` INNER join user on avis.id_user = user.id inner join produit on produit.id=avis.id_produit WHERE id_produit=?";
+        String  req="select * from (SELECT id_avis, avis, user.id id_user, user.nom user_nom, prenom, email, pass, tel, role, user.image user_image, produit.id id_produit, produit.nom produit_nom, produit.image image_produit, prix, description, id_cat FROM `avis` INNER join user on avis.id_user = user.id inner join produit on produit.id=avis.id_produit WHERE id_produit=?) p join categorie c on c.id = p.id_cat";
         List<Avis> list = new ArrayList<>();
         try {
             pst= conn.prepareStatement(req);
@@ -78,7 +79,9 @@ public class ServiceAvis implements IService<Avis>{
                  produit p = new produit();
                  p.setId(rs.getInt("id_produit"));
                  p.setDescription(rs.getString("description"));
-                 p.setId_cat(rs.getInt("id_cat"));
+                 categorie c= new categorie(rs.getInt("id"), rs.getString("nom"));
+
+                 p.setCat(c);
                  p.setImage(rs.getString("image_produit"));
                  p.setNom(rs.getString("produit_nom"));
                  p.setPrix(rs.getFloat("prix"));
@@ -99,7 +102,7 @@ public class ServiceAvis implements IService<Avis>{
         return list;
     }
     
-    public List<Float> getCountAvrageAvisByProduit(int id){
+    public List<Float> getCountAverageAvisByProduit(int id){
         String  req="SELECT COUNT(*) count, AVG(avis) average FROM `avis` WHERE id_produit=?";
         List<Float> list = new ArrayList<>();
         try {

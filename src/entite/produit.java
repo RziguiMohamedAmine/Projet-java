@@ -18,26 +18,26 @@ public class produit {
     private String image;
     private float prix;
     private String description;
-    private int id_cat;
+    private categorie cat;
 
     public produit() {
     }
 
-    public produit(int id, String nom, String image, float prix, String description, int id_cat) {
+    public produit(int id, String nom, String image, float prix, String description, categorie cat) {
         this.id = id;
         this.nom = nom;
         this.image = image;
         this.prix = prix;
         this.description = description;
-        this.id_cat = id_cat;
+        this.cat = cat;
     }
-     public produit(String nom, String image, float prix, String description, int id_cat) {
+     public produit(String nom, String image, float prix, String description, categorie cat) {
      
         this.nom = nom;
         this.image = image;
         this.prix = prix;
         this.description = description;
-        this.id_cat = id_cat;
+        this.cat = cat;
     }
 
     public int getId() {
@@ -60,9 +60,7 @@ public class produit {
         return description;
     }
 
-    public int getId_cat() {
-        return id_cat;
-    }
+    
 
     public void setId(int id) {
         this.id = id;
@@ -84,17 +82,21 @@ public class produit {
         this.description = description;
     }
 
-    public void setId_cat(int id_cat) {
-        this.id_cat = id_cat;
+    public categorie getCat() {
+        return cat;
+    }
+
+    public void setCat(categorie cat) {
+        this.cat = cat;
     }
 
     @Override
-    public String toString() {
-        return "produit{" + "id=" + id + ", nom=" + nom + ", image=" + image + ","
-                + " prix=" + prix + ", description=" + description + ", id_cat=" + id_cat + '}';
+    public int hashCode() {
+        int hash = 3;
+        hash = 31 * hash + this.id;
+        return hash;
     }
 
-    
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -110,23 +112,21 @@ public class produit {
         if (this.id != other.id) {
             return false;
         }
-        if (Float.floatToIntBits(this.prix) != Float.floatToIntBits(other.prix)) {
-            return false;
-        }
-        if (this.id_cat != other.id_cat) {
-            return false;
-        }
-        if (!Objects.equals(this.nom, other.nom)) {
-            return false;
-        }
-        if (!Objects.equals(this.image, other.image)) {
-            return false;
-        }
-        if (!Objects.equals(this.description, other.description)) {
-            return false;
-        }
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "produit{" + "id=" + id + ", nom=" + nom + ", image=" + image + ", prix=" + prix + ", description=" + description + ", cat=" + cat + '}';
+    }
+    
+    
+
+    
+    
+
+    
+    
     
     
 
