@@ -16,6 +16,7 @@ public interface IService<T> {
     boolean insert(T t);
 
     boolean update(T t);
+    boolean updateuser(T t);
 
     boolean delete(T t);
 

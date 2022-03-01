@@ -47,7 +47,7 @@ public class UserService implements IService<User>{
     
     
    public boolean insert(User u){
-       String req="insert into user (nom,prenom,email,pass,tel,role,image) values (?,?,?,?,?,?,?)";
+       String req="insert into user (nom,prenom,email,pass,tel,image) values (?,?,?,?,?,?)";
         boolean inserted=false;
         try {
             pst=conn.prepareStatement(req);
@@ -55,9 +55,10 @@ public class UserService implements IService<User>{
             pst.setString(2,u.getPrenom());
             pst.setString(3,u.getEmail());
             pst.setString(4,doHashing(u.getPass()));
-            pst.setString(5,u.getTel());
-            pst.setString(6,u.getRole());
-            pst.setString(7,u.getImage());
+            pst.setInt(5,u.getTel());
+            
+            pst.setString(6,u.getImage());
+        
             inserted=pst.executeUpdate()>0;
             envoyerMail(u.getEmail(), "");
             
@@ -74,7 +75,7 @@ public class UserService implements IService<User>{
 
     @Override
     public boolean update(User u) {
-        String req="UPDATE user SET nom=?,prenom=?,email=?,pass=?,tel=?,role=?,image=? WHERE id=?";
+        String req="UPDATE user SET nom=?,prenom=?,email=?,pass=?,tel=?,image=?,role=? WHERE id=?";
         boolean update=false;
         try {
             pst = conn.prepareStatement(req);
@@ -83,10 +84,12 @@ public class UserService implements IService<User>{
             pst.setString(2,u.getPrenom());
             pst.setString(3,u.getEmail());
             pst.setString(4,doHashing(u.getPass()));
-            pst.setString(5,u.getTel());
-            pst.setString(6,u.getRole());
-            pst.setString(7,u.getImage());
+            pst.setInt(5,u.getTel());
+
+            pst.setString(6,u.getImage());
+            
             pst.setInt(8,u.getId());
+            pst.setString(7,u.getRole());
             update=pst.executeUpdate()>0;
 
             
@@ -94,7 +97,30 @@ public class UserService implements IService<User>{
             Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
         }return update;
 }
+    
+    @Override
+    public boolean updateuser(User u) {
+        String req="UPDATE user SET nom=?,prenom=?,pass=?,tel=?,image=? WHERE id=?";
+        boolean update=false;
+        try {
+            pst = conn.prepareStatement(req);
+            
+            pst.setString(1,u.getNom());
+            pst.setString(2,u.getPrenom());
+            pst.setString(3,doHashing(u.getPass()));
+            pst.setInt(4,u.getTel());
 
+            pst.setString(5,u.getImage());
+            
+            pst.setInt(6,u.getId());
+            
+            update=pst.executeUpdate()>0;
+
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
+        }return update;
+}
     @Override
     public boolean delete(User u) {
          String req="DELETE FROM user WHERE id=?";
@@ -119,7 +145,7 @@ public class UserService implements IService<User>{
             rs=ste.executeQuery(req);
             while(rs.next())
             {
-              list.add(new User(rs.getInt("id"), rs.getString(2),rs.getString("prenom"),rs.getString("email"),"",rs.getString("tel"),rs.getString("role"),rs.getString("image")));
+              list.add(new User(rs.getInt("id"), rs.getString(2),rs.getString("prenom"),rs.getString("email"),"",rs.getInt("tel"),rs.getString("image"),rs.getString("role")));
             }
             
         } catch (SQLException ex) {
@@ -145,7 +171,7 @@ public class UserService implements IService<User>{
             if(rs.next())
             {
                 u=new User(rs.getInt(1),rs.getString(2),rs.getString(3),
-              rs.getString(4),"",rs.getString(6),
+              rs.getString(4),"",rs.getInt(6),
                         rs.getString(7),rs.getString(8));
             }
         } catch (SQLException ex) {
@@ -282,8 +308,8 @@ public boolean login(String email, String pass){
 
 	 public  void envoyerMail(String recepient, String code) throws Exception
    {
-        String email ="formulamailone@gmail.com";
-        String password ="formulaone1_";
+        String email ="tunisieftf@gmail.com";
+        String password ="0000ftf1";
 
        System.out.println("Preparing to send email");
 

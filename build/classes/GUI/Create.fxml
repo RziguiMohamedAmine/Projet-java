@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="480.0" styleClass="blue-panel" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.CreateController">
+   <children>
+      <Label text="Sign Up" textFill="DIMGRAY">
+         <font>
+            <Font size="20.0" />
+         </font>
+         <VBox.margin>
+            <Insets left="20.0" />
+         </VBox.margin>
+      </Label>
+      <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0" styleClass="tf_box">
+         <children>
+            <TextField fx:id="tfNomUser" prefHeight="42.0" prefWidth="450.0" promptText="Nom" styleClass="tf_box" HBox.hgrow="ALWAYS" />
+         </children>
+         <VBox.margin>
+            <Insets left="15.0" right="15.0" top="10.0" />
+         </VBox.margin>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="245.0" prefHeight="40.0" prefWidth="448.0" styleClass="tf_box">
+         <children>
+            <TextField fx:id="tfPrenomUser" prefHeight="40.0" prefWidth="453.0" promptText="Prenom" styleClass="tf_box" HBox.hgrow="ALWAYS">
+               <HBox.margin>
+                  <Insets right="15.0" top="5.0" />
+               </HBox.margin></TextField>
+         </children>
+         <opaqueInsets>
+            <Insets left="20.0" />
+         </opaqueInsets>
+         <VBox.margin>
+            <Insets left="15.0" right="10.0" top="10.0" />
+         </VBox.margin>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="266.0" prefHeight="40.0" prefWidth="200.0" styleClass="tf_box">
+         <children>
+            <TextField fx:id="tfEmailUser" prefHeight="64.0" prefWidth="475.0" promptText="Email" styleClass="tf_box" HBox.hgrow="ALWAYS">
+               <HBox.margin>
+                  <Insets right="15.0" top="20.0" />
+               </HBox.margin>
+            </TextField>
+         </children>
+         <VBox.margin>
+            <Insets left="15.0" right="15.0" top="10.0" />
+         </VBox.margin>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="293.0" prefHeight="40.0" prefWidth="200.0" styleClass="tf_box">
+         <children>
+            <TextField fx:id="tfPassUser" promptText="Mot de passe" styleClass="tf_box" HBox.hgrow="ALWAYS">
+               <HBox.margin>
+                  <Insets right="15.0" top="20.0" />
+               </HBox.margin>
+            </TextField>
+         </children>
+         <VBox.margin>
+            <Insets left="15.0" right="15.0" top="10.0" />
+         </VBox.margin>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="319.0" prefHeight="40.0" prefWidth="200.0" styleClass="tf_box">
+         <children>
+            <TextField fx:id="tfTelUser" promptText="TEL" styleClass="tf_box" HBox.hgrow="ALWAYS">
+               <HBox.margin>
+                  <Insets right="15.0" top="20.0" />
+               </HBox.margin>
+            </TextField>
+         </children>
+         <VBox.margin>
+            <Insets left="15.0" right="15.0" top="10.0" />
+         </VBox.margin>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="346.0" prefHeight="40.0" prefWidth="200.0" styleClass="tf_box">
+         <children>
+            <TextField fx:id="tfImageUser" promptText="Image" styleClass="tf_box" HBox.hgrow="ALWAYS">
+               <HBox.margin>
+                  <Insets right="15.0" top="20.0" />
+               </HBox.margin>
+            </TextField>
+         </children>
+         <VBox.margin>
+            <Insets left="15.0" right="15.0" top="10.0" />
+         </VBox.margin>
+      </HBox>
+      <Button fx:id="btnCreer" mnemonicParsing="false" onAction="#ONCreer" prefHeight="44.0" prefWidth="445.0" styleClass="blue-btn" text="Sign Up" textFill="WHITE" VBox.vgrow="ALWAYS">
+         <VBox.margin>
+            <Insets left="20.0" top="20.0" />
+         </VBox.margin>
+         <font>
+            <Font size="20.0" />
+         </font></Button>
+   </children>
+</VBox>
