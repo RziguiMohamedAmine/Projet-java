@@ -26,9 +26,9 @@ import service.MatchService;
  * @author Houssem Charef
  */
 public class FTF_Desktop {
-    
+
     public static void main(String[] args) {
-        
+
         MatchService ms = new MatchService();
         //**************************match**************************
 
@@ -51,8 +51,8 @@ public class FTF_Desktop {
 //        List<Match> list = ms.getmatchsByEquipe(e2);
 //        System.out.println(list);
         //**************************billet**************************
-        Match m = ms.getOne(21088);
-        m.setId(21088);
+        Match m = ms.getOne(21484);
+//        m.setId(21088);
         Billet b = new Billet(11, m, "m33", 10);
         BilletService bs = new BilletService();
 //        bs.insert(b);
@@ -62,14 +62,14 @@ public class FTF_Desktop {
 //        System.out.println(bs.getOne(12));
 //        System.out.println(ms.getMatchsByDate("2022-02-16"));
 //        System.out.println(ms.getmatchsByEquipe(e2));
-//        Timestamp millis = Timestamp.valueOf(LocalDateTime.of(2022, Month.FEBRUARY, 25, 16, 30));
-//        System.out.println(ms.tirage_au_sort("20202021", millis));
+        Timestamp millis = Timestamp.valueOf(LocalDateTime.of(2022, Month.FEBRUARY, 25, 16, 30));
+        System.out.println(ms.tirage_au_sort("20202021", millis));
 //        ClassmentService cs = new ClassmentService();
 //        System.out.println(cs.getAllBySaison("20202021"));
 
 //        System.out.println(bs.billet_disponible(m));
-        System.out.println(bs.reserverBillet(b));
-        
+//        System.out.println(bs.reserverBillet(b));
+//        bs.QRcodeGen("fffff");
     }
-    
+
 }

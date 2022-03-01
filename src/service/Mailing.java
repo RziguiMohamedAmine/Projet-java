@@ -8,7 +8,11 @@ package service;
 import entite.Billet;
 import java.util.logging.Level;
 import java.util.Properties;
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
 import javax.mail.Authenticator;
+import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
@@ -16,7 +20,9 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 /**
  *
@@ -80,9 +86,30 @@ public class Mailing {
                     + "\n"
                     + "<body marginheight=\"0\" topmargin=\"0\" marginwidth=\"0\" style=\"margin: 0px; background-color: #f2f3f8;\" leftmargin=\"0\">\n"
                     + " <p>" + billet + "</p>"
+                    + "<img width=200 height=200 src=\"cid:image\">"
                     + "</html>";
 
-            message.setContent(htmlCode, "text/html");
+            MimeMultipart multipart = new MimeMultipart("related");
+
+            // first part (the html)
+            BodyPart messageBodyPart = new MimeBodyPart();
+            messageBodyPart.setContent(htmlCode, "text/html");
+            // add it
+            multipart.addBodyPart(messageBodyPart);
+
+            // second part (the image)
+            messageBodyPart = new MimeBodyPart();
+            DataSource fds = new FileDataSource(
+                    "D:/Users/Houssem Charef/Documents/NetBeansProjects/FTF_Desktop/src/GUI/QRCode/" + billet.getId() + ".jpg");
+
+            messageBodyPart.setDataHandler(new DataHandler(fds));
+            messageBodyPart.setHeader("Content-ID", "<image>");
+
+            // add image to the multipart
+            multipart.addBodyPart(messageBodyPart);
+
+            // put everything together
+            message.setContent(multipart);
             return message;
 
         } catch (AddressException ex) {

@@ -5,11 +5,20 @@
  */
 package service;
 
+import com.stripe.exception.StripeException;
 import entite.Arbitres;
 import entite.Billet;
 import entite.Equipe;
 import entite.Match;
 import entite.Roles;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,6 +27,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import net.glxn.qrgen.QRCode;
+import net.glxn.qrgen.image.ImageType;
 import utils.DataSource;
 
 /**
@@ -43,12 +55,38 @@ public class BilletService implements IService<Billet> {
             ps.setString(2, billet.getBloc());
             ps.setFloat(3, (float) billet.getPrix());
             int result = ps.executeUpdate();
+
             return result >= 1;
 
         } catch (SQLException ex) {
             Logger.getLogger(MatchService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
+    }
+
+    public int insertID(Billet billet) {
+        String generatedColumns[] = {"ID"};
+
+        String sql = "insert into billet values(null, ?, ?, ?)";
+
+        try {
+            PreparedStatement ps = cnx.prepareStatement(sql, generatedColumns);
+
+            ps.setInt(1, billet.getMatch().getId());
+            ps.setString(2, billet.getBloc());
+            ps.setFloat(3, (float) billet.getPrix());
+            int affectedRows = ps.executeUpdate();
+            ResultSet result = ps.getGeneratedKeys();
+            if (result.next()) {
+                return result.getInt(1);
+            } else {
+                return -1;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MatchService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return -1;
     }
 
     @Override
@@ -101,15 +139,16 @@ public class BilletService implements IService<Billet> {
                 + "INNER JOIN role_arbitre r4 on m.role_arbitre4=r4.id;";
 //select * from (SELECT m.id_billet, m.bloc,m.prix_billet, m.id_match,m.nb_but1,m.nb_but2, m.stade, m.id_arbitre1, b1.nom nom_arbitre1, b1.prenom prenom_arbitre1, b1.id_role role_arbitre1, b1.image image_arbitre1, b1.age age_arbitre1 , m.id_arbitre2, b2.nom nom_arbitre2, b2.prenom prenom_arbitre2, b2.id_role role_arbitre2, b2.image image_arbitre2, b2.age age_arbitre2 , m.id_arbitre3, b3.nom nom_arbitre3, b3.prenom prenom_arbitre3, b3.id_role role_arbitre3, b3.image image_arbitre3, b3.age age_arbitre3 , m.id_arbitre4, b4.nom nom_arbitre4, b4.prenom prenom_arbitre4, b4.id_role role_arbitre4, b4.image image_arbitre4, b4.age age_arbitre4 ,m.date, m.nb_spectateur, m.equipe1 id_equipe1 ,e1.nom nom_equipe1,e1.logo logo_equipe1, e1.id_entreneur entreneur_equipe1, e1.niveau niveau_equipe1,m.equipe2 id_equipe2,e2.nom nom_equipe2,e2.logo logo_equipe2, e1.id_entreneur entreneur_equipe2, e1.niveau niveau_equipe2 FROM (SELECT b.id id_billet, b.bloc, b.prix prix_billet,b.id_match, m.equipe1, m.equipe2, m.nb_but1, m.nb_but2, m.stade, m.id_arbitre1, m.id_arbitre2, m.id_arbitre3, m.id_arbitre4, m.date, m.nb_spectateur FROM billet b INNER JOIN matchs m ON m.id = b.id_match ) m INNER JOIN equipe e1 ON e1.id = m.equipe1 INNER JOIN equipe e2 ON e2.id = m.equipe2 INNER JOIN arbitre b1 ON b1.id = m.id_arbitre1 INNER JOIN arbitre b2 ON b2.id = m.id_arbitre2 INNER JOIN arbitre b3 ON b3.id = m.id_arbitre3 INNER JOIN arbitre b4 ON b4.id = m.id_arbitre4) m INNER JOIN role_arbitre r1 on m.role_arbitre1=r1.id INNER JOIN role_arbitre r2 on m.role_arbitre2=r2.id INNER JOIN role_arbitre r3 on m.role_arbitre3=r3.id INNER JOIN role_arbitre r4 on m.role_arbitre4=r4.id;
         List<Billet> list = new ArrayList<>();
-        Billet b = new Billet();
-        Match match = new Match();
 
         try {
             ps = cnx.prepareStatement(sql);
             rs = ps.executeQuery();
 
             while (rs.next()) {
+                Billet b = new Billet();
+                Match match = new Match();
                 b.setId(rs.getInt("id_billet"));
+                match.setId(rs.getInt("id_match"));
                 match.setNb_but1(rs.getInt("nb_but1"));
                 match.setNb_but2(rs.getInt("nb_but2"));
                 match.setStade(rs.getString("stade"));
@@ -125,7 +164,6 @@ public class BilletService implements IService<Billet> {
                 b.setBloc(rs.getString("bloc"));
                 b.setPrix(rs.getFloat("prix_billet"));
                 list.add(b);
-                System.out.println(b);
             }
 
         } catch (SQLException ex) {
@@ -201,13 +239,44 @@ public class BilletService implements IService<Billet> {
 
     public boolean reserverBillet(Billet billet) {
         if (billet_disponible(billet.getMatch())) {
-            this.insert(billet);
-            Mailing mail = new Mailing();
-            mail.envoyerMail("charef.houssem@esprit.tn", billet);
-            return true;
+            try {
+                ServicePaymentStripe spt = new ServicePaymentStripe("annnn@gmail.com", "ann", 2000, "4111111111111111");
+
+                if (spt.payer()) {
+                    int id = this.insertID(billet);
+                    billet.setId(id);
+                    QRcodeGen(billet.toString(), id);
+                    Mailing mail = new Mailing();
+                    mail.envoyerMail("charef.houssem@esprit.tn", billet);
+                    return true;
+                }
+
+            } catch (StripeException ex) {
+                Logger.getLogger(BilletService.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            return false;
         }
 
         return false;
+    }
+
+    public void QRcodeGen(String input, int id) {
+        try {
+            ByteArrayOutputStream output = QRCode.from(input).to(ImageType.JPG).withSize(500, 500).stream();
+            File f = new File("D:\\Users\\Houssem Charef\\Documents\\NetBeansProjects\\FTF_Desktop\\src\\GUI\\QRCode\\" + id + ".jpg");
+            FileOutputStream fos;
+
+            fos = new FileOutputStream(f);
+
+            fos.write(output.toByteArray());
+            fos.flush();
+
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(BilletService.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(BilletService.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

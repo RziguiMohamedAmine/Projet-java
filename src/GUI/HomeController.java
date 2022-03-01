@@ -95,6 +95,18 @@ public class HomeController implements Initializable {
     }
 
     @FXML
+    private void redirectGestionBillet(ActionEvent event) {
+        try {
+            Parent fxml = FXMLLoader.load(getClass().getResource("BilletTable.fxml"));
+            contentArea.getChildren().removeAll();
+            contentArea.getChildren().setAll(fxml);
+        } catch (IOException ex) {
+
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    @FXML
     private void gestion_equipes(ActionEvent event) {
         try {
             Parent fxml = FXMLLoader.load(getClass().getResource("EquipeDetailss.fxml"));

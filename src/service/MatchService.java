@@ -322,7 +322,7 @@ public class MatchService implements IService<Match> {
     }
 
     public boolean tirage_au_sort(String saison, Timestamp DateDebut) {
-        String sql = "INSERT INTO matchs(equipe1, equipe2, nb_but1, nb_but2, stade, id_arbitre1, id_arbitre2, id_arbitre3, id_arbitre4, date, nb_spectateur, saision, round) VALUES ";
+        String sql = "INSERT INTO matchs(equipe1, equipe2, nb_but1, nb_but2, stade, id_arbitre1, id_arbitre2, id_arbitre3, id_arbitre4, date, nb_spectateur, saison, round) VALUES ";
         EquipeService equipeService = new EquipeService();
         List<Equipe> equipeList = new ArrayList<>(equipeService.getAll());
 
@@ -339,14 +339,7 @@ public class MatchService implements IService<Match> {
             }
             int nombreRound = equipeList.size() - 1;
             int nbrMatchParRound = equipeList.size() / 2;
-//            for (Equipe e : equipeList1) {
-//                System.out.print(e.getId() + " ");
-//            }
-//            System.out.println("");
-//            for (Equipe e : equipeList2) {
-//                System.out.print(e.getId() + " ");
-//            }
-//            System.out.println("");
+
             for (int i = 0; i < nombreRound; i++) {
                 Instant matchDate = roundDate;
 
@@ -391,15 +384,7 @@ public class MatchService implements IService<Match> {
                 equipeList1.set(1, equipe2);
                 equipeList2.set(equipeList2.size() - 1, equipe1);
                 roundDate = roundDate.plusSeconds(3600 * 24 * 7);
-//                for (Equipe e : equipeList1) {
-//                    System.out.print(e.getId() + "     ");
-//                }
-//                System.out.println("");
-//                for (Equipe e : equipeList2) {
-//                    System.out.print(e.getId() + "     ");
-//                }
-//                System.out.println("");
-//                System.out.println("------------------------------------------------------");
+
             }
 
             List<Match> matchListReverse = new ArrayList<>(reverseListOrderAndEquipe(matchList, nombreRound));
