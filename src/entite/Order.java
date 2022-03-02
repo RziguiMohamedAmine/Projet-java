@@ -3,19 +3,23 @@ import java.util.Date;
 
 public class Order {
     private int id;
-    private int userId;
+    private User user;  //USER
     private String state;
     private Date date;
 
-    public Order(int id, int userId, String state, Date date) {
+    public Order(int id) {
         this.id = id;
-        this.userId = userId;
+    }
+
+    public Order(int id, User user, String state, Date date) {
+        this.id = id;
+        this.user = user;
         this.state = state;
         this.date = date;
     }
 
-    public Order(int userId, String state) {
-        this.userId = userId;
+    public Order(User user, String state) {
+        this.user = user;
         this.state = state;
     }
     public Order(){
@@ -30,12 +34,12 @@ public class Order {
         this.id = id;
     }
 
-    public int getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getState() {
@@ -58,7 +62,7 @@ public class Order {
     public String toString() {
         return "Order{" +
                 "id=" + id +
-                ", userId=" + userId +
+                ", userId=" + user +
                 ", state='" + state + '\'' +
                 ", date=" + date +
                 '}';
@@ -71,5 +75,7 @@ public class Order {
         Order order = (Order) o;
         return getId() == order.getId();
     }
+
+
 
 }

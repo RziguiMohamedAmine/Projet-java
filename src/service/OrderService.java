@@ -2,6 +2,8 @@ package service;
 
 import entite.Order;
 import entite.State;
+import entite.User;
+import java.net.PasswordAuthentication;
 import utils.DataSource;
 
 import java.sql.Connection;
@@ -10,8 +12,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 public class OrderService implements IService<Order> {
     private Connection cnx;
@@ -26,7 +37,7 @@ public class OrderService implements IService<Order> {
         String req = "insert into orders (user_id) values (?)";
         try {
             pst = cnx.prepareStatement(req);
-            pst.setInt(1,order.getUserId());
+            pst.setInt(1,order.getUser().getId());
             pst.executeUpdate();
 
         } catch (SQLException ex) {
@@ -77,7 +88,7 @@ public class OrderService implements IService<Order> {
             pst= cnx.prepareStatement(req);
             ResultSet rs= pst.executeQuery();
             while(rs.next()){
-                ordersList.add(new Order(rs.getInt(1),rs.getInt(2),rs.getString(3),rs.getDate(4)));
+                ordersList.add(new Order(rs.getInt(1),new User(rs.getInt(2)),rs.getString(3),rs.getDate(4)));
             }
 
         } catch (SQLException ex) {
@@ -94,7 +105,7 @@ public class OrderService implements IService<Order> {
             pst.setInt(1,id);
             ResultSet rs= pst.executeQuery();
             if(rs.next()) {
-                Order order = new Order(rs.getInt(1),rs.getInt(2),rs.getString(3),rs.getDate(4));
+                Order order = new Order(rs.getInt(1),new User(rs.getInt(2)),rs.getString(3),rs.getDate(4));
                 return order;
             }
 
@@ -113,7 +124,7 @@ public class OrderService implements IService<Order> {
             pst.setString(2,state);
             ResultSet rs= pst.executeQuery();
             while(rs.next()){
-                userOrdersList.add(new Order(rs.getInt(1),rs.getInt(2),rs.getString(3),rs.getDate(4)));
+                userOrdersList.add(new Order(rs.getInt(1),new User(rs.getInt(2)),rs.getString(3),rs.getDate(4)));
             }
 
         } catch (SQLException ex) {
@@ -122,13 +133,13 @@ public class OrderService implements IService<Order> {
         return userOrdersList;
     }
 
-    public Order getOrInitUserCart(int userId){
+    public Order getOrInitUserCart(User user){
         Order order = new Order();
-        if (getUserOrders(userId, State.inCart.toString()).isEmpty()) {
-            order.setUserId(userId);
+        if (getUserOrders(user.getId(), State.inCart.toString()).isEmpty()) {
+            order.setUser(user);
             insert(order);
         }
-        return getUserOrders(userId,State.inCart.toString()).get(0); // reparcourir la BD pour extraire le champ orderID (PK autoincrement)
+        return getUserOrders(user.getId(),State.inCart.toString()).get(0); // reparcourir la BD pour extraire le champ orderID (PK autoincrement)
     }
 
     public void placeOrder(Order order){
@@ -138,8 +149,51 @@ public class OrderService implements IService<Order> {
         else {
             order.setState(State.placed.toString());
             update(order);
-            getOrInitUserCart(order.getUserId());
+            getOrInitUserCart(order.getUser());
+            sendOrderEmail("yessine.rekik@esprit.tn",order);
         }
     }
+        public static void sendOrderEmail(String recepient , Order order){
+         System.out.println("Preparing to send email");
+        Properties properties = new Properties();
+         properties.put("mail.smtp.auth","true");
+         properties.put("mail.smtp.starttls.enable","true");
+         properties.put("mail.smtp.host","smtp.gmail.com");
+         properties.put("mail.smtp.port","587");
+         
+         String myAccountEmail ="yessine.rekik@esprit.tn";
+         String password ="191JMT0563";
+         
+         
+         Session session = Session.getInstance(properties, new Authenticator() {
+             @Override
+             protected javax.mail.PasswordAuthentication getPasswordAuthentication() {
+                 return new javax.mail.PasswordAuthentication(myAccountEmail,password);
+             }  
+         });
+         
+         Message message = prepareMessage( session,myAccountEmail,recepient,order);
+        try {
+            Transport.send(message);
+            System.out.println("Message sent successfully");
+        } catch (MessagingException ex) {
+            Logger.getLogger(OrderService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    private static Message prepareMessage(Session session , String myAccountEmail, String recepient,Order order ){
+        try {
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(myAccountEmail));
+            message.setRecipient(Message.RecipientType.TO, new InternetAddress(recepient));
+            message.setSubject("FTF ");
+            message.setText("Cher Client\n Vous avez passé la commande #"+order.getId()+" le "+order.getDate());
+            return message;
+        } catch (Exception ex) {
+            Logger.getLogger(OrderService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
 
 }

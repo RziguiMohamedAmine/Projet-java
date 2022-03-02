@@ -1,7 +1,7 @@
 package entite;
 
 public enum State {
-    inCart("pending"),
+    inCart("Pending"),
     placed("Placed");
 
     private final String state;

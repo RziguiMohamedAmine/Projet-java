@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER" spacing="5.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pkg3a11javaproj.OrderVboxController">
+   <children>
+      <Separator />
+      <HBox spacing="25.0" VBox.vgrow="ALWAYS">
+         <children>
+            <Label fx:id="id" text="ID">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font></Label>
+            <Label fx:id="price" text="Label" />
+            <Label fx:id="date" text="Date" />
+         </children>
+      </HBox>
+      <HBox fx:id="orderItemsHBox" spacing="15.0" />
+   </children>
+</VBox>
