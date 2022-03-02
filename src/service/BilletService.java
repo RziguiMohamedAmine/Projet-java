@@ -11,14 +11,11 @@ import entite.Billet;
 import entite.Equipe;
 import entite.Match;
 import entite.Roles;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -27,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import net.glxn.qrgen.QRCode;
 import net.glxn.qrgen.image.ImageType;
 import utils.DataSource;
@@ -238,24 +234,16 @@ public class BilletService implements IService<Billet> {
     }
 
     public boolean reserverBillet(Billet billet) {
+        System.out.println("mail");
+
         if (billet_disponible(billet.getMatch())) {
-            try {
-                ServicePaymentStripe spt = new ServicePaymentStripe("annnn@gmail.com", "ann", 2000, "4111111111111111");
 
-                if (spt.payer()) {
-                    int id = this.insertID(billet);
-                    billet.setId(id);
-                    QRcodeGen(billet.toString(), id);
-                    Mailing mail = new Mailing();
-                    mail.envoyerMail("charef.houssem@esprit.tn", billet);
-                    return true;
-                }
-
-            } catch (StripeException ex) {
-                Logger.getLogger(BilletService.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-            return false;
+            int id = this.insertID(billet);
+            billet.setId(id);
+            QRcodeGen(billet.toString(), id);
+            Mailing mail = new Mailing();
+            mail.envoyerMail("charef.houssem@esprit.tn", billet);
+            return true;
         }
 
         return false;

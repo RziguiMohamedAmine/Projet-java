@@ -53,6 +53,8 @@ public class AjouterMatchController implements Initializable {
     MatchService matchService = new MatchService();
     Match match;
     
+    private AjouterMatchController ajouterMatchController;
+    
     @FXML
     TableView<Match> tableViewMatchs;
     
@@ -75,15 +77,13 @@ public class AjouterMatchController implements Initializable {
     @FXML
     private TableColumn<Match, String> saison;
     @FXML
-    private TableColumn<Match, ImageView> logo_equipe1;
-    @FXML
     private TableColumn<Match, String> action;
     @FXML
     private TextField rechercheTextFiled;
     @FXML
     private StackPane contentArea;
     @FXML
-    private TableColumn<?, ?> logo_equipe2;
+    private TableColumn<Match, String> resultat;
 
     /**
      * Initializes the controller class.
@@ -91,6 +91,7 @@ public class AjouterMatchController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         matchService = new MatchService();
+        ajouterMatchController = this;
         LoadData();
         
     }
@@ -129,6 +130,10 @@ public class AjouterMatchController implements Initializable {
         
         Arbitre4.setCellValueFactory(cellData
                 -> new SimpleStringProperty(cellData.getValue().getArbiter4().getNom()));
+        resultat.setCellValueFactory(cellData -> new SimpleStringProperty((cellData.getValue().getNb_but1() == -1 ? "" : cellData.getValue().getNb_but1()) + " - "
+                + (cellData.getValue().getNb_but2() == -1 ? "" : cellData.getValue().getNb_but2())));
+        resultat.setStyle("-fx-alignment: CENTER;");
+
 //        logo_equipe1.setCellValueFactory(cellData
 //                -> new ObservableValue<ImageView>() {
 //            @Override
@@ -161,7 +166,6 @@ public class AjouterMatchController implements Initializable {
 ////        match.getEquipe1().setImageViewLogo(equipe1Logo);
 //        FilteredList<Match> filterData = recherche(matchList);
 //        tableViewMatchs.setItems(filterData);
-
         action.setCellFactory(createActionButton());
         
     }
@@ -259,6 +263,7 @@ public class AjouterMatchController implements Initializable {
                                 root = loader.load();
                                 
                                 MatchAjoutModifyController matchAjoutModifyController = loader.getController();
+                                matchAjoutModifyController.initializeMatchController(ajouterMatchController);
                                 matchAjoutModifyController.initializeTextField(match);
                                 matchAjoutModifyController.setButton("Update");
                                 Scene scene = new Scene(root);

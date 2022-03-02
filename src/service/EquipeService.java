@@ -89,7 +89,7 @@ public class EquipeService implements IService<Equipe> {
             ste = conn.createStatement();
             rs = ste.executeQuery(req);
             while (rs.next()) {
-                list.add(new Equipe(rs.getInt("id"), rs.getString(2), rs.getString("logo"), rs.getString(4), rs.getString(5)));
+                list.add(new Equipe(rs.getInt("id"), rs.getString(2), rs.getString("logo"), rs.getString(4), rs.getString(5), rs.getString("stade")));
             }
         } catch (SQLException ex) {
             Logger.getLogger(EquipeService.class.getName()).log(Level.SEVERE, null, ex);

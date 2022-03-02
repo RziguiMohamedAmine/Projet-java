@@ -13,16 +13,21 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import service.BilletService;
 import service.MatchService;
+import service.ServicePaymentStripe;
 
 /**
  * FXML Controller class
@@ -48,6 +53,7 @@ public class BilletAjoutModifyController implements Initializable {
     private BilletService billetService;
     private ObservableList<Match> matchList = FXCollections.observableArrayList();
     private BilletTableController billetTableController;
+    private BilletAjoutModifyController billetAjoutModifyController;
 
     /**
      * Initializes the controller class.
@@ -136,8 +142,23 @@ public class BilletAjoutModifyController implements Initializable {
                 showAlert("champ text", "erreur", "vous devez remplir tous les champs", AlertType.ERROR);
             } else {
                 Billet billet = new Billet(match, bloc, prix);
-                billetService.insert(billet);
-                showAlert("succes", "ajout Succès", "votre ajout effectuer avec Succès", AlertType.INFORMATION);
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("Payment.fxml"));
+                Parent root;
+                root = loader.load();
+                PaymentController p = loader.getController();
+
+                Scene scene = new Scene(root);
+                Stage stage = new Stage();
+                stage.setScene(scene);
+                stage.showAndWait();
+                if (p.getReturn()) {
+                    billetService.reserverBillet(billet);
+                    showAlert("succes", "ajout Succès", "votre ajout effectuer avec Succès", AlertType.INFORMATION);
+                } else {
+                    showAlert("error", "ajout error", "error reservation", AlertType.INFORMATION);
+
+                }
+
             }
         } catch (NumberFormatException e) {
             System.out.println(e.getClass());

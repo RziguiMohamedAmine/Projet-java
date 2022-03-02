@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -29,6 +30,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
@@ -43,6 +45,10 @@ import service.BilletService;
  */
 public class BilletTableController implements Initializable {
 
+    private BilletService billetService;
+    private ObservableList<Billet> billetList = FXCollections.observableArrayList();
+    private Billet billet;
+    private BilletTableController billetTableController;
     @FXML
     private TableColumn<Billet, String> idBillet;
     @FXML
@@ -57,21 +63,19 @@ public class BilletTableController implements Initializable {
     private TableColumn<Billet, String> stade;
     @FXML
     private TableColumn<Billet, String> date;
-
     @FXML
     private TableView<Billet> billetTableView;
     @FXML
     private TableColumn<Billet, String> action;
-
-    BilletService billetService;
-    ObservableList<Billet> billetList = FXCollections.observableArrayList();
-    Billet billet;
+    @FXML
+    private TextField rechercheTextFiled;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        billetTableController = this;
         billetService = new BilletService();
         LoadData();
     }
@@ -80,7 +84,11 @@ public class BilletTableController implements Initializable {
 
         billetList.clear();
         billetList.addAll(billetService.getAll());
-        billetTableView.setItems(billetList);
+        FilteredList<Billet> filterData = recherche(billetList);
+        String a = rechercheTextFiled.getText();
+        rechercheTextFiled.setText("");
+        rechercheTextFiled.setText(a);
+        billetTableView.setItems(filterData);
 
     }
 
@@ -158,6 +166,7 @@ public class BilletTableController implements Initializable {
                                 BilletAjoutModifyController billetAjoutModifyController = loader.getController();
                                 billetAjoutModifyController.initializeTextField(billet);
                                 billetAjoutModifyController.setButton("Update");
+                                billetAjoutModifyController.initializeBilletController(billetTableController);
                                 Scene scene = new Scene(root);
                                 Stage stage = new Stage();
                                 stage.setScene(scene);
@@ -200,7 +209,37 @@ public class BilletTableController implements Initializable {
 
     }
 
+    private FilteredList<Billet> recherche(ObservableList billetList) {
+        FilteredList<Billet> filterData = new FilteredList<Billet>(billetList, b -> true);
+        rechercheTextFiled.textProperty().addListener((observable, oldValue, newValue) -> {
+            filterData.setPredicate(billetSearchModel -> {
+
+                if (newValue.isEmpty() || newValue == null) {
+                    return true;
+                }
+                String serachKeeyword = newValue.toLowerCase();
+                if (((Billet) billetSearchModel).getBloc().toLowerCase().contains(serachKeeyword)) {
+                    return true;
+                } else if (((Billet) billetSearchModel).getMatch().getEquipe2().getNom().toLowerCase().contains(serachKeeyword)) {
+                    return true;
+                } else if (((Billet) billetSearchModel).getMatch().getEquipe2().getNom().toLowerCase().contains(serachKeeyword)) {
+                    return true;
+                } else if (((Billet) billetSearchModel).getMatch().getStade().toLowerCase().contains(serachKeeyword)) {
+                    return true;
+                } else if (((Billet) billetSearchModel).getMatch().getDate().toString().toLowerCase().contains(serachKeeyword)) {
+                    return true;
+                }
+
+                return false;
+            });
+
+        });
+
+        return filterData;
+    }
+
     @FXML
+
     public void RedirectToAjoutMatch() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("BilletAjoutModify.fxml"));
@@ -215,6 +254,7 @@ public class BilletTableController implements Initializable {
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.show();
+
         } catch (IOException ex) {
             Logger.getLogger(AjouterMatchController.class.getName()).log(Level.SEVERE, null, ex);
         }

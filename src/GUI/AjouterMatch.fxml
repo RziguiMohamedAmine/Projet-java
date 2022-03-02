@@ -40,7 +40,7 @@
                <font>
                   <Font size="14.0" />
                </font></TextField>
-            <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#tirageAuSort" prefHeight="40.0" prefWidth="148.0" text="Tirage au sort" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+            <Button alignment="CENTER" mnemonicParsing="false" onAction="#tirageAuSort" prefHeight="40.0" prefWidth="148.0" text="Tirage au sort" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="TOP">
                <GridPane.margin>
                   <Insets top="5.0" />
                </GridPane.margin>
@@ -49,11 +49,10 @@
       </GridPane>
       <StackPane fx:id="contentArea" layoutY="57.0" prefHeight="678.0" prefWidth="1161.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="57.0">
          <children>
-            <TableView fx:id="tableViewMatchs" editable="true" prefHeight="688.0" prefWidth="1152.0" tableMenuButtonVisible="true">
+            <TableView fx:id="tableViewMatchs" centerShape="false" editable="true" prefHeight="688.0" prefWidth="1152.0" style="-fx-alignment: CENTER;" tableMenuButtonVisible="true">
                <columns>
-                  <TableColumn fx:id="logo_equipe1" prefWidth="75.0" />
                   <TableColumn fx:id="nom_equipe1" prefWidth="75.0" text="nom equipe1" />
-                  <TableColumn fx:id="logo_equipe2" minWidth="0.0" prefWidth="0.0" />
+                  <TableColumn fx:id="resultat" minWidth="0.0" prefWidth="0.0" sortType="DESCENDING" text="resultat" />
                   <TableColumn fx:id="nom_equipe2" prefWidth="158.0" text="nom equipe2" />
                   <TableColumn fx:id="Arbitre1" prefWidth="75.0" text="Arbitre 1" />
                   <TableColumn fx:id="Arbitre2" prefWidth="75.0" text="Arbitre 2" />
@@ -67,6 +66,9 @@
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
             </TableView>
          </children>
       </StackPane>

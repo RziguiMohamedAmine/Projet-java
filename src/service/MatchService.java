@@ -143,7 +143,7 @@ public class MatchService implements IService<Match> {
                 + "m.equipe2 id_equipe2,e2.nom nom_equipe2,e2.logo logo_equipe2, e1.id_entreneur entreneur_equipe2, e1.niveau niveau_equipe2,m.saison FROM matchs m INNER JOIN equipe e1 ON e1.id = m.equipe1 "
                 + "INNER JOIN equipe e2 ON e2.id = m.equipe2 INNER JOIN arbitre b1 ON b1.id = m.id_arbitre1 INNER JOIN arbitre b2 ON b2.id = m.id_arbitre2 INNER JOIN arbitre b3 ON b3.id = m.id_arbitre3 "
                 + "INNER JOIN arbitre b4 ON b4.id = m.id_arbitre4) m INNER JOIN role_arbitre r1 on m.role_arbitre1=r1.id INNER JOIN role_arbitre r2 on m.role_arbitre2=r2.id INNER JOIN role_arbitre r3 "
-                + "on m.role_arbitre3=r3.id INNER JOIN role_arbitre r4 on m.role_arbitre4=r4.id;";
+                + "on m.role_arbitre3=r3.id INNER JOIN role_arbitre r4 on m.role_arbitre4=r4.id  ORDER BY date;";
 //select * from (SELECT m.id id_match,m.nb_but1,m.nb_but2, m.stade, m.id_arbitre1, b1.nom nom_arbitre1, b1.prenom prenom_arbitre1, b1.id_role role_arbitre1, b1.image image_arbitre1, b1.age age_arbitre1 , m.id_arbitre2, b2.nom nom_arbitre2, b2.prenom prenom_arbitre2, b2.id_role role_arbitre2, b2.image image_arbitre2, b2.age age_arbitre2 , m.id_arbitre3, b3.nom nom_arbitre3, b3.prenom prenom_arbitre3, b3.id_role role_arbitre3, b3.image image_arbitre3, b3.age age_arbitre3 , m.id_arbitre4, b4.nom nom_arbitre4, b4.prenom prenom_arbitre4, b4.id_role role_arbitre4, b4.image image_arbitre4, b4.age age_arbitre4 ,m.date, m.nb_spectateur, m.equipe1 id_equipe1 ,e1.nom nom_equipe1,e1.logo logo_equipe1, e1.id_entreneur entreneur_equipe1, e1.niveau niveau_equipe1,m.equipe2 id_equipe2,e2.nom nom_equipe2,e2.logo logo_equipe2, e1.id_entreneur entreneur_equipe2, e1.niveau niveau_equipe2 FROM matchs m INNER JOIN equipe e1 ON e1.id = m.equipe1 INNER JOIN equipe e2 ON e2.id = m.equipe2 INNER JOIN arbitre b1 ON b1.id = m.id_arbitre1 INNER JOIN arbitre b2 ON b2.id = m.id_arbitre2 INNER JOIN arbitre b3 ON b3.id = m.id_arbitre3 INNER JOIN arbitre b4 ON b4.id = m.id_arbitre4) m INNER JOIN role_arbitre r1 on m.role_arbitre1=r1.id INNER JOIN role_arbitre r2 on m.role_arbitre2=r2.id INNER JOIN role_arbitre r3 on m.role_arbitre3=r3.id INNER JOIN role_arbitre r4 on m.role_arbitre4=r4.id;       
         List<Match> list = new ArrayList<>();
         try {
@@ -358,7 +358,7 @@ public class MatchService implements IService<Match> {
 
                     match.setNb_spectateur(10000);
                     match.setDate(Timestamp.from(matchDate));
-                    match.setStade("sssss");
+                    match.setStade(equipeList1.get(j).getSatde());
                     match.setRound(i + 1);
                     matchList.add(match);
                     if (j % 3 == 0) {

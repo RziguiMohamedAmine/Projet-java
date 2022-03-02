@@ -14,6 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.input.MouseEvent;
@@ -29,8 +30,6 @@ public class HomeController implements Initializable {
 
     @FXML
     private StackPane contentArea;
-//    @FXML
-//    private TreeView<String> treeView;
 
     /**
      * Initializes the controller class.
@@ -53,7 +52,6 @@ public class HomeController implements Initializable {
         }
     }
 
-    @FXML
     private void Close(MouseEvent event) {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
@@ -121,6 +119,17 @@ public class HomeController implements Initializable {
     private void gestion_joueurs(ActionEvent event) {
         try {
             Parent fxml = FXMLLoader.load(getClass().getResource("JoueurDetails.fxml"));
+            contentArea.getChildren().removeAll();
+            contentArea.getChildren().setAll(fxml);
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    @FXML
+    private void redirectToClasmment(ActionEvent event) {
+        try {
+            Parent fxml = FXMLLoader.load(getClass().getResource("ClassmentGestion.fxml"));
             contentArea.getChildren().removeAll();
             contentArea.getChildren().setAll(fxml);
         } catch (IOException ex) {
