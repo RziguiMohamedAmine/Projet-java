@@ -220,16 +220,17 @@ public class JoueurService implements IService<Joueur>{//relation entre entite e
         List<JoueurMatch> list =new ArrayList<>();
          List<Float> listscore =new ArrayList<>();
          
-        JoueurMatch jm=new JoueurMatch();
-         EquipeService es =new EquipeService();
-        Match m=new Match();
-        Joueur j=new Joueur();
+       
         try {
             pst=conn.prepareStatement(req);
             pst.setInt(1,ee.getId());
             rs=pst.executeQuery();
             while(rs.next())
             {
+                 JoueurMatch jm=new JoueurMatch();
+                 EquipeService es =new EquipeService();
+                Match m=new Match();
+                 Joueur j=new Joueur();
                 j.setId(rs.getInt("id_joueur"));
                 j.setNom(rs.getString("nom"));
                 j.setPrenom(rs.getString("prenom"));
@@ -243,7 +244,7 @@ public class JoueurService implements IService<Joueur>{//relation entre entite e
                 
                 m.setId(rs.getInt("id_match"));
                 m.setEquipe1(new Equipe(rs.getInt(18),rs.getString(22),rs.getString(23),rs.getString("nom_entreneur"),rs.getString("niveau"),rs.getString("stade")));
-                m.setEquipe2(new Equipe(rs.getInt(19),rs.getString(27),rs.getString(28),rs.getString("nom_entreneur"),rs.getString("niveau"),rs.getString("stade")));
+                m.setEquipe2(new Equipe(rs.getInt(19),rs.getString(28),rs.getString(28),rs.getString("nom_entreneur"),rs.getString("niveau"),rs.getString("stade")));
                 m.setDate(rs.getDate("date"));
                 jm.setId(rs.getInt(12));
                 jm.setJoueur(j);
@@ -284,7 +285,7 @@ public class JoueurService implements IService<Joueur>{//relation entre entite e
         } catch (SQLException ex) {
             Logger.getLogger(JoueurService.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.println("le score de joueur "+j.getNom()+" dans les defferents matchs est:"+listscore);
+        //System.out.println("le score de joueur "+j.getNom()+" dans les defferents matchs est:"+listscore);
         return list;
        
         

@@ -151,7 +151,6 @@ public class AddjoueurController implements Initializable {
         prenom.setText(null);
         poste.setText(null);
         nation.setText(null);
-        date.setText(null);
         taille.setText(null);
         poids.setText(null);
         image.setText(null);
@@ -164,6 +163,7 @@ public class AddjoueurController implements Initializable {
         chooser.showOpenDialog(null);
         File f=chooser.getSelectedFile();
         String filename=f.getAbsolutePath();
+        
         image.setText(filename);
         Image imagee;
           try {

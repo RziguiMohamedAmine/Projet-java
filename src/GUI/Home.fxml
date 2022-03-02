@@ -14,7 +14,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane id="AnchorPane" prefHeight="750.0" prefWidth="1500.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.HomeController">
+<BorderPane id="AnchorPane" prefHeight="750.0" prefWidth="1500.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.HomeController">
+    
     <stylesheets>
         <URL value="@joueurdetails.css" />
     </stylesheets>

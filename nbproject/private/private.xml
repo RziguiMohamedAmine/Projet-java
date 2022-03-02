@@ -5,21 +5,17 @@
         <group>
             <file>file:/C:/Users/moham/Desktop/equipe/src/GUI/MatchPlayedController.java</file>
             <file>file:/C:/Users/moham/Desktop/equipe/src/GUI/HomeController.java</file>
-            <file>file:/C:/Users/moham/Desktop/equipe/src/GUI/AddTransfert.fxml</file>
             <file>file:/C:/Users/moham/Desktop/equipe/src/GUI/AddTransfertController.java</file>
-            <file>file:/C:/Users/moham/Desktop/equipe/src/GUI/TransfertDetails.fxml</file>
+            <file>file:/C:/Users/moham/Desktop/equipe/src/GUI/MapController.java</file>
             <file>file:/C:/Users/moham/Desktop/equipe/src/GUI/AddjoueurController.java</file>
             <file>file:/C:/Users/moham/Desktop/equipe/src/service/EquipeService.java</file>
-            <file>file:/C:/Users/moham/Desktop/equipe/src/GUI/JoueurDetails.fxml</file>
-            <file>file:/C:/Users/moham/Desktop/equipe/src/GUI/JoueurDetailsController.java</file>
+            <file>file:/C:/Users/moham/Desktop/equipe/src/GUI/SquadController.java</file>
             <file>file:/C:/Users/moham/Desktop/equipe/src/GUI/EquipeDetailsController.java</file>
             <file>file:/C:/Users/moham/Desktop/equipe/src/test/Federation.java</file>
             <file>file:/C:/Users/moham/Desktop/equipe/src/entite/Joueur.java</file>
             <file>file:/C:/Users/moham/Desktop/equipe/src/service/TransfertService.java</file>
             <file>file:/C:/Users/moham/Desktop/equipe/src/service/MatchService.java</file>
-            <file>file:/C:/Users/moham/Desktop/equipe/src/GUI/MainFx.java</file>
             <file>file:/C:/Users/moham/Desktop/equipe/src/service/JoueurService.java</file>
-            <file>file:/C:/Users/moham/Desktop/equipe/src/GUI/TransfertDetailsController.java</file>
             <file>file:/C:/Users/moham/Desktop/equipe/src/GUI/AddEquipeController.java</file>
         </group>
     </open-files>

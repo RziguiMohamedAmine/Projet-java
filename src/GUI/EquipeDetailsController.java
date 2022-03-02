@@ -90,6 +90,8 @@ public class EquipeDetailsController implements Initializable {
     private TableColumn<Equipe,String> stade;
     @FXML
     private TextField stadeupdate;
+    @FXML
+    private TableColumn<Equipe,String> mapp;
 
     /**
      * Initializes the controller class.
@@ -106,7 +108,6 @@ public class EquipeDetailsController implements Initializable {
           
     }    
 
-     @FXML
     private void refreshTable() {
        
           equipeList.clear();
@@ -166,6 +167,7 @@ public class EquipeDetailsController implements Initializable {
                                 + "-glyph-size:28px;"
                                 + "-fx-fill:#00E676;"
                         );
+                      
                         deleteIcon.setOnMouseClicked((MouseEvent event) -> {
                             
                            
@@ -219,8 +221,8 @@ public class EquipeDetailsController implements Initializable {
                             }
                                                      
                         });
-                         
-                         
+                        
+                      
                         HBox managebtn = new HBox(editIcon, deleteIcon,logoIcon,SquadIcon);
                         managebtn.setStyle("-fx-alignment:center");
                         HBox.setMargin(deleteIcon, new Insets(2, 2, 0, 3));
@@ -238,13 +240,78 @@ public class EquipeDetailsController implements Initializable {
 
             return cell;
         };
-         edit.setCellFactory(cellFoctory);
+         edit.setCellFactory(cellFoctory);   
+            Callback<TableColumn<Equipe, String>, TableCell<Equipe, String>> cellFoctory1 = (TableColumn<Equipe, String> param) -> {
+            // make cell containing buttons
+            final TableCell<Equipe, String> cell = new TableCell<Equipe, String>() {
+                @Override
+                public void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    //that cell created only on non-empty rows
+                    if (empty) {
+                        setGraphic(null);
+                        setText(null);
+
+                    } else {
+
+                        FontAwesomeIconView mapIcon = new FontAwesomeIconView(FontAwesomeIcon.MAP_MARKER);
+                    
+                     
+                        mapIcon.setStyle(
+                                " -fx-cursor: hand ;"
+                                + "-glyph-size:28px;"
+                                + "-fx-fill:#00E676;"
+                        );
+                                           
+                         
+                          mapIcon.setOnMouseClicked((MouseEvent event) -> {
+                            
+                             equipe = equipeTable.getSelectionModel().getSelectedItem();                                        
+                            FXMLLoader loader = new FXMLLoader ();
+                            loader.setLocation(getClass().getResource("map.fxml"));
+                            
+                            try {
+                                loader.load();
+                               
+                            } catch (IOException ex) {
+                                Logger.getLogger(JoueurDetailsController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                               MapController mapController = loader.getController();                          
+                           mapController.setTextField(equipe.getStade());
+                              //System.out.println(equipe.getStade());
+                            Parent parent = loader.getRoot();
+                            Stage stage = new Stage();
+                            stage.setScene(new Scene(parent));
+                            stage.initStyle(StageStyle.UTILITY);
+                            stage.show();
+                          
+
+                        }); 
+                         
+                     
+                        
+                      
+                        HBox managebtn = new HBox(mapIcon);
+                        managebtn.setStyle("-fx-alignment:center");                       
+                        HBox.setMargin(mapIcon, new Insets(2, 3, 0, 2));
+                        setGraphic(managebtn);
+
+                        setText(null);
+
+                    }
+                }
+
+            };
+
+            return cell;
+        };
+         
+         mapp.setCellFactory(cellFoctory1);
          equipeTable.setItems(equipeList);
          
          
     }
     
-    @FXML
     private void getAddView(MouseEvent event)
     {
          Parent parent;

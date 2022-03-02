@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
@@ -14,34 +13,29 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="596.0" prefWidth="991.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.EquipeDetailsController">
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.EquipeDetailsController">
     <stylesheets>
         <URL value="@equipedetails.css" />
     </stylesheets>
    <children>
-      <TableView fx:id="equipeTable" layoutX="7.0" layoutY="114.0" prefHeight="458.0" prefWidth="591.0">
+      <TableView fx:id="equipeTable" layoutX="7.0" layoutY="114.0" prefHeight="458.0" prefWidth="642.0">
         <columns>
           <TableColumn fx:id="id" prefWidth="75.0" text="Id" />
           <TableColumn fx:id="nom" prefWidth="75.0" text="Nom" />
             <TableColumn fx:id="logo" prefWidth="75.0" text="Logo" />
             <TableColumn fx:id="coach" prefWidth="75.0" text="Coach" />
             <TableColumn fx:id="level" prefWidth="75.0" text="Level" />
-            <TableColumn fx:id="stade" prefWidth="75.0" text="Stade" />
+            <TableColumn fx:id="stade" prefWidth="100.0" text="Stade" />
+            <TableColumn fx:id="mapp" prefWidth="25.0" />
             <TableColumn fx:id="edit" prefWidth="140.0" text="Edit" />
         </columns>
       </TableView>
       <HBox alignment="CENTER_LEFT" layoutX="44.0" layoutY="28.0" prefHeight="100.0" prefWidth="200.0">
          <children>
-            <FontAwesomeIconView fill="#2196f3" glyphName="PLUS_SQUARE" onMouseClicked="#getAddView" size="40">
-               <HBox.margin>
-                  <Insets right="20.0" />
-               </HBox.margin>
-            </FontAwesomeIconView>
-            <FontAwesomeIconView fill="#00e676" glyphName="REFRESH" layoutX="10.0" layoutY="75.0" onMouseClicked="#refreshTable" size="40" />
-         </children>
+            </children>
       </HBox>
       <ImageView fx:id="logoview" fitHeight="70.0" fitWidth="95.0" layoutX="807.0" layoutY="114.0" pickOnBounds="true" preserveRatio="true" />
-      <HBox alignment="CENTER" layoutX="619.0" layoutY="256.0" prefHeight="62.0" prefWidth="501.0" spacing="12.0">
+      <HBox alignment="CENTER" layoutX="677.0" layoutY="256.0" prefHeight="62.0" prefWidth="457.0" spacing="12.0">
          <padding>
             <Insets bottom="11.0" left="64.0" right="43.0" />
          </padding>
@@ -61,7 +55,7 @@
             <Button mnemonicParsing="false" onAction="#getlogo" prefHeight="26.0" prefWidth="98.0" text="parcourir" />
          </children>
       </HBox>
-      <HBox alignment="CENTER_LEFT" layoutX="633.0" layoutY="182.0" prefHeight="80.0" prefWidth="406.0" spacing="12.0">
+      <HBox alignment="CENTER_LEFT" layoutX="668.0" layoutY="182.0" prefHeight="80.0" prefWidth="371.0" spacing="12.0">
          <padding>
             <Insets bottom="11.0" left="64.0" right="43.0" />
          </padding>
@@ -84,7 +78,7 @@
             </TextField>
          </children>
       </HBox>
-      <HBox alignment="CENTER" layoutX="613.0" layoutY="312.0" prefHeight="70.0" prefWidth="398.0" spacing="12.0">
+      <HBox alignment="CENTER" layoutX="672.0" layoutY="312.0" prefHeight="70.0" prefWidth="354.0" spacing="12.0">
          <padding>
             <Insets bottom="11.0" left="64.0" right="43.0" />
          </padding>
@@ -103,7 +97,7 @@
             <TextField fx:id="coachupdate" prefHeight="42.0" prefWidth="168.0" />
          </children>
       </HBox>
-      <HBox alignment="CENTER" layoutX="619.0" layoutY="382.0" prefHeight="54.0" prefWidth="388.0" spacing="12.0">
+      <HBox alignment="CENTER" layoutX="675.0" layoutY="382.0" prefHeight="54.0" prefWidth="354.0" spacing="12.0">
          <padding>
             <Insets bottom="11.0" left="64.0" right="43.0" />
          </padding>
@@ -122,12 +116,12 @@
             <TextField fx:id="levelupdate" prefHeight="35.0" prefWidth="174.0" />
          </children>
       </HBox>
-      <Button fx:id="update" layoutX="704.0" layoutY="488.0" mnemonicParsing="false" onMouseClicked="#updatee" prefHeight="42.0" prefWidth="121.0" style="-fx-background-color: #00E676;" text="Update">
+      <Button fx:id="update" layoutX="809.0" layoutY="506.0" mnemonicParsing="false" onMouseClicked="#updatee" prefHeight="42.0" prefWidth="121.0" style="-fx-background-color: #00E676;" text="Update">
          <font>
             <Font name="Century Gothic" size="21.0" />
          </font>
       </Button>
-      <HBox alignment="CENTER" layoutX="607.0" layoutY="436.0" prefHeight="54.0" prefWidth="419.0" spacing="12.0">
+      <HBox alignment="CENTER" layoutX="670.0" layoutY="436.0" prefHeight="62.0" prefWidth="371.0" spacing="12.0">
          <padding>
             <Insets bottom="11.0" left="64.0" right="43.0" />
          </padding>
