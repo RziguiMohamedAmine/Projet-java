@@ -59,7 +59,7 @@ public class FTF_Desktop {
 //        bs.update(b);
 //        bs.delete(b);
 //        bs.getAll();
-//        System.out.println(bs.getOne(12));
+        System.out.println(bs.getAll());
 //        System.out.println(ms.getMatchsByDate("2022-02-16"));
 //        System.out.println(ms.getmatchsByEquipe(e2));
         Timestamp millis = Timestamp.valueOf(LocalDateTime.of(2022, Month.FEBRUARY, 25, 16, 30));
@@ -67,9 +67,9 @@ public class FTF_Desktop {
 //        ClassmentService cs = new ClassmentService();
 //        System.out.println(cs.getAllBySaison("20202021"));
 
-//        System.out.println(bs.billet_disponible(m));
+        System.out.println(bs.billet_disponible(m));
 //        System.out.println(bs.reserverBillet(b));
-//        bs.QRcodeGen("fffff");
+//        bs.QRcodeGen("fffff", 10);
     }
 
 }

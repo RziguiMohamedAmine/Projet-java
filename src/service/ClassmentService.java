@@ -22,28 +22,28 @@ import java.util.logging.Logger;
  * @author Houssem Charef
  */
 public class ClassmentService {
-    
+
     Connection cnx;
     private PreparedStatement ps;
     private ResultSet rs;
-    
+
     public ClassmentService() {
         cnx = DataSource.getInstance().getCnx();
     }
-    
+
     public List<Classment> getAllBySaison(String saison) {
         String sql = "SELECT (Row_number() over (ORDER BY nb_point DESC)) rang, c.nb_totale_but_recu,c.id_classment,c.nb_totale_but, c.nb_point, c.saison, c.nb_win, c.nb_draw, c.nb_lose, "
-                + "c.id_equipe, e.nom, e.logo, e.id_entreneur, e.niveau  FROM classment c INNER JOIN equipe e on e.id=c.id_equipe WHERE saison like ?  ";
+                + "c.id_equipe, e.nomeq, e.logo, e.nom_entreneur, e.niveau  FROM classment c INNER JOIN equipe e on e.id=c.id_equipe WHERE saison like ?  ";
         List<Classment> list = new ArrayList<>();
         try {
             ps = cnx.prepareStatement(sql);
             ps.setString(1, saison);
             rs = ps.executeQuery();
-            
+
             while (rs.next()) {
                 Classment classment = new Classment();
-                
-                classment.setEquipe(new Equipe(rs.getInt("id_equipe"), rs.getString("nom"), rs.getString("logo"), rs.getString("id_entreneur"), rs.getString("niveau")));
+
+                classment.setEquipe(new Equipe(rs.getInt("id_equipe"), rs.getString("nomeq"), rs.getString("logo"), rs.getString("nom_entreneur"), rs.getString("niveau")));
                 classment.setId(rs.getInt("id_classment"));
                 classment.setNb_draw(rs.getInt("nb_draw"));
                 classment.setNb_win(rs.getInt("nb_win"));
@@ -54,26 +54,26 @@ public class ClassmentService {
                 classment.setRang(rs.getInt("rang"));
                 list.add(classment);
             }
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(MatchService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
     }
-    
+
     public List<String> getAvalableSaison() {
-        
+
         String sql = "SELECT DISTINCT saison FROM `classment`";
         List<String> list = new ArrayList<>();
         try {
             ps = cnx.prepareStatement(sql);
             rs = ps.executeQuery();
-            
+
             while (rs.next()) {
-                
+
                 list.add(rs.getString("saison"));
             }
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(MatchService.class.getName()).log(Level.SEVERE, null, ex);
         }

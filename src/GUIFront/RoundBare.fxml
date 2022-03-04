@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="20.0" prefWidth="825.0" style="-fx-background-color: #b1b1b1; -fx-background-radius: 50px 50px 0 0;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUIFront.RoundBareController">
+   <children>
+      <Label fx:id="roundLabel" layoutX="20.0" layoutY="2.0" prefHeight="28.0" prefWidth="800.0" text="round 1">
+         <font>
+            <Font size="16.0" />
+         </font></Label>
+   </children>
+   <opaqueInsets>
+      <Insets top="10.0" />
+   </opaqueInsets>
+</AnchorPane>

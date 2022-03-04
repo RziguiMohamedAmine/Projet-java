@@ -13,33 +13,25 @@ import entite.Roles;
  *
  * @author R I B
  */
+
 public class Arbitres {
 
     private int id;
     private String nom;
     private String prenom;
-    private Roles id_role;
+    Roles id_role;
     private String image;
     private int age;
-    private int Avis;
+    private String email;
 
-    public Arbitres(int id, String nom, String prenom, Roles id_role, String image, int age) {
+    public Arbitres(int id, String nom, String prenom, Roles id_role, String image, int age, String email) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
         this.id_role = id_role;
         this.image = image;
         this.age = age;
-    }
-
-    public Arbitres(int id, String nom, String prenom, Roles id_role, String image, int age, int Avis) {
-        this.id = id;
-        this.nom = nom;
-        this.prenom = prenom;
-        this.id_role = id_role;
-        this.image = image;
-        this.age = age;
-        this.Avis = Avis;
+        this.email = email;
     }
 
     public Arbitres() {
@@ -49,13 +41,13 @@ public class Arbitres {
         this.id = id;
     }
 
-    public Arbitres(String nom, String prenom, Roles id_role, String image, int age, int Avis) {
+    public Arbitres(String nom, String prenom, Roles id_role, String image, int age, String email) {
         this.nom = nom;
         this.prenom = prenom;
         this.id_role = id_role;
         this.image = image;
         this.age = age;
-        this.Avis = Avis;
+        this.email = email;
     }
 
     public Arbitres(int id, String nom, String prenom) {
@@ -112,17 +104,17 @@ public class Arbitres {
         this.age = age;
     }
 
-    public int getAvis() {
-        return Avis;
+    public String getEmail() {
+        return email;
     }
 
-    public void setAvis(int Avis) {
-        this.Avis = Avis;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Override
     public String toString() {
-        return "Arbitres{" + "id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", id_role=" + id_role + ", image=" + image + ", age=" + age + ", Avis=" + Avis + '}';
+        return "Arbitres{" + "id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", id_role=" + id_role + ", image=" + image + ", age=" + age + ", Email=" + email + '}';
     }
 
     @Override
@@ -149,7 +141,7 @@ public class Arbitres {
         if (this.age != other.age) {
             return false;
         }
-        if (this.Avis != other.Avis) {
+        if (this.email != other.email) {
             return false;
         }
         if (!Objects.equals(this.nom, other.nom)) {

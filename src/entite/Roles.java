@@ -12,9 +12,10 @@ import java.util.Objects;
  * @author R I B
  */
 public class Roles {
-   private int id ;
-   private String role ;
-   private String Descp ; 
+
+    int id;
+    private String role;
+    private String description;
 
     public Roles() {
     }
@@ -23,15 +24,15 @@ public class Roles {
         this.id = id;
     }
 
-    public Roles(int id, String role, String Descp) {
+    public Roles(int id, String role, String description) {
         this.id = id;
         this.role = role;
-        this.Descp = Descp;
+        this.description = description;
     }
 
-    public Roles(String role, String Descp) {
+    public Roles(String role, String description) {
         this.role = role;
-        this.Descp = Descp;
+        this.description = description;
     }
 
     public int getId() {
@@ -50,17 +51,17 @@ public class Roles {
         this.role = role;
     }
 
-    public String getDescp() {
-        return Descp;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescp(String Descp) {
-        this.Descp = Descp;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override
     public String toString() {
-        return "Roles{\n\t" + "id=" + id + ", role=" + role + ", Descp=" + Descp + '}';
+        return role;
     }
 
     @Override
@@ -87,10 +88,10 @@ public class Roles {
         if (!Objects.equals(this.role, other.role)) {
             return false;
         }
-        if (!Objects.equals(this.Descp, other.Descp)) {
+        if (!Objects.equals(this.description, other.description)) {
             return false;
         }
         return true;
     }
-   
+
 }

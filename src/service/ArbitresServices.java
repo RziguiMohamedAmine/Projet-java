@@ -9,9 +9,7 @@ import utils.DataSource;
 import java.awt.*;
 import java.awt.TrayIcon.MessageType;
 import java.util.List;
-import entite.Arbitres;
-import entite.Match;
-import entite.Roles;
+import entite.*;
 //import entite.Personne;
 import java.sql.*;
 import java.util.ArrayList;
@@ -36,7 +34,7 @@ public class ArbitresServices {
 
     public boolean insert(Arbitres a) {
 
-        String req = "insert into arbitre (nom,prenom,id_role,image,age,Avis) values (?,?,?,?,?,?)";
+        String req = "insert into arbitre (nom,prenom,id_role,image,age,email) values (?,?,?,?,?,?)";
         Boolean inserted = false;
         try {
             pst = conn.prepareStatement(req);
@@ -52,7 +50,7 @@ public class ArbitresServices {
 
             pst.setString(4, a.getImage());
             pst.setInt(5, a.getAge());
-            pst.setInt(6, a.getAvis());
+            pst.setString(6, a.getEmail());
             inserted = pst.executeUpdate() > 0;
 
         } catch (SQLException ex) {
@@ -60,32 +58,12 @@ public class ArbitresServices {
         }
 
         //Obtain only one instance of the SystemTray object
-        SystemTray tray = SystemTray.getSystemTray();
-
-        //If the icon is a file
-        Image image = Toolkit.getDefaultToolkit().createImage("icon2.png");
-        //Alternative (if the icon is on the classpath):
-        //Image image = Toolkit.getDefaultToolkit().createImage(getClass().getResource("icon.png"));
-
-        TrayIcon trayIcon = new TrayIcon(image, "Tray demo");
-        //Let the system resize the image if needed
-        trayIcon.setImageAutoSize(true);
-        //Set tooltip text for the tray icon
-        trayIcon.setToolTip("System tray icon demo");
-        try {
-            tray.add(trayIcon);
-        } catch (AWTException ex) {
-            Logger.getLogger(ArbitresServices.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        trayIcon.displayMessage("Hello", "un noveau arbitre a ete ajouter !", MessageType.INFO);
-
         return inserted;
 
     }
 
     public boolean update(Arbitres a) {
-        String req = "UPDATE arbitre SET nom=?,prenom=?,id_role=?,image=?,age=? WHERE id=?";
+        String req = "UPDATE arbitre SET nom=?,prenom=?,id_role=?,image=?,age=?,email=? WHERE id=?";
 
         Boolean updated = false;
         try {
@@ -97,7 +75,7 @@ public class ArbitresServices {
 
             pst.setString(4, a.getImage());
             pst.setInt(5, a.getAge());
-            pst.setInt(6, a.getAvis());
+            pst.setString(6, a.getEmail());
             pst.setInt(7, a.getId());
 
             updated = pst.executeUpdate() > 0;
@@ -128,7 +106,7 @@ public class ArbitresServices {
             rs = ste.executeQuery(req);
             RolesServices s = new RolesServices();
             while (rs.next()) {
-                list.add(new Arbitres(rs.getInt("id"), rs.getString(2), rs.getString("prenom"), s.read(rs.getInt("id_role")), rs.getString("image"), rs.getInt("age"), rs.getInt("Avis")));
+                list.add(new Arbitres(rs.getInt("id"), rs.getString(2), rs.getString("prenom"), s.read(rs.getInt("id_role")), rs.getString("image"), rs.getInt("age"), rs.getString("email")));
             }
         } catch (SQLException ex) {
             Logger.getLogger(ArbitresServices.class.getName()).log(Level.SEVERE, null, ex);
