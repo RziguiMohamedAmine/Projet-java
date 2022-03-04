@@ -65,7 +65,12 @@ public class ServiceAvis implements IService<Avis>{
 
     }
     public List<Avis> getAvisByProduit(int id){
-        String  req="select * from (SELECT id_avis, avis, user.id id_user, user.nom user_nom, prenom, email, pass, tel, role, user.image user_image, produit.id id_produit, produit.nom produit_nom, produit.image image_produit, prix, description, id_cat FROM `avis` INNER join user on avis.id_user = user.id inner join produit on produit.id=avis.id_produit WHERE id_produit=?) p join categorie c on c.id = p.id_cat";
+        String  req="select * from (SELECT id_avis, avis, user.id id_user, user.nom user_nom,"
+                + " prenom, email, pass, tel, role, user.image user_image, produit.id id_produit,"
+                + " produit.nom produit_nom, produit.image image_produit, prix, description, "
+                + "id_cat FROM `avis` INNER join user on avis.id_user = user.id inner "
+                + "join produit on produit.id=avis.id_produit WHERE id_produit=?) p join categorie"
+                + " c on c.id = p.id_cat";
         List<Avis> list = new ArrayList<>();
         try {
             pst= conn.prepareStatement(req);
@@ -74,6 +79,7 @@ public class ServiceAvis implements IService<Avis>{
             rs = pst.executeQuery();
             while (rs.next()){
                   Avis avis =new Avis();
+                  
                  avis.setId(rs.getInt("id_avis"));
                  avis.setAvis(rs.getFloat("avis"));
                  produit p = new produit();
@@ -91,7 +97,7 @@ public class ServiceAvis implements IService<Avis>{
                  avis.setUser(new User(rs.getInt("id_user"), rs.getString("user_nom"), rs.getString("prenom"), rs.getString("email"), "", rs.getString("tel"), rs.getString("role"), rs.getString("user_image")));
                  list.add(avis);
             }
-                          
+              System.out.println(list);            
                
              
              

@@ -5,13 +5,12 @@
  */
 package GUI;
 
+import entite.categorie;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
-import entite.Avis;
 import entite.produit;
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,8 +24,6 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -35,74 +32,78 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import service.ServiceAvis;
 import service.ServiceProduit;
+import service.ServiceCategorie;
+
 
 /**
  * FXML Controller class
  *
  * @author sof
  */
-public class ProduitGestionController implements Initializable {
-ObservableList<produit> produitList = FXCollections.observableArrayList();
-    produit Produit;
-    ServiceAvis serviceAvis;
-    private ServiceProduit serviceProduit;
+public class CategorieGestionController implements Initializable {
 
+    
     @FXML
-    private TableView<produit> produitTableView;
+    private TableView<categorie> categorieTableView;
     @FXML
-    private TableColumn<produit, String> nom;
+    private TableColumn<categorie, String> nom;
     @FXML
-    private TableColumn<produit, String> image;
-    @FXML
-    private TableColumn<produit, String> description;
-    @FXML
-    private TableColumn<produit, String> prix;
-    @FXML
-    private TableColumn<produit, String> categorie;
-    @FXML
-    private TableColumn<produit, String> action;
-    @FXML
-    private TableColumn<produit, String> stock;
+    private TableColumn<categorie, String> action;
+    private ServiceCategorie serviceCategorie;
    
-    
-    
+    ObservableList<categorie> categorieList = FXCollections.observableArrayList();
+    categorie categorie;
+   
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        serviceProduit = new ServiceProduit();
-        serviceAvis = new ServiceAvis();
+        
+        serviceCategorie = new ServiceCategorie();
         LoadData();
     }    
     public void refreshTable() {
 
-        produitList.clear();
-        produitList.addAll(serviceProduit.getAll());
-        System.out.println(produitList);
-        produitTableView.setItems(produitList);
-        
+        categorieList.clear();
+        categorieList.addAll(serviceCategorie.getAll());
+        System.out.println(categorieList);
+        categorieTableView.setItems(categorieList);
 
     }
-    
-   private void LoadData() {
+        // TODO
+
+    @FXML
+    private void redirectcategorietAjoutEdit(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("CategorieAjoutModif.fxml"));
+
+            Parent root = loader.load();
+//            MatchAjoutModifyController matchAjoutModifyController = loader.getController();
+
+//            matchAjoutModifyController.setButton("Ajouter");
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+            
+        }
+    }
+        
+    private void LoadData() {
 
         refreshTable();
         
         nom.setCellValueFactory(new PropertyValueFactory<>("nom"));
-        description.setCellValueFactory(new PropertyValueFactory<>("description"));
-        prix.setCellValueFactory(new PropertyValueFactory<>("prix"));
-        stock.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        
 
-        categorie.setCellValueFactory(cellData
-                -> new SimpleStringProperty(cellData.getValue().getCat().getNom()));
-
-        Callback<TableColumn<produit, String>, TableCell<produit, String>> cellFoctory = (TableColumn<produit, String> param) -> {
+        Callback<TableColumn<categorie, String>, TableCell<categorie, String>> cellFoctory = (TableColumn<categorie, String> param) -> {
             // make cell containing buttons
-            final TableCell<produit, String> cell = new TableCell<produit, String>() {
+            final TableCell<categorie, String> cell = new TableCell<categorie, String>() {
                 @Override
                 public void updateItem(String item, boolean empty) {
                     super.updateItem(item, empty);
@@ -135,22 +136,22 @@ ObservableList<produit> produitList = FXCollections.observableArrayList();
 
                         deleteIcon.setOnMouseClicked((MouseEvent event) -> {
 
-                            Produit = produitTableView.getSelectionModel().getSelectedItem();
-                            serviceProduit.delete(Produit);
+                            categorie = categorieTableView.getSelectionModel().getSelectedItem();
+                            serviceCategorie.delete(categorie);
                             refreshTable();
                         });
                         editIcon.setOnMouseClicked((MouseEvent event) -> {
                             try {
 
-                                Produit = produitTableView.getSelectionModel().getSelectedItem();
-                                FXMLLoader loader = new FXMLLoader(getClass().getResource("ProduitAjoutModif.fxml"));
+                                categorie = categorieTableView.getSelectionModel().getSelectedItem();
+                                FXMLLoader loader = new FXMLLoader(getClass().getResource("CategorieAjoutModif.fxml"));
 
                                 Parent root;
                                 root = loader.load();
 
-                                ProduitAjoutModifController produitAjoutModifController = loader.getController();
-                                produitAjoutModifController.setTextField(Produit);
-                                produitAjoutModifController.setButton();
+                                CategorieAjoutModifController CategorieAjoutModifController = loader.getController();
+                                CategorieAjoutModifController.setTextField(categorie);
+                                CategorieAjoutModifController.setButton();
                                 Scene scene = new Scene(root);
                                 Stage stage = new Stage();
                                 stage.setScene(scene);
@@ -161,13 +162,15 @@ ObservableList<produit> produitList = FXCollections.observableArrayList();
                         });
 
                         logoIcon.setOnMouseClicked((MouseEvent event) -> {
-                            produit p = (produit)produitTableView.getSelectionModel().getSelectedItem();
-                              List<Float> list=  serviceAvis.getCountAverageAvisByProduit(p.getId());
-                              
-                              Alert alert= new Alert(AlertType.INFORMATION);
-                              alert.setContentText("moyenne de avis = "+ list.get(1) + "\n nombre des personnes qui on donnée des avis: "+ Math.round(list.get(0)));
-                              alert.show();
-//                            
+
+//                             equipe = equipeTable.getSelectionModel().getSelectedItem();
+//                             Image image;
+//                            try {
+//                                image = new Image(new FileInputStream(equipe.getLogo()));
+//                                logoview.setImage(image); 
+//                            } catch (FileNotFoundException ex) {
+//                                Logger.getLogger(EquipeDetailsController.class.getName()).log(Level.SEVERE, null, ex);
+//                            }
                         });
 
                         HBox managebtn = new HBox(editIcon, deleteIcon, logoIcon);
@@ -188,23 +191,9 @@ ObservableList<produit> produitList = FXCollections.observableArrayList();
         };
         action.setCellFactory(cellFoctory);
     }
-
-    @FXML
-    private void redirectProduitAjoutEdit(ActionEvent event) {
-          try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("ProduitAjoutModif.fxml"));
-
-            Parent root = loader.load();
-            ProduitAjoutModifController produitAjoutModifController=(ProduitAjoutModifController)loader.getController();
-            produitAjoutModifController.initializeController(this);
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-            
-        }
-    }
     
 }
+
+    
+    
+

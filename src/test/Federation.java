@@ -28,8 +28,11 @@ public class Federation {
         ServiceAvis sa=new ServiceAvis();
         UserService su =new UserService();
         
-//        produit p = new produit(1,"hmed", "image", 0, "description", 2);
+        categorie c= new categorie(4,"maillo");
+        produit p = new produit(37, "nom", "image", 20, "desc", c, 60);
          User u1=new User(2,"hamdi","aouichaoui","hamdi@esprit.tn","0000","87521221","admin","image");
+         
+//        System.out.println(sp.delete(p));
          //su.insert(u1);
 //         Avis a=new Avis(u1,p,9);
       //**********ajout***********
@@ -50,8 +53,8 @@ public class Federation {
       // System.out.println(sp.getOnebyname("hmed"));
 //        sa.insert(a);
         
-        System.out.println(sa.getAvisByProduit(18)); 
-          System.out.println(sa.getCountAverageAvisByProduit(18)); 
+//        System.out.println(sa.getAvisByProduit(18)); 
+//          System.out.println(sa.getCountAverageAvisByProduit(18)); 
 
     }
     

@@ -36,6 +36,11 @@ import service.ServiceProduit;
  */
 public class ProduitAjoutModifController implements Initializable {
 
+    private ServiceCategorie serviceCategorie;
+    private ObservableList<categorie> produitList = FXCollections.observableArrayList();
+    private ServiceProduit serviceProduit;
+    private ProduitGestionController pc;
+    private produit p;
     @FXML
     private TextField nomField;
     @FXML
@@ -48,16 +53,14 @@ public class ProduitAjoutModifController implements Initializable {
     private ComboBox<categorie> categorieBox;
     @FXML
     private TextField image;
-    
-    private ServiceCategorie serviceCategorie;
-    private ObservableList<categorie> produitList = FXCollections.observableArrayList();
-    private ServiceProduit serviceProduit;
     @FXML
     private Label label;
     @FXML
     private Button actionButon;
     @FXML
     private TextField idField;
+    @FXML
+    private TextField stockField;
 
     /**
      * Initializes the controller class.
@@ -87,18 +90,26 @@ public class ProduitAjoutModifController implements Initializable {
     @FXML
     private void updateOrAdd(ActionEvent event) {
         String nom = nomField.getText();
+         String imagePath;
             float prix = Float.parseFloat(prixField.getText());
             String description = descriptionField.getText();
             categorie c= categorieBox.getSelectionModel().getSelectedItem();
-            String imagePath = image.getText();
-            produit p= new produit(nom, imagePath, prix, description, c);
+            System.out.println(p);
+            if(image.getText().isEmpty()){
+                imagePath=p.getImage();
+            }else{
+                imagePath = image.getText();
+            }
+            int stock =Integer.parseInt(stockField.getText()) ;
+            produit p= new produit(nom, imagePath, prix, description, c, stock);
             System.out.println(p);
         if(actionButon.getText().equals("Mise à jour")){
             p.setId(Integer.parseInt(idField.getText()) );
+            
             if(serviceProduit.update(p)){
            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-           alert.setHeaderText("alert mse à jour");
-           alert.setContentText("produit mise à jour");
+           alert.setHeaderText("alert Mise à jour");
+           alert.setContentText("produit Mise à jour");
            alert.show();
         }
         }else{
@@ -112,11 +123,11 @@ public class ProduitAjoutModifController implements Initializable {
         
        }
         
-        
+        pc.refreshTable();
     }
     
     public void setButton(){
-        label.setText("mise à jour Produit");
+        label.setText("Mise à jour Produit");
         actionButon.setText("Mise à jour");
     }
     
@@ -138,13 +149,18 @@ public class ProduitAjoutModifController implements Initializable {
     }
     
     public void setTextField(produit p){
-        System.out.println(p);
         idField.setText(p.getId()+"");
         nomField.setText(p.getNom());
         prixField.setText(p.getPrix()+"");
         descriptionField.setText(p.getDescription());
         categorieBox.getSelectionModel().select(p.getCat());
-        image.setText(p.getImage());
+        stockField.setText(p.getStock()+"");
+        this.p=p;
+        
+    }
+    
+    public void initializeController(ProduitGestionController pc){
+        this.pc=pc;
     }
     
 }

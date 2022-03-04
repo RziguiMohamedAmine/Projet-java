@@ -27,14 +27,15 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label fx:id="label" text="Label">
+            <Label fx:id="label" alignment="CENTER" contentDisplay="CENTER" text="Ajout Produit" textAlignment="CENTER" GridPane.halignment="CENTER">
                <font>
                   <Font size="23.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="34.0" prefWidth="505.0" text="Categorie" GridPane.rowIndex="5">
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="34.0" prefWidth="505.0" text="Categorie" GridPane.rowIndex="6">
                <font>
                   <Font size="23.0" />
                </font>
@@ -45,7 +46,7 @@
                   <Insets />
                </GridPane.margin>
             </Label>
-            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="34.0" prefWidth="458.0" text="Image" GridPane.rowIndex="4">
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="34.0" prefWidth="458.0" text="Image" GridPane.rowIndex="5">
                <font>
                   <Font size="23.0" />
                </font>
@@ -101,17 +102,26 @@
                <GridPane.margin>
                   <Insets right="20.0" />
                </GridPane.margin></TextField>
-            <Button fx:id="imageButton" alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#get_image" prefHeight="25.0" prefWidth="118.0" text="Choisir une image" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
+            <Button fx:id="imageButton" alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#get_image" prefHeight="25.0" prefWidth="118.0" text="Choisir une image" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="5">
                <GridPane.margin>
                   <Insets right="20.0" />
                </GridPane.margin></Button>
-            <ComboBox fx:id="categorieBox" prefHeight="25.0" prefWidth="498.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+            <ComboBox fx:id="categorieBox" prefHeight="25.0" prefWidth="498.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                <GridPane.margin>
                   <Insets right="20.0" />
                </GridPane.margin></ComboBox>
-            <Button fx:id="actionButon" mnemonicParsing="false" onAction="#updateOrAdd" prefHeight="33.0" prefWidth="83.0" text="ajout" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <TextField fx:id="image" maxWidth="208.0" prefHeight="25.0" prefWidth="149.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Button fx:id="actionButon" mnemonicParsing="false" onAction="#updateOrAdd" prefHeight="33.0" prefWidth="83.0" text="ajout" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <TextField fx:id="image" maxWidth="208.0" prefHeight="25.0" prefWidth="149.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <TextField fx:id="idField" visible="false" GridPane.columnIndex="1" />
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="34.0" prefWidth="458.0" text="Stock" GridPane.rowIndex="4">
+               <font>
+                  <Font size="23.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </Label>
+            <TextField fx:id="stockField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
          </children>
       </GridPane>
    </children>

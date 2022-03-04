@@ -19,6 +19,10 @@ public class categorie {
     public categorie() {
     }
 
+    public categorie(String nom) {
+        this.nom = nom;
+    }
+
     public categorie(int id, String nom) {
         this.id = id;
         this.nom = nom;

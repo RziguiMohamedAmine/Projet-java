@@ -31,7 +31,7 @@ public class Main extends Application {
         try {
             root = new FXMLLoader(getClass().getResource("Home.fxml")).load();
             Scene scene = new Scene(root);
-            primaryStage.setTitle("Hello World!");
+            primaryStage.setTitle("Produit");
             primaryStage.setScene(scene);
             primaryStage.show();
         } catch (IOException ex) {

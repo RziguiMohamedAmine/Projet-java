@@ -68,5 +68,17 @@ public class HomeController implements Initializable {
             System.out.println(ex.getMessage());
         }
     }
+
+    @FXML
+    private void redirectCategorie(ActionEvent event) {
+        try {
+            Parent fxml = FXMLLoader.load(getClass().getResource("CategorieGestion.fxml"));
+            contentArea.getChildren().removeAll();
+            contentArea.getChildren().setAll(fxml);
+        } catch (IOException ex) {
+
+            System.out.println(ex.getMessage());
+        }
+    }
     
 }

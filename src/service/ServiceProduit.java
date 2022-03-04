@@ -33,7 +33,7 @@ public class ServiceProduit implements IService<produit>{
     @Override
     public boolean insert(produit t) {
           boolean insert=false;
-        String req = "insert into produit (nom,image,prix,description,id_cat) values (?,?,?,?,? )";
+        String req = "insert into produit (nom,image,prix,description,id_cat, stock) values (?,?,?,?,?,? )";
        try {
                         PreparedStatement ps = conn.prepareStatement(req);
 
@@ -42,6 +42,7 @@ public class ServiceProduit implements IService<produit>{
              ps.setFloat(3, t.getPrix());
              ps.setString(4, t.getDescription());
              ps.setInt(5, t.getCat().getId());
+             ps.setInt(6, t.getStock());
             insert=ps.executeUpdate()>0;
 
         } catch (SQLException ex) {
@@ -54,7 +55,7 @@ public class ServiceProduit implements IService<produit>{
     public boolean update(produit t) {
         
          boolean update=false;
-        String req ="update produit set nom = ? , image = ? , prix = ? , description = ? , id_cat = ? where id = ?";
+        String req ="update produit set nom = ? , image = ? , prix = ? , description = ? , id_cat = ?, stock=stock+? where id = ?";
          
         try {
              PreparedStatement ps = conn.prepareStatement(req);
@@ -63,7 +64,8 @@ public class ServiceProduit implements IService<produit>{
              ps.setFloat(3, t.getPrix());
              ps.setString(4, t.getDescription());
              ps.setInt(5, t.getCat().getId());
-             ps.setInt(6, t.getId());
+             ps.setInt(6, t.getStock());
+             ps.setInt(7, t.getId());
              
              update=ps.executeUpdate()>0;
              
@@ -92,7 +94,7 @@ public class ServiceProduit implements IService<produit>{
         
         try {
             
-        String req ="SELECT p.id id_produit, p.nom nom_produit, p.image,p.prix ,"
+        String req ="SELECT p.stock,p.id id_produit, p.nom nom_produit, p.image,p.prix ,"
                 + "p.description, p.id_cat, c.nom nom_cat FROM produit p JOIN categorie c on p.id_cat=c.id";
         
         Statement st = conn.createStatement();
@@ -106,6 +108,8 @@ public class ServiceProduit implements IService<produit>{
          p.setDescription(rs.getString("description"));
          categorie c= new categorie(rs.getInt("id_cat"), rs.getString("nom_cat"));
          p.setCat(c);
+         p.setImage(rs.getString("image"));
+         p.setStock(rs.getInt("stock"));
          list.add(p);
         }
         } catch (SQLException ex) {
@@ -115,8 +119,8 @@ public class ServiceProduit implements IService<produit>{
 
     @Override
     public produit getOne(int id) {
-        String req="SELECT p.id id_produit, p.nom nom_produit, p.image,p.prix ,"
-                + "p.description, p.id_cat, c.nom nom_categorie FROM produit p JOIN categorie c on p.id_cat=c.id where p.id=?";
+        String req="SELECT  p.id id_produit, p.nom nom_produit, p.image,p.prix ,"
+                + "p.description, p.id_cat, c.nom nom_categorie, p.stock FROM produit p JOIN categorie c on p.id_cat=c.id where p.id=?";
         produit p=null;
         try {
             pst= conn.prepareStatement(req);
@@ -125,8 +129,15 @@ public class ServiceProduit implements IService<produit>{
             rs = pst.executeQuery();
              if (rs.next())
              {       
-                 categorie c= new categorie(rs.getInt("id_categorie"), rs.getString("nom_categorie"));
-                 p = new produit(rs.getInt(1), rs.getString(2),rs.getString(3),rs.getFloat(4),rs.getString(5),c);     
+                 categorie c= new categorie(rs.getInt("id_cat"), rs.getString("nom_categorie"));
+                 p = new produit(
+                         rs.getInt(1), 
+                         rs.getString(2),
+                         rs.getString(3),
+                         rs.getFloat(4),
+                         rs.getString(5),
+                         c, 
+                         rs.getInt("stock"));     
              }
              
         } catch (SQLException ex) {

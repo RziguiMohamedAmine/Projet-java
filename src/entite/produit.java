@@ -5,8 +5,6 @@
  */
 package entite;
 
-import java.util.Objects;
-
 /**
  *
  * @author sof
@@ -19,10 +17,14 @@ public class produit {
     private float prix;
     private String description;
     private categorie cat;
+    private int stock;
 
     public produit() {
     }
 
+    
+
+    
     public produit(int id, String nom, String image, float prix, String description, categorie cat) {
         this.id = id;
         this.nom = nom;
@@ -39,6 +41,27 @@ public class produit {
         this.description = description;
         this.cat = cat;
     }
+
+    public produit(int id, String nom, String image, float prix, String description, categorie cat, int stock) {
+        this.id = id;
+        this.nom = nom;
+        this.image = image;
+        this.prix = prix;
+        this.description = description;
+        this.cat = cat;
+        this.stock = stock;
+    }
+
+    public produit( String nom, String image, float prix, String description, categorie cat, int stock) {
+        this.id = id;
+        this.nom = nom;
+        this.image = image;
+        this.prix = prix;
+        this.description = description;
+        this.cat = cat;
+        this.stock = stock;
+    }
+     
 
     public int getId() {
         return id;
@@ -60,6 +83,7 @@ public class produit {
         return description;
     }
 
+    
     
 
     public void setId(int id) {
@@ -90,6 +114,15 @@ public class produit {
         this.cat = cat;
     }
 
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+    
+
     @Override
     public int hashCode() {
         int hash = 3;
@@ -117,8 +150,13 @@ public class produit {
 
     @Override
     public String toString() {
-        return "produit{" + "id=" + id + ", nom=" + nom + ", image=" + image + ", prix=" + prix + ", description=" + description + ", cat=" + cat + '}';
+        return "produit{" + "id=" + id + ", nom=" + nom + ", image=" + image + ", prix=" + prix + ", description=" + description + ", cat=" + cat + ", stock=" + stock + '}';
     }
+
+    
+
+    
+    
     
     
 
