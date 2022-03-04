@@ -20,7 +20,6 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import service.EquipeService;
 import service.JoueurService;
-
 /**
  * FXML Controller class
  *

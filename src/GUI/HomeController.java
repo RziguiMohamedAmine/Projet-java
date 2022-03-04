@@ -39,7 +39,7 @@ public class HomeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
      try{
-            Parent fxml=FXMLLoader.load(getClass().getResource("EquipeDetails.fxml"));
+            Parent fxml=FXMLLoader.load(getClass().getResource("/GUIFront/teamsFront.fxml"));
             contentArea.getChildren().removeAll();
             contentArea.getChildren().setAll(fxml);
             
@@ -71,7 +71,7 @@ public class HomeController implements Initializable {
     }
  @FXML
        private void home(ActionEvent event) {
-        
+       
     }
     @FXML
     private void gestion_equipes(ActionEvent event) {
@@ -127,6 +127,19 @@ public class HomeController implements Initializable {
         {
             System.out.println(ex.getMessage());
         }
+    }
+
+    @FXML
+    private void front(ActionEvent event) {
+             try{
+            Parent fxml=FXMLLoader.load(getClass().getResource("/GUIFront/teamsFront.fxml"));
+            contentArea.getChildren().removeAll();
+            contentArea.getChildren().setAll(fxml);
+        }catch(IOException ex)
+        {
+            System.out.println(ex.getMessage());
+        }
+        
     }
     
    

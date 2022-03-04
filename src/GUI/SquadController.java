@@ -123,7 +123,7 @@ public class SquadController implements Initializable {
 
                      
                         FontAwesomeIconView logoIcon = new FontAwesomeIconView(FontAwesomeIcon.IMAGE);
-                      
+                        
                         
                         logoIcon.setStyle(
                                 " -fx-cursor: hand ;"

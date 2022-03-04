@@ -61,8 +61,6 @@ public class EquipeDetailsController implements Initializable {
     @FXML
     private TableView<Equipe> equipeTable;
     @FXML
-    private TableColumn<Equipe,String> id;
-    @FXML
     private TableColumn<Equipe,String> nom;
     @FXML
     private TableColumn<Equipe,Image> logo;
@@ -122,7 +120,6 @@ public class EquipeDetailsController implements Initializable {
        
          refreshTable();
          
-        id.setCellValueFactory(new PropertyValueFactory<>("id"));
         nom.setCellValueFactory(new PropertyValueFactory<>("nom"));
         logo.setCellValueFactory(new PropertyValueFactory<>("logo"));
         coach.setCellValueFactory(new PropertyValueFactory<>("nom_entreneur"));

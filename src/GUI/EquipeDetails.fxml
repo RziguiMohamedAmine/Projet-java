@@ -13,14 +13,13 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.EquipeDetailsController">
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.EquipeDetailsController">
     <stylesheets>
         <URL value="@equipedetails.css" />
     </stylesheets>
    <children>
-      <TableView fx:id="equipeTable" layoutX="7.0" layoutY="114.0" prefHeight="458.0" prefWidth="642.0">
+      <TableView fx:id="equipeTable" layoutX="7.0" layoutY="114.0" prefHeight="458.0" prefWidth="566.0">
         <columns>
-          <TableColumn fx:id="id" prefWidth="75.0" text="Id" />
           <TableColumn fx:id="nom" prefWidth="75.0" text="Nom" />
             <TableColumn fx:id="logo" prefWidth="75.0" text="Logo" />
             <TableColumn fx:id="coach" prefWidth="75.0" text="Coach" />
