@@ -5,7 +5,6 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -17,15 +16,15 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="832.0" prefWidth="1315.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUIFront.TeamsFrontController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="832.0" prefWidth="1315.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUIFront.PlayersFrontController">
    <children>
       <BorderPane layoutY="-16.0" prefHeight="826.0" prefWidth="1315.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <left>
-            <VBox alignment="TOP_CENTER" prefHeight="724.0" prefWidth="435.0" stylesheets="@teamsfront.css" BorderPane.alignment="TOP_LEFT">
+            <VBox alignment="TOP_CENTER" prefHeight="724.0" prefWidth="435.0" stylesheets="@teamsfront.css" BorderPane.alignment="TOP_CENTER">
                <children>
                   <HBox alignment="CENTER" prefHeight="91.0" prefWidth="435.0">
                      <children>
-                        <Label text="Teams">
+                        <Label text="Players">
                            <font>
                               <Font name="Arial Bold" size="46.0" />
                            </font>
@@ -49,23 +48,23 @@
                         <String fx:value="shadow" />
                      </styleClass>
                   </HBox>
-                  <Pane prefHeight="62.0" prefWidth="435.0" />
-                  <VBox fx:id="chosenTeam" alignment="CENTER" prefHeight="565.0" prefWidth="335.0" stylesheets="@teamsfront.css">
+                  <Pane prefHeight="68.0" prefWidth="435.0" />
+                  <VBox fx:id="chosenTeam" alignment="CENTER" prefHeight="578.0" prefWidth="335.0" stylesheets="@teamsfront.css">
                      <VBox.margin>
-                        <Insets left="50.0" right="50.0" top="11.0" />
+                        <Insets left="50.0" right="50.0" top="-5.0" />
                      </VBox.margin>
                      <children>
-                        <HBox prefHeight="81.0" prefWidth="335.0">
+                        <HBox prefHeight="64.0" prefWidth="335.0">
                            <children>
-                              <Label prefHeight="85.0" prefWidth="160.0" text="Nom" textFill="WHITE">
+                              <Label fx:id="prenom" prefHeight="64.0" prefWidth="118.0" text="Nom" textFill="WHITE">
                                  <font>
                                     <Font name="Arial Bold" size="24.0" />
                                  </font>
                                  <HBox.margin>
-                                    <Insets left="8.0" right="4.0" />
+                                    <Insets left="18.0" right="4.0" />
                                  </HBox.margin>
                               </Label>
-                              <Label fx:id="nomequipe" layoutX="10.0" layoutY="10.0" prefHeight="85.0" prefWidth="160.0" text="Nom" textFill="WHITE">
+                              <Label fx:id="nomjoueur" layoutX="10.0" layoutY="10.0" prefHeight="85.0" prefWidth="160.0" text="Nom" textFill="WHITE">
                                  <font>
                                     <Font name="Arial Bold" size="24.0" />
                                  </font>
@@ -75,13 +74,16 @@
                               <Insets />
                            </opaqueInsets>
                            <VBox.margin>
-                              <Insets />
+                              <Insets bottom="45.0" />
                            </VBox.margin>
                         </HBox>
-                        <ImageView fx:id="imageequipe" fitHeight="170.0" fitWidth="285.0" pickOnBounds="true" preserveRatio="true" />
-                        <HBox prefHeight="84.0" prefWidth="335.0">
+                        <ImageView fx:id="imagejoueur" fitHeight="150.0" fitWidth="235.0" pickOnBounds="true" preserveRatio="true">
+                           <VBox.margin>
+                              <Insets bottom="47.0" />
+                           </VBox.margin></ImageView>
+                        <HBox prefHeight="63.0" prefWidth="335.0">
                            <children>
-                              <Label prefHeight="85.0" prefWidth="160.0" text="Entreneur" textFill="WHITE">
+                              <Label prefHeight="62.0" prefWidth="199.0" text="Date naissance" textFill="WHITE">
                                  <font>
                                     <Font name="Arial Bold" size="24.0" />
                                  </font>
@@ -89,53 +91,50 @@
                                     <Insets left="11.0" />
                                  </HBox.margin>
                               </Label>
-                              <Label fx:id="entreneur" layoutX="10.0" layoutY="10.0" prefHeight="85.0" prefWidth="160.0" text="Entreneur" textFill="WHITE">
+                              <Label fx:id="date" layoutX="10.0" layoutY="10.0" prefHeight="85.0" prefWidth="160.0" text="date" textFill="WHITE">
                                  <font>
                                     <Font name="Arial Bold" size="24.0" />
                                  </font>
                               </Label>
                            </children>
-                        </HBox>
-                        <HBox alignment="CENTER" prefHeight="45.0" prefWidth="335.0">
                            <VBox.margin>
-                              <Insets bottom="20.0" top="20.0" />
+                              <Insets bottom="20.0" />
                            </VBox.margin>
-                           <children>
-                              <Separator prefHeight="20.0" prefWidth="241.0" />
-                           </children>
                         </HBox>
-                        <HBox layoutX="10.0" layoutY="361.0" prefHeight="70.0" prefWidth="335.0">
+                        <HBox layoutX="10.0" layoutY="361.0" prefHeight="66.0" prefWidth="335.0">
                            <children>
-                              <Label prefHeight="65.0" prefWidth="147.0" text="Stade" textFill="WHITE">
+                              <Label prefHeight="85.0" prefWidth="160.0" text="Taille" textFill="WHITE">
                                  <font>
                                     <Font name="Arial Bold" size="24.0" />
                                  </font>
                                  <HBox.margin>
-                                    <Insets left="14.0" right="10.0" />
+                                    <Insets left="9.0" />
                                  </HBox.margin>
                               </Label>
-                              <Label fx:id="stade" layoutX="10.0" layoutY="10.0" prefHeight="85.0" prefWidth="160.0" text="Stade" textFill="WHITE">
+                              <Label fx:id="taille" layoutX="10.0" layoutY="10.0" prefHeight="85.0" prefWidth="160.0" text="taille" textFill="WHITE">
                                  <font>
                                     <Font name="Arial Bold" size="24.0" />
                                  </font>
                               </Label>
                            </children>
-                           <VBox.margin>
-                              <Insets bottom="41.0" />
-                           </VBox.margin>
                         </HBox>
-                        <Button fx:id="effectif" mnemonicParsing="false" onAction="#effectif" prefHeight="42.0" prefWidth="165.0" stylesheets="@teamsfront.css" text="Effectif" textFill="WHITE">
-                           <VBox.margin>
-                              <Insets bottom="16.0" />
-                           </VBox.margin>
-                           <styleClass>
-                              <String fx:value="search-button" />
-                              <String fx:value="shadow" />
-                           </styleClass>
-                           <font>
-                              <Font name="Arial Bold" size="19.0" />
-                           </font>
-                        </Button>
+                        <HBox prefHeight="84.0" prefWidth="335.0">
+                           <children>
+                              <Label prefHeight="85.0" prefWidth="160.0" text="Nationalite" textFill="WHITE">
+                                 <font>
+                                    <Font name="Arial Bold" size="24.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="9.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Label fx:id="nation" layoutX="10.0" layoutY="10.0" prefHeight="85.0" prefWidth="160.0" text="nat" textFill="WHITE">
+                                 <font>
+                                    <Font name="Arial Bold" size="24.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
                      </children>
                      <styleClass>
                         <String fx:value="chosen-fruit-card" />
@@ -147,6 +146,9 @@
                   <String fx:value="right-bar" />
                   <String fx:value="bo" />
                </styleClass>
+               <BorderPane.margin>
+                  <Insets />
+               </BorderPane.margin>
             </VBox>
          </left>
          <center>

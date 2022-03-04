@@ -5,11 +5,13 @@
         <group>
             <file>file:/C:/Users/moham/Desktop/equipe/src/GUIFront/listener.java</file>
             <file>file:/C:/Users/moham/Desktop/equipe/src/GUIFront/EquipeOneController.java</file>
-            <file>file:/C:/Users/moham/Desktop/equipe/src/GUI/EquipeDetailsController.java</file>
+            <file>file:/C:/Users/moham/Desktop/equipe/src/GUIFront/listenerjoueur.java</file>
             <file>file:/C:/Users/moham/Desktop/equipe/src/GUI/HomeController.java</file>
+            <file>file:/C:/Users/moham/Desktop/equipe/src/GUIFront/PlayersFrontController.java</file>
             <file>file:/C:/Users/moham/Desktop/equipe/src/GUIFront/TeamsFrontController.java</file>
-            <file>file:/C:/Users/moham/Desktop/equipe/src/GUI/MainFx.java</file>
-            <file>file:/C:/Users/moham/Desktop/equipe/src/service/EquipeService.java</file>
+            <file>file:/C:/Users/moham/Desktop/equipe/src/GUIFront/teamsFront.fxml</file>
+            <file>file:/C:/Users/moham/Desktop/equipe/src/GUIFront/JoueurOneController.java</file>
+            <file>file:/C:/Users/moham/Desktop/equipe/src/GUIFront/PlayersFront.fxml</file>
         </group>
     </open-files>
 </project-private>

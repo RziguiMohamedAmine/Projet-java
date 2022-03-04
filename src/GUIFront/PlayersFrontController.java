@@ -5,9 +5,10 @@
  */
 package GUIFront;
 
-import GUI.JoueurDetailsController;
-import GUI.SquadController;
+
+import GUIFront.*;
 import entite.Equipe;
+import entite.Joueur;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -22,8 +23,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -33,38 +32,46 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import service.EquipeService;
+import service.JoueurService;
 
 /**
  * FXML Controller class
  *
  * @author moham
  */
-public class TeamsFrontController implements Initializable {
+public class PlayersFrontController implements Initializable {
 
      EquipeService es=new EquipeService();
-     List<Equipe> equipeList = new ArrayList<>(); 
-      Equipe equipe;
-     listener l;
-     Equipe equ=null;
+     JoueurService js=new JoueurService();
+     List<Equipe> equipeList = new ArrayList<>();
+     List<Joueur> joueurList = new ArrayList<>();
+     Equipe e=new Equipe();
+     Joueur joueur;
+     listenerjoueur l;
+    
     @FXML
     private VBox chosenTeam;
-    @FXML
     private Label nomequipe;
-    @FXML
     private ImageView imageequipe;
-    @FXML
     private Label entreneur;
-    @FXML
     private Label stade;
     @FXML
     private ScrollPane scroll;
     @FXML
     private GridPane grid;
     @FXML
-    private Button effectif;
+    private Label nomjoueur;
+    @FXML
+    private ImageView imagejoueur;
+    @FXML
+    private Label date;
+    @FXML
+    private Label taille;
+    @FXML
+    private Label nation;
+    @FXML
+    private Label prenom;
 
     /**
      * Initializes the controller class.
@@ -73,40 +80,43 @@ public class TeamsFrontController implements Initializable {
     
     
     
-     private void setChosenTeam(Equipe e) throws FileNotFoundException {
-         this.equipe = e;
-         nomequipe.setText(e.getNom());
-          Image  image = new Image(new FileInputStream(e.getLogo()));
-        imageequipe.setImage(image);
-        entreneur.setText(e.getNom_entreneur());
-        stade.setText(e.getStade());
+     private void setChosenJoueur(Joueur j) throws FileNotFoundException {
+       
+        prenom.setText(j.getPrenom());
+        nomjoueur.setText(j.getNom());
+        date.setText(j.getDate_naiss().toString());
+        taille.setText(String.valueOf(j.getTaille()));
+        nation.setText(j.getNationalite());
+        Image  image = new Image(new FileInputStream(j.getImage()));
+        imagejoueur.setImage(image);
+
 //        chosenTeam.setStyle("-fx-background-color: #857777;\n" +
 //                "    -fx-background-radius: 30;");
     }
-    
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO       
-      equipeList.addAll(es.getAll());
+       private void LoadDate()
+    {
+        joueurList.addAll(js.getjoueurbyequipe(e));
       //System.out.println(equipeList.size());
        // System.out.println(equipeList);
-        if(equipeList.size()>0)
+        if(joueurList.size()>0)
         {
           try {
               // System.out.println(equipeList);
-              setChosenTeam(equipeList.get(0));
+              setChosenJoueur(joueurList.get(0));
           } catch (FileNotFoundException ex) {
-              Logger.getLogger(TeamsFrontController.class.getName()).log(Level.SEVERE, null, ex);
+              Logger.getLogger(PlayersFrontController.class.getName()).log(Level.SEVERE, null, ex);
           }
-            l=new listener() {
+            l=new listenerjoueur() {
                 @Override
-                public void onClickListener(Equipe e) {
+                public void onClickListener(Joueur j) {
                     try {
-                        setChosenTeam(e);
+                        setChosenJoueur(j);
                     } catch (FileNotFoundException ex) {
-                        Logger.getLogger(TeamsFrontController.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(PlayersFrontController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
+
+           
             };
         }
         
@@ -114,17 +124,17 @@ public class TeamsFrontController implements Initializable {
         int row =1;
         //System.out.println(equipeList.size());
         try {
-        for(int i=0;i<equipeList.size();i++)
+        for(int i=0;i<joueurList.size();i++)
         { 
               //System.out.println(equipeList.get(i));
             FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource("EquipeOne.fxml"));
+            fxmlLoader.setLocation(getClass().getResource("JoueurOne.fxml"));
             
              AnchorPane anchorpane=fxmlLoader.load();
            
             
-            EquipeOneController eqone=fxmlLoader.getController();
-            eqone.setData(equipeList.get(i),l);
+            JoueurOneController eqone=fxmlLoader.getController();
+            eqone.setData(joueurList.get(i),l);
             
             if(column==3)
             {
@@ -142,48 +152,37 @@ public class TeamsFrontController implements Initializable {
                 grid.setMinHeight(Region.USE_COMPUTED_SIZE);
                 grid.setPrefHeight(Region.USE_COMPUTED_SIZE);
                 grid.setMaxHeight(Region.USE_PREF_SIZE);
-            GridPane.setMargin(anchorpane,new Insets(equipeList.size()));
+            GridPane.setMargin(anchorpane,new Insets(joueurList.size()));
         }
         
         } catch (IOException ex) {
                     ex.getMessage();
         } 
+        
+    }
+    
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        // TODO       
+     
             
       
     }    
-
-    @FXML
-    private void effectif(ActionEvent event) throws FileNotFoundException {
-        
-            
-                            setChosenTeam(equipe);
-                            System.out.println(equipe);
-                            FXMLLoader loader = new FXMLLoader ();
-                            loader.setLocation(getClass().getResource("PlayersFront.fxml"));
-                            
-                            try {
-                                loader.load();
-                               
-                            } catch (IOException ex) {
-                                Logger.getLogger(JoueurDetailsController.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                           PlayersFrontController SquadController = loader.getController();                          
-                           SquadController.setTextField(equipe.getId(),equipe.getNom(),equipe.getLogo(),equipe.getNom_entreneur(),equipe.getNiveau(),equipe.getStade());
-                           
-                            Parent parent = loader.getRoot();
-                            Stage stage = new Stage();
-                            stage.setScene(new Scene(parent));
-                            stage.initStyle(StageStyle.UTILITY);
-                            stage.show();
-                          
+    
+    
+    
+    void setTextField(int id,String nome, String logo, String entreneur,String niveau,String stade) 
+     {
+        e.setId(id);
+        e.setNom(nome);
+        e.setLogo(logo);
+        e.setNom_entreneur(entreneur);
+        e.setNiveau(niveau);
+        e.setStade(stade);
+        LoadDate();
     }
 
-   
-    
-    
-    
-    
-    
+ 
     
     
     
