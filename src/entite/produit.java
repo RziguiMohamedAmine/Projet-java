@@ -50,6 +50,7 @@ public class produit {
         this.description = description;
         this.cat = cat;
         this.stock = stock;
+      
     }
 
     public produit( String nom, String image, float prix, String description, categorie cat, int stock) {
@@ -61,6 +62,8 @@ public class produit {
         this.cat = cat;
         this.stock = stock;
     }
+
+    
      
 
     public int getId() {
@@ -153,6 +156,7 @@ public class produit {
         return "produit{" + "id=" + id + ", nom=" + nom + ", image=" + image + ", prix=" + prix + ", description=" + description + ", cat=" + cat + ", stock=" + stock + '}';
     }
 
+   
     
 
     

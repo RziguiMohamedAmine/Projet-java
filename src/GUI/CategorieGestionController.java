@@ -81,9 +81,6 @@ public class CategorieGestionController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("CategorieAjoutModif.fxml"));
 
             Parent root = loader.load();
-//            MatchAjoutModifyController matchAjoutModifyController = loader.getController();
-
-//            matchAjoutModifyController.setButton("Ajouter");
             Scene scene = new Scene(root);
             Stage stage = new Stage();
             stage.setScene(scene);
@@ -163,14 +160,6 @@ public class CategorieGestionController implements Initializable {
 
                         logoIcon.setOnMouseClicked((MouseEvent event) -> {
 
-//                             equipe = equipeTable.getSelectionModel().getSelectedItem();
-//                             Image image;
-//                            try {
-//                                image = new Image(new FileInputStream(equipe.getLogo()));
-//                                logoview.setImage(image); 
-//                            } catch (FileNotFoundException ex) {
-//                                Logger.getLogger(EquipeDetailsController.class.getName()).log(Level.SEVERE, null, ex);
-//                            }
                         });
 
                         HBox managebtn = new HBox(editIcon, deleteIcon, logoIcon);

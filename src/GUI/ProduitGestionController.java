@@ -65,7 +65,7 @@ ObservableList<produit> produitList = FXCollections.observableArrayList();
     private TableColumn<produit, String> action;
     @FXML
     private TableColumn<produit, String> stock;
-   
+       
     
     
 

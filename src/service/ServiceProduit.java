@@ -43,6 +43,7 @@ public class ServiceProduit implements IService<produit>{
              ps.setString(4, t.getDescription());
              ps.setInt(5, t.getCat().getId());
              ps.setInt(6, t.getStock());
+             
             insert=ps.executeUpdate()>0;
 
         } catch (SQLException ex) {
@@ -65,7 +66,8 @@ public class ServiceProduit implements IService<produit>{
              ps.setString(4, t.getDescription());
              ps.setInt(5, t.getCat().getId());
              ps.setInt(6, t.getStock());
-             ps.setInt(7, t.getId());
+            
+             ps.setInt(8, t.getId());
              
              update=ps.executeUpdate()>0;
              
@@ -110,6 +112,7 @@ public class ServiceProduit implements IService<produit>{
          p.setCat(c);
          p.setImage(rs.getString("image"));
          p.setStock(rs.getInt("stock"));
+  
          list.add(p);
         }
         } catch (SQLException ex) {
@@ -137,7 +140,9 @@ public class ServiceProduit implements IService<produit>{
                          rs.getFloat(4),
                          rs.getString(5),
                          c, 
-                         rs.getInt("stock"));     
+                         rs.getInt("stock")
+                        )
+                                 ;     
              }
              
         } catch (SQLException ex) {

@@ -31,7 +31,7 @@ public class HomeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
-            Parent fxml = FXMLLoader.load(getClass().getResource("ProduitGestion.fxml"));
+            Parent fxml = FXMLLoader.load(getClass().getResource("ProduitFront.fxml"));
             contentArea.getChildren().removeAll();
             contentArea.getChildren().setAll(fxml);
 
