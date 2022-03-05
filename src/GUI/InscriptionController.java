@@ -154,6 +154,9 @@ public class InscriptionController implements Initializable {
     private void OnUpdate(ActionEvent event) {
          int tel;
          int id;
+         User u=tvUser.getSelectionModel().getSelectedItem();
+         id=u.getId();
+         
         String nom =textFieldNom.getText();
         String prenom = textFieldPrenom.getText();
         String email = textFieldEmail.getText();
@@ -179,7 +182,10 @@ public class InscriptionController implements Initializable {
         }
         else
         {
-        User u7 =new User(nom, prenom, email, pass, tel,role);
+            
+        User u7 =new User(nom,prenom,email,pass,tel,role);
+        u7.setId(id);
+       // u7=tvUser.getSelectionModel().getSelectedItem();
         UserService.update(u7);
         
        

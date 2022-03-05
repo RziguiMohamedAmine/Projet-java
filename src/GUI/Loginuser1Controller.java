@@ -56,7 +56,7 @@ public class Loginuser1Controller implements Initializable {
         String email = textFieldemailUser.getText();
         String pass = textFieldpassUser.getText();
         try{
-            System.out.println( UserService.login(email,pass).getRole());
+            //System.out.println( UserService.login(email,pass).getRole());
        if(UserService.login(email,pass)!=null)
        {
            User u = UserService.login(email,pass);

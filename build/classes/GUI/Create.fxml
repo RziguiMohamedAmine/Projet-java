@@ -41,9 +41,9 @@
             <Insets left="15.0" right="10.0" top="10.0" />
          </VBox.margin>
       </HBox>
-      <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="266.0" prefHeight="40.0" prefWidth="200.0" styleClass="tf_box">
+      <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="266.0" prefHeight="16.0" prefWidth="450.0" styleClass="tf_box">
          <children>
-            <TextField fx:id="tfEmailUser" prefHeight="64.0" prefWidth="475.0" promptText="Email" styleClass="tf_box" stylesheets="@style.css" HBox.hgrow="ALWAYS">
+            <TextField fx:id="tfEmailUser" prefHeight="73.0" prefWidth="436.0" promptText="Email" styleClass="tf_box" stylesheets="@style.css" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets right="15.0" top="20.0" />
                </HBox.margin>
@@ -69,11 +69,6 @@
                </HBox.margin>
             </TextField>
          </children>
-         <VBox.margin>
-            <Insets left="15.0" right="15.0" top="10.0" />
-         </VBox.margin>
-      </HBox>
-      <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="346.0" prefHeight="40.0" prefWidth="200.0" styleClass="tf_box">
          <VBox.margin>
             <Insets left="15.0" right="15.0" top="10.0" />
          </VBox.margin>

@@ -44,7 +44,6 @@ public class CreateController implements Initializable {
     @FXML
     private Button btnCreer;
     private UserService UserService;
-    @FXML
     private Parent fxml;
     private Stage stage;
     private Scene scene;
@@ -86,7 +85,7 @@ public class CreateController implements Initializable {
         User u7 =new User(nom, prenom, email, pass, tel);
         UserService.insert(u7);
         try {
-            fxml = FXMLLoader.load(getClass().getResource("inscription.fxml"));
+            fxml = FXMLLoader.load(getClass().getResource("Main.fxml"));
         } catch (IOException ex) {
             Logger.getLogger(CreateController.class.getName()).log(Level.SEVERE, null, ex);
         }

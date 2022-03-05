@@ -16,7 +16,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+
 
 /**
  *
@@ -25,19 +28,19 @@ import javafx.stage.Stage;
 public class NewFXMain extends Application {
     
     @Override
-    public void start(Stage primaryStage) {
-        Parent root;
-        try {
-            root= FXMLLoader.load(getClass().getResource("loginuser1.fxml"));
-            Scene scene = new Scene(root);
-        
-        primaryStage.setTitle("CRUD");
-        primaryStage.setScene(scene);
-        primaryStage.show();
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-            
-        }
+    public void start(Stage stage) {
+      Parent root;        
+         try {
+             root = FXMLLoader.load(getClass().getResource("Main.fxml"));
+         
+         Scene scene = new Scene(root);       
+         scene.setFill(Color.TRANSPARENT);
+        stage.setScene(scene);
+        stage.initStyle(StageStyle.TRANSPARENT);
+        stage.show();
+         } catch (IOException ex) {
+             System.out.println("hfghgh");
+         }
         
         
     }

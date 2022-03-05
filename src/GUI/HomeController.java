@@ -46,7 +46,7 @@ public class HomeController implements Initializable {
     @FXML
     private void OnOut(ActionEvent event) {
          try {
-            fxml = FXMLLoader.load(getClass().getResource("loginuser1.fxml"));
+            fxml = FXMLLoader.load(getClass().getResource("Main.fxml"));
         } catch (IOException ex) {
             Logger.getLogger(Loginuser1Controller.class.getName()).log(Level.SEVERE, null, ex);
         }
