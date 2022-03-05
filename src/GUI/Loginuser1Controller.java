@@ -5,6 +5,7 @@
  */
 package GUI;
 
+import entite.User;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -28,7 +29,7 @@ import service.UserService;
  *
  * @author hamdi
  */
-public class LoginuserController implements Initializable {
+public class Loginuser1Controller implements Initializable {
 
     @FXML
     private TextField textFieldemailUser;
@@ -36,14 +37,12 @@ public class LoginuserController implements Initializable {
     private TextField textFieldpassUser;
     @FXML
     private Button BtnLogin;
-    private UserService UserService;
-    private String nom;
-    private String prenom;
-    private String tel;
-    private String image;
+    @FXML
     private Parent fxml;
     private Stage stage;
     private Scene scene;
+    private UserService UserService;
+
     /**
      * Initializes the controller class.
      */
@@ -57,22 +56,36 @@ public class LoginuserController implements Initializable {
         String email = textFieldemailUser.getText();
         String pass = textFieldpassUser.getText();
         try{
-       if(UserService.login(email,pass)==true)
+            System.out.println( UserService.login(email,pass).getRole());
+       if(UserService.login(email,pass)!=null)
        {
+           User u = UserService.login(email,pass);
+           if(u.getRole().equals("user"))
+           {User.session=u;
             
-                 
-            fxml = FXMLLoader.load(getClass().getResource("inscription.fxml"));
+            System.out.println(u);
+          // System.out.println(User.session);
+            fxml = FXMLLoader.load(getClass().getResource("home.fxml"));
             stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             scene = new Scene(fxml);
             stage.setScene(scene);
             stage.show();
 
             }
+           else if(u.getRole().equals("admin"))
+           {
+            fxml = FXMLLoader.load(getClass().getResource("inscription.fxml"));
+            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            scene = new Scene(fxml);
+            stage.setScene(scene);
+            stage.show();
+           }
+       }
        else
                {
              Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
-            alert.setContentText("login failed");
+            alert.setContentText("la connexion a échoué veuillez verifier vos informations ");
             alert.showAndWait(); 
                }
                 
@@ -85,37 +98,33 @@ public class LoginuserController implements Initializable {
         
     }
 
+    
     @FXML
     private void onForgot(ActionEvent event) {
-        
-       
-       
-            
-                 
         try {
             fxml = FXMLLoader.load(getClass().getResource("EmailV.fxml"));
         } catch (IOException ex) {
-            Logger.getLogger(LoginuserController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Loginuser1Controller.class.getName()).log(Level.SEVERE, null, ex);
         }
             stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             scene = new Scene(fxml);
             stage.setScene(scene);
             stage.show();
 
-            
     }
 
     @FXML
     private void OnCreate(ActionEvent event) {
-        try {
+         try {
             fxml = FXMLLoader.load(getClass().getResource("Create.fxml"));
         } catch (IOException ex) {
-            Logger.getLogger(LoginuserController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Loginuser1Controller.class.getName()).log(Level.SEVERE, null, ex);
         }
             stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             scene = new Scene(fxml);
             stage.setScene(scene);
             stage.show();
     }
+    
     
 }

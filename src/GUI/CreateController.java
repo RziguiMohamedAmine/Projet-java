@@ -18,6 +18,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -40,8 +41,6 @@ public class CreateController implements Initializable {
     private TextField tfPassUser;
     @FXML
     private TextField tfTelUser;
-    @FXML
-    private TextField tfImageUser;
     @FXML
     private Button btnCreer;
     private UserService UserService;
@@ -74,15 +73,20 @@ public class CreateController implements Initializable {
         }
         
         
-        String image = tfImageUser.getText();
         
-        
-        
-        
-        User u7 =new User(nom, prenom, email, pass, tel, image);
+         if(nom.isEmpty()||email.isEmpty()||pass.isEmpty()||prenom.isEmpty())
+        {
+              Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("veuillez remplir tous les champs obligatoires ");
+            alert.showAndWait(); 
+        }
+         else{
+      
+        User u7 =new User(nom, prenom, email, pass, tel);
         UserService.insert(u7);
         try {
-            fxml = FXMLLoader.load(getClass().getResource("home.fxml"));
+            fxml = FXMLLoader.load(getClass().getResource("inscription.fxml"));
         } catch (IOException ex) {
             Logger.getLogger(CreateController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -90,6 +94,9 @@ public class CreateController implements Initializable {
             scene = new Scene(fxml);
             stage.setScene(scene);
             stage.show();
+         
+         }
+        
        
         
     }

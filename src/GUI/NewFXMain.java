@@ -28,7 +28,7 @@ public class NewFXMain extends Application {
     public void start(Stage primaryStage) {
         Parent root;
         try {
-            root= FXMLLoader.load(getClass().getResource("loginuser.fxml"));
+            root= FXMLLoader.load(getClass().getResource("loginuser1.fxml"));
             Scene scene = new Scene(root);
         
         primaryStage.setTitle("CRUD");

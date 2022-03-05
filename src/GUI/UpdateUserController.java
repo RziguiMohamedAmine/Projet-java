@@ -6,17 +6,23 @@
 package GUI;
 
 import entite.User;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import service.UserService;
 
 /**
@@ -35,69 +41,51 @@ public class UpdateUserController implements Initializable {
     private TextField tfNewPass;
     @FXML
     private TextField tfNewTel;
-    @FXML
-    private TextField tfNewImage;
-    @FXML
-    private TableView<User> tvUser1;
-    @FXML
-    private TableColumn<User,String> colNomUser;
-    @FXML
-    private TableColumn<User,String> colPrenomUser;
-    @FXML
-    private TableColumn<User,String> colEmailUser;
-    @FXML
-    private TableColumn<User,String> colPassUser;
-    @FXML
-    private TableColumn<User,Integer> colTelUser;
-    @FXML
-    private TableColumn<User,String> colImageUser;
-    @FXML
-    private TableColumn<User,String> colRoleUser;
+  
     @FXML
     private Button BtnUpdateUser;
-    @FXML
     private TextField tfId;
     private UserService UserService;
-
+     private Parent fxml;
+    private Stage stage;
+    private Scene scene;
+    
+    
+    
+        int id=User.session.getId();
+        String nom=User.session.getNom();
+        String prenom=User.session.getPrenom();
+        String pass = User.session.getPass();
+        int tel=User.session.getTel();
+        
+       User u=new User(nom,prenom,pass,tel);
+    
+    UserService us =new UserService();
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       this.UserService = new UserService();
-       colNomUser.setCellValueFactory(new PropertyValueFactory<User,String>("nom"));
-        colPrenomUser.setCellValueFactory(new PropertyValueFactory<User,String>("prenom"));
-        colEmailUser.setCellValueFactory(new PropertyValueFactory<User,String>("email"));
-        colPassUser.setCellValueFactory(new PropertyValueFactory<User,String>("pass"));
-        colTelUser.setCellValueFactory(new PropertyValueFactory<User,Integer>("tel"));
-        colImageUser.setCellValueFactory(new PropertyValueFactory<User,String>("image"));   
-        colRoleUser.setCellValueFactory(new PropertyValueFactory<User,String>("role"));
-       User u7 =new User(index, nom, prenom, email, pass, index, image);
-        UserService.getOne();
-       tvUser1.setItems(User);
+       
+   
+       
+       tfNewNom.setText(nom);
+       tfNewPrenom.setText(prenom);
+       tfNewPass.setText(pass);
+       tfNewTel.setText(String.valueOf(tel));
     }    
 
-    @FXML
-    private void onMouseClicked(MouseEvent event) {
-        int tel;
-     User user= tvUser1.getSelectionModel().getSelectedItem();
-        tfNewNom.setText(user.getNom());
-        tfNewPrenom.setText(user.getPrenom());
-        tfNewPass.setText(user.getPass());
-        tfNewTel.setText(""+user.getTel());
-        tfNewImage.setText(user.getImage());
-        tfId.setText(""+user.getId());
-      
-    }
 
     @FXML
-    private void OnUpdateUser(ActionEvent event) {
+    private void OnUpdateUser(ActionEvent event) throws IOException {
         int tel;
-         int id;
-        String nom =tfNewNom.getText();
+         
+         
+         
+        String nom = tfNewNom.getText();
         String prenom = tfNewPrenom.getText();
         String pass = tfNewPass.getText();
-       
+      
         
         try{
             tel = Integer.parseInt(tfNewTel.getText());
@@ -106,19 +94,20 @@ public class UpdateUserController implements Initializable {
          return;
         }
         
-        
-        String image = tfNewImage.getText();
-         try{
-            id = Integer.parseInt(tfId.getText());
-        }catch(NumberFormatException ex){
-            System.out.println("  doit être un entier ");
-         return;
-        }
-        
+       
+        User u =new User(nom,prenom,pass,tel);
+        u.setId(id);
+        System.out.println(u);
+        System.out.println(us.updateuser(u));
+        System.out.println(u);
+     
         
         
-       User u7 =new User(id,nom, prenom, pass, tel, image);
-        UserService.updateuser(u7);
+      fxml = FXMLLoader.load(getClass().getResource("home.fxml"));
+            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            scene = new Scene(fxml);
+            stage.setScene(scene);
+            stage.show();
         
     }
     

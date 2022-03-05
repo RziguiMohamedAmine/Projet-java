@@ -20,44 +20,53 @@ String email;
 String pass;
 int tel;
 String role;
+public static User session;
 
-String image;
+    public User() {
+    }
 
-    public User(int id, String nom, String prenom, String email, String pass, int tel, String image, String role) {
+    public User(String nom, String prenom, String pass, int tel) {
+        this.nom = nom;
+        this.prenom = prenom;
+        this.pass = pass;
+        this.tel = tel;
+    }
+
+    
+    public User(int id, String nom, String prenom, String email, String pass, int tel ,String role) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;
         this.pass = pass;
         this.tel = tel;
-        this.image = image;
         this.role = role;
     }
 
-    public User(String nom, String prenom, String email, String pass, int tel, String image, String role) {
+    public User(String nom, String prenom, String email, String pass, int tel,String role) {
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;
         this.pass = pass;
         this.tel = tel;
         this.role = role;
-        this.image = image;
+       
     }
     
     
 
-    public User(String nom, String prenom, String email, String pass, int tel, String image) {
+    public User(String nom, String prenom, String email, String pass, int tel) {
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;
         this.pass = pass;
         this.tel = tel;
-        this.image = image;
+        
     }
     
 
 
-    public User(int id, String nom, String prenom, String email, String pass, int tel, String image) {
+    public User(int id, String nom, String prenom, String email, String pass, int tel) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
@@ -65,7 +74,7 @@ String image;
         this.pass = pass;
         this.tel = tel;
         
-        this.image = image;
+        
     }
 
     public int getId() {
@@ -116,16 +125,6 @@ String image;
         this.tel = tel;
     }
 
-
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
     public String getRole() {
         return role;
     }
@@ -143,8 +142,6 @@ String image;
         hash = 67 * hash + Objects.hashCode(this.email);
         hash = 67 * hash + Objects.hashCode(this.pass);
         hash = 67 * hash + this.tel;
-        
-        hash = 67 * hash + Objects.hashCode(this.image);
         return hash;
     }
 
@@ -179,15 +176,12 @@ String image;
             return false;
         }
 
-        if (!Objects.equals(this.image, other.image)) {
-            return false;
-        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "User{" + "id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", email=" + email + ", pass=" + pass + ", tel=" + tel + ", image=" + image +",role=" + role + '}';
+        return "User{" + "id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", email=" + email + ", pass=" + pass + ", tel=" + tel + ",role=" + role + '}';
     }
 
     

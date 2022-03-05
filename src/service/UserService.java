@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Properties;
 import javax.mail.Authenticator;
 import javax.mail.Message;
@@ -47,7 +48,7 @@ public class UserService implements IService<User>{
     
     
    public boolean insert(User u){
-       String req="insert into user (nom,prenom,email,pass,tel,image) values (?,?,?,?,?,?)";
+       String req="insert into user (nom,prenom,email,pass,tel) values (?,?,?,?,?)";
         boolean inserted=false;
         try {
             pst=conn.prepareStatement(req);
@@ -56,8 +57,6 @@ public class UserService implements IService<User>{
             pst.setString(3,u.getEmail());
             pst.setString(4,doHashing(u.getPass()));
             pst.setInt(5,u.getTel());
-            
-            pst.setString(6,u.getImage());
         
             inserted=pst.executeUpdate()>0;
             envoyerMail(u.getEmail(), "");
@@ -75,7 +74,7 @@ public class UserService implements IService<User>{
 
     @Override
     public boolean update(User u) {
-        String req="UPDATE user SET nom=?,prenom=?,email=?,pass=?,tel=?,image=?,role=? WHERE id=?";
+        String req="UPDATE user SET nom=?,prenom=?,email=?,pass=?,tel=?,role=? WHERE id=?";
         boolean update=false;
         try {
             pst = conn.prepareStatement(req);
@@ -85,11 +84,9 @@ public class UserService implements IService<User>{
             pst.setString(3,u.getEmail());
             pst.setString(4,doHashing(u.getPass()));
             pst.setInt(5,u.getTel());
-
-            pst.setString(6,u.getImage());
+            pst.setString(6,u.getRole());
+            pst.setInt(7,u.getId());
             
-            pst.setInt(8,u.getId());
-            pst.setString(7,u.getRole());
             update=pst.executeUpdate()>0;
 
             
@@ -100,7 +97,7 @@ public class UserService implements IService<User>{
     
     @Override
     public boolean updateuser(User u) {
-        String req="UPDATE user SET nom=?,prenom=?,pass=?,tel=?,image=? WHERE id=?";
+        String req="UPDATE user SET nom=?,prenom=?,pass=?,tel=? WHERE id=?";
         boolean update=false;
         try {
             pst = conn.prepareStatement(req);
@@ -109,10 +106,7 @@ public class UserService implements IService<User>{
             pst.setString(2,u.getPrenom());
             pst.setString(3,doHashing(u.getPass()));
             pst.setInt(4,u.getTel());
-
-            pst.setString(5,u.getImage());
-            
-            pst.setInt(6,u.getId());
+            pst.setInt(5,u.getId());
             
             update=pst.executeUpdate()>0;
 
@@ -145,7 +139,7 @@ public class UserService implements IService<User>{
             rs=ste.executeQuery(req);
             while(rs.next())
             {
-              list.add(new User(rs.getInt("id"), rs.getString(2),rs.getString("prenom"),rs.getString("email"),"",rs.getInt("tel"),rs.getString("image"),rs.getString("role")));
+              list.add(new User(rs.getInt("id"), rs.getString(2),rs.getString("prenom"),rs.getString("email"),"",rs.getInt("tel"),rs.getString("role")));
             }
             
         } catch (SQLException ex) {
@@ -172,7 +166,7 @@ public class UserService implements IService<User>{
             {
                 u=new User(rs.getInt(1),rs.getString(2),rs.getString(3),
               rs.getString(4),"",rs.getInt(6),
-                        rs.getString(7),rs.getString(8));
+                        rs.getString(7));
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
@@ -203,23 +197,23 @@ public class UserService implements IService<User>{
   return "";
  }
     
-   public boolean block(Timestamp date, User user){
+   public boolean block(LocalDate date, User user){
        
        String req="UPDATE user SET block=? WHERE id=?";
-        boolean update=false;
+        boolean block=false;
         try {
             pst = conn.prepareStatement(req);
             
-            pst.setTimestamp(1,date);
+            pst.setObject(1,date);
             pst.setInt(2,user.getId());
            
-            update=pst.executeUpdate()>0;
+            block=pst.executeUpdate()>0;
 
             
         } catch (SQLException ex) {
             Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return update;
+        return block;
        
    }
    
@@ -286,23 +280,27 @@ public class UserService implements IService<User>{
         return update;
        
    }
-public boolean login(String email, String pass){
+public User login(String email, String pass){
     String hashedPass = doHashing(pass);
     int count = 0;
+    
     Timestamp nowDate=Timestamp.from(Instant.now());
     String req="select * from user where email = '"+email+"' and pass= '"+hashedPass+"' and (block<'"+nowDate+"' or block is null) and ban = 0";
-    
+    User u=null;
         try {
             ste = conn.createStatement();
             rs = ste.executeQuery(req);
             if(rs.next()){
-                count++;
+               u=new User(rs.getInt(1),rs.getString(2),rs.getString(3),
+              rs.getString(4),"",rs.getInt(6),
+                        rs.getString("role"));
+                 System.out.println( rs.getString("role"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        return count!=0;
+      
+        return u;
     
 }    
 

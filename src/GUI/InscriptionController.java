@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -24,13 +25,18 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import service.UserService;
 import utils.DataSource;
 
@@ -41,24 +47,34 @@ import utils.DataSource;
  */
 public class InscriptionController implements Initializable {
 
+    @FXML
     private TextField textFieldNom;
+    @FXML
     private TextField textFieldPrenom;
+    @FXML
     private TextField textFieldEmail;
+    @FXML
     private TextField textFieldPass;
+    @FXML
     private TextField textFieldTel;
-    
-    private TextField textFieldImage;
-    private TextField textFieldId;
+    @FXML
     private TextField textFieldRole;
     private UserService UserService;
+    @FXML
     private TableView<User> tvUser;
+    @FXML
     private TableColumn<User, String> colNom;
+    @FXML
     private TableColumn<User, String> colPrenom;
+    @FXML
     private TableColumn<User, String> colEmail;
+    @FXML
     private TableColumn<User, String> colPass;
+    @FXML
     private TableColumn<User, Integer> colTel;
-    private TableColumn<User, String> colImage;
+    @FXML
     private TableColumn<User,Integer> colId;
+    @FXML
     private TableColumn<User,String> colRole;
     
     ObservableList<User> ListM = FXCollections.observableArrayList();
@@ -68,35 +84,18 @@ public class InscriptionController implements Initializable {
     PreparedStatement pst= null;
     
     @FXML
-    private TextField tfNewNom;
+    private Button BtnOk;
     @FXML
-    private TextField tfNewPrenom;
+    private Button BtnUpdate;
     @FXML
-    private TextField tfNewPass;
+    private Button BtnDelete;
     @FXML
-    private TextField tfNewTel;
+    private DatePicker dat;
     @FXML
-    private TextField tfNewImage;
-    @FXML
-    private TableView<?> tvUser1;
-    @FXML
-    private TableColumn<?, ?> colNomUser;
-    @FXML
-    private TableColumn<?, ?> colPrenomUser;
-    @FXML
-    private TableColumn<?, ?> colEmailUser;
-    @FXML
-    private TableColumn<?, ?> colPassUser;
-    @FXML
-    private TableColumn<?, ?> colTelUser;
-    @FXML
-    private TableColumn<?, ?> colImageUser;
-    @FXML
-    private TableColumn<?, ?> colRoleUser;
-    @FXML
-    private Button BtnUpdateUser;
-    @FXML
-    private TextField tfId;
+    private Parent fxml;
+    private Stage stage;
+    private Scene scene;
+
     
 
     /**
@@ -109,8 +108,7 @@ public class InscriptionController implements Initializable {
         colPrenom.setCellValueFactory(new PropertyValueFactory<User,String>("prenom"));
         colEmail.setCellValueFactory(new PropertyValueFactory<User,String>("email"));
         colPass.setCellValueFactory(new PropertyValueFactory<User,String>("pass"));
-        colTel.setCellValueFactory(new PropertyValueFactory<User,Integer>("tel"));
-        colImage.setCellValueFactory(new PropertyValueFactory<User,String>("image"));   
+        colTel.setCellValueFactory(new PropertyValueFactory<User,Integer>("tel"));   
         colId.setCellValueFactory(new PropertyValueFactory<User,Integer>("id"));
         colRole.setCellValueFactory(new PropertyValueFactory<User,String>("role"));
        ListM.addAll(UserService.getAll());
@@ -120,33 +118,39 @@ public class InscriptionController implements Initializable {
        
     }    
 
+    @FXML
     private void OnCreate(ActionEvent event) {
         int tel;
         String nom =textFieldNom.getText();
         String prenom = textFieldPrenom.getText();
         String email = textFieldEmail.getText();
         String pass = textFieldPass.getText();
-        
         try{
             tel = Integer.parseInt(textFieldTel.getText());
         }catch(NumberFormatException ex){
             System.out.println("le numero de tel doit être un entier ");
          return;
         }
-        
-        
-        String image = textFieldImage.getText();
-        
-        
-        
-        
-        User u7 =new User(nom, prenom, email, pass, tel, image);
+        if(nom.isEmpty()||email.isEmpty()||pass.isEmpty()||prenom.isEmpty())
+        {
+              Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("veuillez remplir tous les champs obligatoires ");
+            alert.showAndWait(); 
+        }
+        else
+        {      
+        User u7 =new User(nom, prenom, email, pass, tel);
         UserService.insert(u7);
        
         Refresh();
+        }
+        
+       
        
     }
 
+    @FXML
     private void OnUpdate(ActionEvent event) {
          int tel;
          int id;
@@ -163,27 +167,29 @@ public class InscriptionController implements Initializable {
          return;
         }
         
-        
-        String image = textFieldImage.getText();
-         try{
-            id = Integer.parseInt(textFieldId.getText());
-        }catch(NumberFormatException ex){
-            System.out.println("  doit être un entier ");
-         return;
-        }
+         
         
         String role = textFieldRole.getText();
-        
-        User u7 =new User(id,nom, prenom, email, pass, tel, image,role);
+        if(nom.isEmpty()||email.isEmpty()||prenom.isEmpty())
+        {
+              Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("veuillez remplir tous les champs obligatoires ");
+            alert.showAndWait(); 
+        }
+        else
+        {
+        User u7 =new User(nom, prenom, email, pass, tel,role);
         UserService.update(u7);
         
        
     Refresh();
-        
+        }
         
        
     }
 
+    @FXML
     private void OnDelete(ActionEvent event) {
         User u3= null;
         u3=tvUser.getSelectionModel().getSelectedItem();
@@ -209,11 +215,41 @@ public class InscriptionController implements Initializable {
         textFieldEmail.setText(user.getEmail());
         textFieldPass.setText(user.getPass());
         textFieldTel.setText(""+user.getTel());
-        textFieldImage.setText(user.getImage());
-        textFieldId.setText(""+user.getId());
         textFieldRole.setText(user.getRole());
         
     }
+
+    @FXML
+    private void block(ActionEvent event) {
+        User u3= null;
+        u3=tvUser.getSelectionModel().getSelectedItem();
+        UserService.block(dat.getValue(), u3);
+        Refresh();
+    }
+
+    @FXML
+    private void onBan(ActionEvent event) {
+        User u3= null;
+        u3=tvUser.getSelectionModel().getSelectedItem();
+        UserService.ban(u3);
+        Refresh();
+    }
+
+    @FXML
+    private void OnAccueil(ActionEvent event) {
+         try {
+            fxml = FXMLLoader.load(getClass().getResource("home.fxml"));
+        } catch (IOException ex) {
+            Logger.getLogger(CreateController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            scene = new Scene(fxml);
+            stage.setScene(scene);
+            stage.show();
+       
+        
+    }
+    
 
     
     
