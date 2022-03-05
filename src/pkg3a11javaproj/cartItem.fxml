@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox alignment="CENTER" spacing="100.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pkg3a11javaproj.CartItemController">
+   <children>
+      <HBox spacing="10.0">
+         <children>
+            <ImageView fx:id="image" fitWidth="175.0" pickOnBounds="true" preserveRatio="true" />
+            <VBox spacing="5.0">
+               <children>
+                  <Label fx:id="name" text="Name">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="price" text="Price" />
+                  <Button fx:id="deleteBtn" mnemonicParsing="false" text="Supprimer" />
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+      <Spinner fx:id="quantity" editable="true" prefHeight="25.0" prefWidth="51.0" />
+      <Label fx:id="subtotal" text="Prix Total" />
+   </children>
+</HBox>

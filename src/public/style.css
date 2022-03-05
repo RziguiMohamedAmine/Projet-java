@@ -22,3 +22,14 @@
 .shadow {
   -fx-effect: dropShadow(three-pass-box, rgba(0, 0, 0, 0), 10, 0, 0, 10);
 }
+.table-view .column-header * {
+	-fx-text-align: center;
+	-fx-padding: 0px;
+	-fx-color: #fff;
+	
+    -fx-background-color: #ff523b;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: white;
+}

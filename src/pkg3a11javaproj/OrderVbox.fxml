@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" spacing="5.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pkg3a11javaproj.OrderVboxController">
+<VBox fx:id="orderDetailsVbox" alignment="CENTER" spacing="5.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pkg3a11javaproj.OrderVboxController">
    <children>
       <Separator />
       <HBox spacing="25.0" VBox.vgrow="ALWAYS">

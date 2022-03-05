@@ -31,6 +31,9 @@ import service.OrderItemService;
 public class OrderVboxController  {
 
     @FXML
+    private VBox orderDetailsVbox;
+    
+    @FXML
     private Label id;
 
     @FXML
@@ -49,6 +52,8 @@ public class OrderVboxController  {
         id.setText("#"+String.valueOf(order.getId()));
         date.setText(dateToString(order));
         float sum=0; // total price
+        orderItemsHBox.setVisible(false);
+        orderItemsHBox.setManaged(false);
         OrderItemService orderItemService = new OrderItemService();
         List<OrderItem> orderItemList = new ArrayList<>();
         orderItemList=orderItemService.getOrderItems(order.getId());
@@ -65,6 +70,11 @@ public class OrderVboxController  {
                     OrderItemVBoxController cardController = fxmlLoader.getController();
                     cardController.setData(orderItemList.get(i));
                     orderItemsHBox.getChildren().add(cardBox);
+                    
+                    orderDetailsVbox.setOnMouseClicked(e->{
+                        orderItemsHBox.setManaged(!orderItemsHBox.isManaged());
+                        orderItemsHBox.setVisible(!orderItemsHBox.isVisible());
+                    });
                 }
             }catch (IOException e){
                 e.printStackTrace();
