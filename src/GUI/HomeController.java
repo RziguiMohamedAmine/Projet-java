@@ -5,6 +5,7 @@
  */
 package GUI;
 
+import GUIFront.BaseController;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -38,7 +39,7 @@ public class HomeController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         try {
-            Parent fxml = FXMLLoader.load(getClass().getResource("FXML.fxml"));
+            Parent fxml = FXMLLoader.load(getClass().getResource("../GUIFront/Base.fxml"));
             contentArea.getChildren().removeAll();
             contentArea.getChildren().setAll(fxml);
 //            TreeItem<String> rootItem = new TreeItem<>("gestion match");
@@ -95,9 +96,13 @@ public class HomeController implements Initializable {
     @FXML
     private void redirectGestionBillet(ActionEvent event) {
         try {
-            Parent fxml = FXMLLoader.load(getClass().getResource("BilletTable.fxml"));
+            FXMLLoader fxml = new FXMLLoader(getClass().getResource("../GUIFront/Base.fxml"));
+            Parent root = fxml.load();
+            BaseController baseController = fxml.getController();
+            baseController.setButtonVisible();
+            baseController.LoadGestionBillet();
             contentArea.getChildren().removeAll();
-            contentArea.getChildren().setAll(fxml);
+            contentArea.getChildren().setAll(root);
         } catch (IOException ex) {
 
             System.out.println(ex.getMessage());
@@ -133,6 +138,22 @@ public class HomeController implements Initializable {
             contentArea.getChildren().removeAll();
             contentArea.getChildren().setAll(fxml);
         } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    @FXML
+    private void redirectToClasmmentClient(ActionEvent event) {
+        try {
+            FXMLLoader fxml = new FXMLLoader(getClass().getResource("../GUIFront/Base.fxml"));
+            Parent root = fxml.load();
+            BaseController baseController = fxml.getController();
+//            baseController.setButtonVisible();
+            baseController.LoadClassment();
+            contentArea.getChildren().removeAll();
+            contentArea.getChildren().setAll(root);
+        } catch (IOException ex) {
+
             System.out.println(ex.getMessage());
         }
     }

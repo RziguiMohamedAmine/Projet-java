@@ -25,8 +25,9 @@ public class main extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-//            root = FXMLLoader.load(getClass().getResource("Home.fxml"));
-            root = FXMLLoader.load(getClass().getResource("../GUIFront/MatchsDisplay.fxml"));
+            root = FXMLLoader.load(getClass().getResource("Home.fxml"));
+//            root = FXMLLoader.load(getClass().getResource("../GUIFront/MatchsDisplay.fxml"));
+//            root = FXMLLoader.load(getClass().getResource("../GUIFront/Base.fxml"));
 
             Scene scene = new Scene(root);
             primaryStage.setTitle("FTF desktop");

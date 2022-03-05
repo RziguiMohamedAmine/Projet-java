@@ -12,6 +12,7 @@ import entite.Match;
 import java.sql.Timestamp;
 import java.sql.Date;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.ArrayList;
@@ -26,9 +27,9 @@ import service.MatchService;
  * @author Houssem Charef
  */
 public class FTF_Desktop {
-
+    
     public static void main(String[] args) {
-
+        
         MatchService ms = new MatchService();
         //**************************match**************************
 
@@ -59,17 +60,19 @@ public class FTF_Desktop {
 //        bs.update(b);
 //        bs.delete(b);
 //        bs.getAll();
-        System.out.println(bs.getAll());
+//        System.out.println(bs.getAll());
 //        System.out.println(ms.getMatchsByDate("2022-02-16"));
 //        System.out.println(ms.getmatchsByEquipe(e2));
-        Timestamp millis = Timestamp.valueOf(LocalDateTime.of(2022, Month.FEBRUARY, 25, 16, 30));
-        System.out.println(ms.tirage_au_sort("20202021", millis));
+//        Timestamp millis = Timestamp.valueOf(LocalDateTime.of(2022, Month.FEBRUARY, 25, 16, 30));
+//        System.out.println(ms.tirage_au_sort("20202021", millis));
 //        ClassmentService cs = new ClassmentService();
 //        System.out.println(cs.getAllBySaison("20202021"));
-
-        System.out.println(bs.billet_disponible(m));
+//
+//        System.out.println(bs.billet_disponible(m));
 //        System.out.println(bs.reserverBillet(b));
 //        bs.QRcodeGen("fffff", 10);
-    }
 
+        System.out.println(ms.getMatchsByDate(LocalDate.now()));
+    }
+    
 }

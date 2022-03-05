@@ -6,6 +6,7 @@
 package GUIFront;
 
 import GUI.MatchAjoutModifyController;
+import entite.Billet;
 import entite.Match;
 import java.io.File;
 import java.io.FileInputStream;
@@ -24,6 +25,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 /**
@@ -31,7 +34,10 @@ import javafx.stage.Stage;
  *
  * @author Houssem Charef
  */
-public class MatchItemController implements Initializable {
+public class MatchItemController {
+
+    private Match match;
+    private Billet billet;
 
     @FXML
     private Label date;
@@ -47,15 +53,13 @@ public class MatchItemController implements Initializable {
     private Label butEquipe1Label;
     @FXML
     private ImageView logoEquipe2;
-    private Match match;
+    @FXML
+    private AnchorPane MatchItem;
 
     /**
      * Initializes the controller class.
      */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }
+    Listener<Match> lm;
 
     public void setDate(Match m) {
         try {
@@ -79,10 +83,12 @@ public class MatchItemController implements Initializable {
             }
 
             String absulutePath = new File("").getAbsolutePath();
-            Image image = new Image(new FileInputStream(absulutePath + "\\src\\GUI\\images\\ess.png"));
+            Image image1 = new Image(new FileInputStream(absulutePath + "\\src\\GUI\\images\\" + m.getEquipe1().getLogo()));
 
-            logoEquipe1.setImage(image);
-            logoEquipe2.setImage(image);
+            logoEquipe1.setImage(image1);
+            Image image2 = new Image(new FileInputStream(absulutePath + "\\src\\GUI\\images\\" + m.getEquipe2().getLogo()));
+
+            logoEquipe2.setImage(image2);
 
         } catch (FileNotFoundException ex) {
             Logger.getLogger(MatchItemController.class.getName()).log(Level.SEVERE, null, ex);
@@ -91,27 +97,63 @@ public class MatchItemController implements Initializable {
 
     @FXML
     private void openMatchDetails(MouseEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("MatchDetails.fxml"));
 
-            Parent root;
-
-            root = loader.load();
-
-            MatchDetailsController matchDetailsController = loader.getController();
-            matchDetailsController.setData(match);
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException ex) {
-            Logger.getLogger(MatchItemController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
+        BaseController baseController = BaseController.baseController;
+        baseController.setMatchSideBare(match);
+//        try {
+//            FXMLLoader loader = new FXMLLoader(getClass().getResource("MatchDetails.fxml"));
+//
+//            Parent root;
+//
+//            root = loader.load();
+//
+//            MatchDetailsController matchDetailsController = loader.getController();
+//            matchDetailsController.setData(match);
+////            FXMLLoader fxmlLoader = new FXMLLoader();
+////            Pane p = fxmlLoader.load(getClass().getResource("Base.fxml").openStream());
+////            BaseController baseController = (BaseController) fxmlLoader.getController();
+////            baseController.setMatchSideBare(root);
+//
+//            Scene scene = new Scene(root);
+//            Stage stage = new Stage();
+//            stage.setScene(scene);
+//            stage.show();
+//        } catch (IOException ex) {
+//            Logger.getLogger(MatchItemController.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        lm.onClickListener(match);
     }
 
     public void setMatch(Match m) {
         this.match = m;
+    }
+
+    void setBillet(Billet b) {
+        billet = b;
+    }
+
+    void setDataBillet(Billet b) {
+        try {
+            date.setText(b.getMatch().getDate() + "");
+
+            equipe1Label.setText(b.getMatch().getEquipe1().getNom());
+            equipe2Label.setText(b.getMatch().getEquipe2().getNom());
+
+            butEquipe1Label.setText("BLOC: " + b.getBloc());
+
+            butEquipe2Label.setText("Prix: " + b.getPrix());
+
+            String absulutePath = new File("").getAbsolutePath();
+            Image image1 = new Image(new FileInputStream(absulutePath + "\\src\\GUI\\images\\" + b.getMatch().getEquipe1().getLogo()));
+
+            logoEquipe1.setImage(image1);
+            Image image2 = new Image(new FileInputStream(absulutePath + "\\src\\GUI\\images\\" + b.getMatch().getEquipe2().getLogo()));
+
+            logoEquipe2.setImage(image2);
+
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(MatchItemController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

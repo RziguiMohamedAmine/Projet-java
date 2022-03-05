@@ -100,7 +100,7 @@
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button layoutX="11.0" layoutY="356.0" mnemonicParsing="false" onAction="#redirectToClasmment" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: #AAB2BD;" text="Classment">
+                  <Button layoutX="11.0" layoutY="356.0" mnemonicParsing="false" onAction="#redirectToClasmmentClient" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: #AAB2BD;" text="Classment">
                      <font>
                         <Font size="14.0" />
                      </font>

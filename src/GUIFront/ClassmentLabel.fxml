@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.text.Font?>
+
+<Label fx:id="text" alignment="CENTER" prefHeight="93.0" prefWidth="200.0" style="-fx-background-color: white;" text="text" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUIFront.ClassmentLabelController">
+   <font>
+      <Font size="18.0" />
+   </font>
+</Label>

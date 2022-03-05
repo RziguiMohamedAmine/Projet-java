@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package GUI;
+package GUIFront;
 
 /**
  *
  * @author Houssem Charef
  */
-class FooController {
+class classmentLabelController {
 
 }
