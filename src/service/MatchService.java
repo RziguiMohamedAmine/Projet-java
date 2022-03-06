@@ -71,11 +71,11 @@ public class MatchService implements IService<Match> {
         String sql = "UPDATE matchs SET equipe1=?,equipe2=?,nb_but1=?,nb_but2=?,stade=?,id_arbitre1=?,"
                 + "id_arbitre2=?,id_arbitre3=?,id_arbitre4=?,date=?,nb_spectateur=? WHERE id=?; ";
 
-        String sql_win = "UPDATE classment SET nb_totale_but=nb_totale_but+? , nb_point=nb_point+3, nb_win=nb_win+1 WHERE id_equipe=? and saison like ?;";
+        String sql_win = "UPDATE classment SET nb_totale_but=nb_totale_but+? , nb_point=nb_point+3, nb_win=nb_win+1 , nb_totale_but_recu=nb_totale_but_recu+? WHERE id_equipe=? and saison like ?;";
 
-        String sql_draw = "UPDATE classment SET nb_totale_but=nb_totale_but+? , nb_point=nb_point+1, nb_draw=nb_draw+1 WHERE id_equipe=? and saison like ?;";
+        String sql_draw = "UPDATE classment SET nb_totale_but=nb_totale_but+? , nb_point=nb_point+1, nb_draw=nb_draw+1, nb_totale_but_recu=nb_totale_but_recu+? WHERE id_equipe=? and saison like ?;";
 
-        String sql_lose = "UPDATE classment SET nb_totale_but=nb_totale_but+? , nb_lose=nb_lose+1 WHERE id_equipe=? and saison like ?;";
+        String sql_lose = "UPDATE classment SET nb_totale_but=nb_totale_but+? , nb_point=nb_point+0 ,nb_lose=nb_lose+1, nb_totale_but_recu=nb_totale_but_recu+? WHERE id_equipe=? and saison like ?;";
 
         if (match.getNb_but1() > match.getNb_but2()) {
             sql = sql + sql_win + sql_lose;
@@ -102,12 +102,16 @@ public class MatchService implements IService<Match> {
             ps.setTimestamp(10, match.getDate());
             ps.setLong(11, match.getNb_spectateur());
             ps.setInt(12, match.getId());
+
             ps.setInt(13, match.getNb_but1());
-            ps.setInt(14, match.getEquipe1().getId());
-            ps.setString(15, match.getSaison());
-            ps.setInt(16, match.getNb_but2());
-            ps.setInt(17, match.getEquipe2().getId());
-            ps.setString(18, match.getSaison());
+            ps.setInt(14, match.getNb_but2());
+            ps.setInt(15, match.getEquipe1().getId());
+            ps.setString(16, match.getSaison());
+            ps.setInt(17, match.getNb_but2());
+            ps.setInt(18, match.getNb_but1());
+
+            ps.setInt(19, match.getEquipe2().getId());
+            ps.setString(20, match.getSaison());
 
             int result = ps.executeUpdate();
             System.out.println("match update");
@@ -234,7 +238,6 @@ public class MatchService implements IService<Match> {
         Match match = new Match();
         try {
             ps = cnx.prepareStatement(sql);
-            System.out.println(Timestamp.valueOf(date.atStartOfDay()));
             ps.setTimestamp(1, Timestamp.valueOf(date.atStartOfDay()));
 
             ps.setTimestamp(2, Timestamp.valueOf(date.atTime(23, 59, 59)));

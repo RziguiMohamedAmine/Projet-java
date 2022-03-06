@@ -254,7 +254,6 @@ public class BilletService implements IService<Billet> {
             ByteArrayOutputStream output = QRCode.from(input).to(ImageType.JPG).withSize(500, 500).stream();
             String absolutePath = new File("").getAbsolutePath();
             File f = new File(absolutePath + "\\src\\GUI\\QRCode\\" + id + ".jpg");
-            System.out.println(absolutePath + "\\src\\GUI\\QRCode\\" + id + ".jpg");
             FileOutputStream fos;
 
             fos = new FileOutputStream(f);

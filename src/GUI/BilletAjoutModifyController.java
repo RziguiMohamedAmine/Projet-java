@@ -8,8 +8,8 @@ package GUI;
 import entite.Billet;
 import entite.Match;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -29,7 +29,6 @@ import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import service.BilletService;
 import service.MatchService;
-import service.ServicePaymentStripe;
 
 /**
  * FXML Controller class
@@ -53,6 +52,8 @@ public class BilletAjoutModifyController implements Initializable {
     private ObservableList<Match> matchList = FXCollections.observableArrayList();
     private BilletTableController billetTableController;
     private BilletAjoutModifyController billetAjoutModifyController;
+    private ObservableList<Match> futureMatch = FXCollections.observableArrayList();
+
     @FXML
     private ComboBox<String> blocComboBox;
 
@@ -72,7 +73,12 @@ public class BilletAjoutModifyController implements Initializable {
         matchService = new MatchService();
         billetService = new BilletService();
         matchList.addAll(matchService.getAll());
-        matchComboBox.setItems(matchList);
+        for (Match m : matchList) {
+            if (m.getDate().after(Timestamp.valueOf(LocalDateTime.now()))) {
+                futureMatch.add(m);
+            }
+        }
+        matchComboBox.setItems(futureMatch);
 
         StringConverter<Match> converter = new StringConverter<Match>() {
             @Override
@@ -94,10 +100,15 @@ public class BilletAjoutModifyController implements Initializable {
     private void updateOrDelete(ActionEvent event) {
         if (submitButton.getText().equals("Ajouter")) {
             ajout();
+            billetTableController.refreshTable();
+
+        } else if (submitButton.getText().equals("Reserver")) {
+            reserverBillet();
         } else {
             update();
+            billetTableController.refreshTable();
+
         }
-        billetTableController.refreshTable();
     }
 
     public void initializeTextField(Billet billet) {
@@ -122,7 +133,6 @@ public class BilletAjoutModifyController implements Initializable {
                 showAlert("Succès", "Mise à jour Succès", "votre mise à jour effectuer avec Succès", AlertType.INFORMATION);
             }
         } catch (NumberFormatException e) {
-            System.out.println(e.getClass());
             showAlert("champ text format", "prix", "prix doit etre un nombre", AlertType.ERROR);
 
         } catch (Exception e) {
@@ -140,7 +150,7 @@ public class BilletAjoutModifyController implements Initializable {
         alert.show();
     }
 
-    public void ajout() {
+    public void reserverBillet() {
         try {
             Match match = matchComboBox.getSelectionModel().getSelectedItem();
             String bloc = blocComboBox.getSelectionModel().getSelectedItem();
@@ -173,6 +183,49 @@ public class BilletAjoutModifyController implements Initializable {
                 if (p.getReturn()) {
                     billetService.reserverBillet(billet);
                     showAlert("succes", "ajout Succès", "votre ajout effectuer avec Succès", AlertType.INFORMATION);
+                } else {
+                    showAlert("error", "ajout error", "error reservation", AlertType.INFORMATION);
+
+                }
+
+            }
+        } catch (NumberFormatException e) {
+            System.out.println(e.getClass());
+            showAlert("champ text format", "prix", "prix doit etre un nombre", AlertType.ERROR);
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            showAlert("erreur", "erreur", "erreur inconnu", AlertType.ERROR);
+
+        }
+
+    }
+
+    public void ajout() {
+        try {
+            Match match = matchComboBox.getSelectionModel().getSelectedItem();
+            String bloc = blocComboBox.getSelectionModel().getSelectedItem();
+
+            float prix;
+            if (match == null || bloc == null) {
+                showAlert("champ text", "erreur", "vous devez remplir tous les champs", AlertType.ERROR);
+            } else {
+                if (bloc.equals("A    10D")) {
+                    prix = 10;
+                } else if (bloc.equals("B    25D")) {
+                    prix = 25;
+                } else if (bloc.equals("C    30D")) {
+                    prix = 30;
+                } else {
+                    prix = 15;
+                }
+                bloc = bloc.charAt(0) + "";
+
+                Billet billet = new Billet(match, bloc, prix);
+
+                if (billetService.insert(billet)) {
+                    showAlert("succes", "ajout Succès", "votre ajout effectuer avec Succès", AlertType.INFORMATION);
+
                 } else {
                     showAlert("error", "ajout error", "error reservation", AlertType.INFORMATION);
 

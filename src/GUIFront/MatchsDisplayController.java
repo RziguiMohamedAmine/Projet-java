@@ -111,7 +111,6 @@ public class MatchsDisplayController implements Initializable {
     }
 
     public void satDate(LocalDate date) {
-        System.out.println("2");
 
         matchList.clear();
         gridPane.getChildren().clear();

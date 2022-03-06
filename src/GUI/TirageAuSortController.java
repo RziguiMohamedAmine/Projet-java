@@ -59,7 +59,6 @@ public class TirageAuSortController implements Initializable {
             if (saison.matches("^[0-9][0-9][0-9][0-9]/[0-9][0-9][0-9][0-9]") && Integer.parseInt(saison.substring(0, 4)) + 1 == Integer.parseInt(saison.substring(5, 9))) {
                 saison = saison.replaceAll("/", "");
                 Timestamp millis = Timestamp.valueOf(dateField.getValue().atStartOfDay());
-                System.out.println(millis);
                 matchservice.tirage_au_sort(saison, millis);
 
                 gestionMatchController.refreshTable();

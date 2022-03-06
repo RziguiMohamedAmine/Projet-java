@@ -85,9 +85,14 @@ public class BaseController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         baseController = this;
-        Parent root;
         controlHbox.setVisible(true);
         DatePiker.setValue(LocalDate.now());
+        loadMatchs();
+    }
+
+    public void loadMatchs() {
+        Parent root;
+
         try {
             root = FXMLLoader.load(getClass().getResource("MatchsDisplay.fxml"));
 
@@ -96,12 +101,10 @@ public class BaseController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(BaseController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     public void setMatchSideBare(Match match) {
         this.match = match;
-        System.out.println(match);
         try {
             sideBareAncorePane.setVisible(true);
             Date.setText(match.getDate().toString());
@@ -139,12 +142,13 @@ public class BaseController implements Initializable {
             Parent root = loader.load();
             BilletAjoutModifyController billetAjoutModifyController = loader.getController();
 
-            billetAjoutModifyController.setButton("Ajouter");
+            billetAjoutModifyController.setButton("Reserver");
 
             Scene scene = new Scene(root);
             Stage stage = new Stage();
             stage.setScene(scene);
-            stage.show();
+            stage.showAndWait();
+            LoadGestionBillet();
 
         } catch (IOException ex) {
             Logger.getLogger(AjouterMatchController.class.getName()).log(Level.SEVERE, null, ex);
@@ -172,7 +176,7 @@ public class BaseController implements Initializable {
         Parent root;
         try {
             root = FXMLLoader.load(getClass().getResource("ClassmentDisplay.fxml"));
-
+            setSideBarVesibility(false);
             scroll.getChildren().removeAll();
             scroll.getChildren().setAll(root);
         } catch (IOException ex) {
@@ -186,6 +190,10 @@ public class BaseController implements Initializable {
 
     public void setSideBarVesibility(boolean visible) {
         this.sidebar.setVisible(visible);
+        System.out.println(visible);
+        if (visible == false) {
+            sidebar.setStyle("-fx-max-width:0");
+        }
     }
 
     public void setHboxVesibility(boolean visible) {

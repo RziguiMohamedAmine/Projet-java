@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import service.BilletService;
@@ -42,77 +43,79 @@ public class BilletDisplayController implements Initializable {
         billetService = new BilletService();
         billetList = billetService.getAll();
         int row = 0;
-        MatchItemController matchItemController;
-        try {
-            System.out.println(Timestamp.valueOf(LocalDateTime.now()));
-//            gridPane.add(anchorPane, 0, 1);
-            AnchorPane anchorPane1;
-            AnchorPane anchorPane2;
+        if (billetList.size() > 0) {
+            MatchItemController matchItemController;
+            try {
+                AnchorPane anchorPane1;
+                AnchorPane anchorPane2;
 
-            FXMLLoader fxmlloader1 = new FXMLLoader();
+                FXMLLoader fxmlloader1 = new FXMLLoader();
 
-            fxmlloader1.setLocation(getClass().getResource("RoundBare.fxml"));
-            anchorPane1 = fxmlloader1.load();
-            RoundBareController roundBareController = fxmlloader1.getController();
-            roundBareController.setLabel("Billet Active");
-            gridPane.add(anchorPane1, 0, row);
-            row++;
+                fxmlloader1.setLocation(getClass().getResource("RoundBare.fxml"));
+                anchorPane1 = fxmlloader1.load();
+                RoundBareController roundBareController = fxmlloader1.getController();
+                roundBareController.setLabel("Billet Active");
+                gridPane.add(anchorPane1, 0, row);
+                row++;
 
-            for (int i = 0; i < billetList.size(); i++) {
+                for (int i = 0; i < billetList.size(); i++) {
 
-                b = billetList.get(i);
-                if (b.getMatch().getDate().after(Timestamp.valueOf(LocalDateTime.now()))) {
-                    FXMLLoader fxmlloader2 = new FXMLLoader();
+                    b = billetList.get(i);
+                    if (b.getMatch().getDate().after(Timestamp.valueOf(LocalDateTime.now()))) {
+                        FXMLLoader fxmlloader2 = new FXMLLoader();
 
-                    fxmlloader2.setLocation(getClass().getResource("MatchItem.fxml"));
-                    anchorPane2 = fxmlloader2.load();
-                    matchItemController = fxmlloader2.getController();
-                    matchItemController.setBillet(b);
+                        fxmlloader2.setLocation(getClass().getResource("MatchItem.fxml"));
+                        anchorPane2 = fxmlloader2.load();
+                        matchItemController = fxmlloader2.getController();
+                        matchItemController.setBillet(b);
 
-                    matchItemController = fxmlloader2.getController();
-                    matchItemController.setDataBillet(b);
-                    matchItemController.setMatch(b.getMatch());
+                        matchItemController = fxmlloader2.getController();
+                        matchItemController.setDataBillet(b);
+                        matchItemController.setMatch(b.getMatch());
 
-                    gridPane.add(anchorPane2, 0, row);
-                    row++;
+                        gridPane.add(anchorPane2, 0, row);
+                        row++;
+                    }
+
                 }
 
-            }
+                fxmlloader1 = new FXMLLoader();
+                fxmlloader1.setLocation(getClass().getResource("RoundBare.fxml"));
+                anchorPane1 = fxmlloader1.load();
+                roundBareController = fxmlloader1.getController();
+                roundBareController.setLabel("Billet Non Active");
+                gridPane.add(anchorPane1, 0, row);
+                row++;
 
-            fxmlloader1 = new FXMLLoader();
-            fxmlloader1.setLocation(getClass().getResource("RoundBare.fxml"));
-            anchorPane1 = fxmlloader1.load();
-            roundBareController = fxmlloader1.getController();
-            roundBareController.setLabel("Billet Non Active");
-            gridPane.add(anchorPane1, 0, row);
-            row++;
+                for (int i = 0; i < billetList.size(); i++) {
 
-            AnchorPane a = new AnchorPane();
-            a.setStyle("-fx-height: 20px");
-            gridPane.add(a, 0, row);
-            row++;
-            for (int i = 0; i < billetList.size(); i++) {
+                    b = billetList.get(i);
+                    if (b.getMatch().getDate().before(Timestamp.valueOf(LocalDateTime.now()))) {
+                        FXMLLoader fxmlloader2 = new FXMLLoader();
 
-                b = billetList.get(i);
-                if (b.getMatch().getDate().before(Timestamp.valueOf(LocalDateTime.now()))) {
-                    FXMLLoader fxmlloader2 = new FXMLLoader();
+                        fxmlloader2.setLocation(getClass().getResource("MatchItem.fxml"));
+                        anchorPane2 = fxmlloader2.load();
+                        matchItemController = fxmlloader2.getController();
+                        matchItemController.setBillet(b);
 
-                    fxmlloader2.setLocation(getClass().getResource("MatchItem.fxml"));
-                    anchorPane2 = fxmlloader2.load();
-                    matchItemController = fxmlloader2.getController();
-                    matchItemController.setBillet(b);
+                        matchItemController = fxmlloader2.getController();
+                        matchItemController.setDataBillet(b);
+                        matchItemController.setMatch(b.getMatch());
 
-                    matchItemController = fxmlloader2.getController();
-                    matchItemController.setDataBillet(b);
-                    matchItemController.setMatch(b.getMatch());
+                        gridPane.add(anchorPane2, 0, row);
+                        row++;
+                    }
 
-                    gridPane.add(anchorPane2, 0, row);
-                    row++;
                 }
-
+            } catch (IOException ex) {
+                Logger.getLogger(MatchsDisplayController.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (IOException ex) {
-            Logger.getLogger(MatchsDisplayController.class.getName()).log(Level.SEVERE, null, ex);
+        } else {
+            Label label = new Label("Pas de Donnée");
+            label.setStyle("-fx-font-size:20px");
+
+            gridPane.add(label, 1, 10);
         }
     }
+
 }
