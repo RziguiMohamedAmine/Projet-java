@@ -17,7 +17,10 @@ import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.Pagination;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import service.MatchService;
@@ -31,9 +34,12 @@ public class MatchsDisplayController implements Initializable {
 
     List<Match> matchList;
     MatchService matchService;
+    private final static int rowsPerPage = 10;
 
     @FXML
     private GridPane gridPane;
+    @FXML
+    private Pagination pagination;
 
     /**
      * Initializes the controller class.
@@ -42,12 +48,20 @@ public class MatchsDisplayController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         matchService = new MatchService();
         matchList = new ArrayList<>();
-        matchList = matchService.getAll();
-        loaddata();
+        matchList = matchService.getMatchFuture();
+        pagination.setPageCount(matchList.size() / 10);
+        pagination.setPageFactory(this::createPage);
+
     }
 
-    public void loaddata() {
-        if (matchList.size() > 0) {
+    private Node createPage(int pageIndex) {
+
+        System.out.println(matchList.size());
+        gridPane.getChildren().clear();
+        int fromIndex = pageIndex * rowsPerPage;
+        int toIndex = Math.min(fromIndex + rowsPerPage, matchList.size());
+        List<Match> subList = matchList.subList(fromIndex, toIndex);
+        if (subList.size() > 0) {
             try {
                 int rows = 2;
 
@@ -60,9 +74,9 @@ public class MatchsDisplayController implements Initializable {
                 fxmlloader1.setLocation(getClass().getResource("RoundBare.fxml"));
                 anchorPane = fxmlloader1.load();
                 RoundBareController roundBareController = fxmlloader1.getController();
-                roundBareController.setLabel("Round " + matchList.get(0).getRound());
+                roundBareController.setLabel("Round " + subList.get(0).getRound());
                 gridPane.add(anchorPane, 0, 0);
-                Match m = matchList.get(0);
+                Match m = subList.get(0);
                 fxmlloader2.setLocation(getClass().getResource("MatchItem.fxml"));
                 anchorPane2 = fxmlloader2.load();
                 MatchItemController matchItemController = fxmlloader2.getController();
@@ -72,20 +86,19 @@ public class MatchsDisplayController implements Initializable {
 
                 gridPane.add(anchorPane2, 0, 1);
 
-                for (int i = 1; i < matchList.size(); i++) {
+                for (int i = 1; i < subList.size(); i++) {
                     fxmlloader1 = new FXMLLoader();
 
-                    if (matchList.get(i).getRound() != matchList.get(i - 1).getRound()) {
+                    if (subList.get(i).getRound() != subList.get(i - 1).getRound()) {
 
                         fxmlloader1.setLocation(getClass().getResource("RoundBare.fxml"));
                         anchorPane = fxmlloader1.load();
-//                    anchorPane.setStyle("-fx-margin:10px");
                         roundBareController = fxmlloader1.getController();
-                        roundBareController.setLabel("Round " + matchList.get(i).getRound());
+                        roundBareController.setLabel("Round " + subList.get(i).getRound());
                         gridPane.add(anchorPane, 0, rows);
                         rows++;
                     }
-                    m = matchList.get(i);
+                    m = subList.get(i);
                     fxmlloader2 = new FXMLLoader();
 
                     fxmlloader2.setLocation(getClass().getResource("MatchItem.fxml"));
@@ -108,6 +121,9 @@ public class MatchsDisplayController implements Initializable {
 
             gridPane.add(label, 1, 10);
         }
+
+        return gridPane;
+
     }
 
     public void satDate(LocalDate date) {
@@ -115,7 +131,17 @@ public class MatchsDisplayController implements Initializable {
         matchList.clear();
         gridPane.getChildren().clear();
         matchList.addAll(matchService.getMatchsByDate(date));
-        loaddata();
+        pagination.setPageCount((matchList.size() / 10) + 1);
+        pagination.setPageFactory(this::createPage);
+
+    }
+
+    @FXML
+    private void ChangePaginationContent(MouseEvent event) {
+        int Pagecount = pagination.getCurrentPageIndex();
+        System.out.println(Pagecount);
+
+        createPage(Pagecount);
     }
 
 }

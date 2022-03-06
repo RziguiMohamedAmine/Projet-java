@@ -176,7 +176,7 @@
                         <Insets left="20.0" right="20.0" />
                      </VBox.margin>
                   </VBox>
-                  <HBox alignment="CENTER" prefHeight="877.0" prefWidth="880.0" VBox.vgrow="ALWAYS">
+                  <HBox alignment="CENTER" prefHeight="877.0" prefWidth="880.0" scaleZ="-1.0" VBox.vgrow="ALWAYS">
                      <children>
                         <Pane fx:id="scroll">
                            <cursor>

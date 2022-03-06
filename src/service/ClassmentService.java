@@ -63,7 +63,7 @@ public class ClassmentService {
 
     public List<String> getAvalableSaison() {
 
-        String sql = "SELECT DISTINCT saison FROM `classment`";
+        String sql = "SELECT DISTINCT saison FROM `classment` order by saison desc";
         List<String> list = new ArrayList<>();
         try {
             ps = cnx.prepareStatement(sql);
