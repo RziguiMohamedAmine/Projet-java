@@ -9,6 +9,7 @@ import entite.Match;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -16,6 +17,7 @@ import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import service.MatchService;
@@ -39,17 +41,16 @@ public class MatchsDisplayController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         matchService = new MatchService();
+        matchList = new ArrayList<>();
         matchList = matchService.getAll();
         loaddata();
     }
 
     public void loaddata() {
         if (matchList.size() > 0) {
-            System.out.println(matchList);
             try {
                 int rows = 2;
 
-//            gridPane.add(anchorPane, 0, 1);
                 AnchorPane anchorPane;
                 AnchorPane anchorPane2;
 
@@ -59,7 +60,7 @@ public class MatchsDisplayController implements Initializable {
                 fxmlloader1.setLocation(getClass().getResource("RoundBare.fxml"));
                 anchorPane = fxmlloader1.load();
                 RoundBareController roundBareController = fxmlloader1.getController();
-                roundBareController.setLabel(matchList.get(0).getRound());
+                roundBareController.setLabel("Round " + matchList.get(0).getRound());
                 gridPane.add(anchorPane, 0, 0);
                 Match m = matchList.get(0);
                 fxmlloader2.setLocation(getClass().getResource("MatchItem.fxml"));
@@ -80,7 +81,7 @@ public class MatchsDisplayController implements Initializable {
                         anchorPane = fxmlloader1.load();
 //                    anchorPane.setStyle("-fx-margin:10px");
                         roundBareController = fxmlloader1.getController();
-                        roundBareController.setLabel(matchList.get(i).getRound());
+                        roundBareController.setLabel("Round " + matchList.get(i).getRound());
                         gridPane.add(anchorPane, 0, rows);
                         rows++;
                     }
@@ -101,10 +102,19 @@ public class MatchsDisplayController implements Initializable {
             } catch (IOException ex) {
                 Logger.getLogger(MatchsDisplayController.class.getName()).log(Level.SEVERE, null, ex);
             }
+        } else {
+            Label label = new Label("Pas de Donnée");
+            label.setStyle("-fx-font-size:20px");
+
+            gridPane.add(label, 1, 10);
         }
     }
 
     public void satDate(LocalDate date) {
+        System.out.println("2");
+
+        matchList.clear();
+        gridPane.getChildren().clear();
         matchList.addAll(matchService.getMatchsByDate(date));
         loaddata();
     }

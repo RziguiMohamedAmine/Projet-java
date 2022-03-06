@@ -31,13 +31,7 @@
          </font>
       </Label>
       <ComboBox fx:id="matchComboBox" prefHeight="35.0" prefWidth="300.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-      <TextField fx:id="prix" prefHeight="35.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
       <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="31.0" prefWidth="466.0" text="bloc" GridPane.columnIndex="1" GridPane.rowIndex="2">
-         <font>
-            <Font name="System Italic" size="21.0" />
-         </font>
-      </Label>
-      <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="31.0" prefWidth="540.0" text="prix" GridPane.columnIndex="1" GridPane.rowIndex="3">
          <font>
             <Font name="System Italic" size="21.0" />
          </font>
@@ -50,5 +44,6 @@
       <Button fx:id="submitButton" mnemonicParsing="false" onAction="#updateOrDelete" prefHeight="35.0" prefWidth="203.0" text="Button" GridPane.columnIndex="4" GridPane.rowIndex="4" />
       <TextField fx:id="idBillet" visible="false" GridPane.columnIndex="4" GridPane.rowIndex="2" />
       <TextField fx:id="bloc" prefHeight="35.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+      <ComboBox fx:id="blocComboBox" prefHeight="35.0" prefWidth="300.0" promptText="Choisir un block" GridPane.columnIndex="3" GridPane.rowIndex="2" />
    </children>
 </GridPane>

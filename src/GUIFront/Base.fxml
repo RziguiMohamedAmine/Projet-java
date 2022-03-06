@@ -25,7 +25,7 @@
                   <String fx:value="bo" />
                </styleClass>
                <children>
-                  <AnchorPane id="AnchorPane" prefHeight="835.0" prefWidth="435.0" styleClass="white-background" stylesheets="@style.css">
+                  <AnchorPane id="AnchorPane" fx:id="sideBareAncorePane" prefHeight="835.0" prefWidth="435.0" styleClass="white-background" stylesheets="@style.css" visible="false">
                      <children>
                         <VBox prefHeight="732.0" prefWidth="485.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
@@ -157,7 +157,20 @@
                               <Font name="System Bold Italic" size="17.0" />
                            </font>
                         </Button>
-                        <DatePicker fx:id="DatePiker" onAction="#loadmatchbyDate" prefHeight="33.0" prefWidth="191.0" />
+                        <HBox fx:id="controlHbox" alignment="CENTER_RIGHT" prefHeight="64.0" prefWidth="840.0" visible="false">
+                           <children>
+                              <DatePicker fx:id="DatePiker" onAction="#loadmatchbyDate" prefHeight="33.0" prefWidth="191.0">
+                                 <HBox.margin>
+                                    <Insets right="10.0" />
+                                 </HBox.margin>
+                              </DatePicker>
+                              <Button mnemonicParsing="false" onAction="#resetMatchs" prefHeight="33.0" prefWidth="95.0" style="-fx-background-color: #c00000;" text="reset" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold Italic" size="15.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </HBox>
                      </children>
                      <VBox.margin>
                         <Insets left="20.0" right="20.0" />

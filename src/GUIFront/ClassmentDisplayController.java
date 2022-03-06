@@ -46,6 +46,7 @@ public class ClassmentDisplayController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         BaseController baseController = BaseController.baseController;
         baseController.setSideBarVesibility(false);
+        baseController.setHboxVesibility(false);
         classmentService = new ClassmentService();
         saisonList.addAll(classmentService.getAvalableSaison());
         saisonComboBox.setItems(saisonList);

@@ -8,6 +8,8 @@ package GUI;
 import entite.Billet;
 import entite.Match;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -38,28 +40,35 @@ public class BilletAjoutModifyController implements Initializable {
 
     @FXML
     private ComboBox<Match> matchComboBox;
-    @FXML
-    private TextField prix;
+
     @FXML
     private Label title;
     @FXML
     private Button submitButton;
     @FXML
     private TextField idBillet;
-    @FXML
-    private TextField bloc;
 
     private MatchService matchService;
     private BilletService billetService;
     private ObservableList<Match> matchList = FXCollections.observableArrayList();
     private BilletTableController billetTableController;
     private BilletAjoutModifyController billetAjoutModifyController;
+    @FXML
+    private ComboBox<String> blocComboBox;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        ObservableList<String> list = FXCollections.observableArrayList();
+        list.add("A    10D");
+        list.add("B    25D");
+
+        list.add("C    30D");
+        list.add("D    15D");
+
+        blocComboBox.setItems(list);
         matchService = new MatchService();
         billetService = new BilletService();
         matchList.addAll(matchService.getAll());
@@ -93,20 +102,18 @@ public class BilletAjoutModifyController implements Initializable {
 
     public void initializeTextField(Billet billet) {
         matchComboBox.getSelectionModel().select(billet.getMatch());
-        prix.setText(billet.getPrix() + "");
         idBillet.setText(billet.getId() + "");
-        bloc.setText(billet.getBloc());
-
+        blocComboBox.getSelectionModel().select(billet.getBloc());
     }
 
     public void update() {
         try {
             Match match = matchComboBox.getSelectionModel().getSelectedItem();
-            String bloc = this.bloc.getText();
-            float prix = Float.parseFloat(this.prix.getText());
+            String bloc = blocComboBox.getSelectionModel().getSelectedItem();
+            bloc = bloc.charAt(0) + "";
             int id = Integer.parseInt(idBillet.getText());
-
-            if (match == null || bloc.equals("") || prix == 0) {
+            float prix = 20f;
+            if (match == null || bloc.equals("")) {
                 showAlert("champ text", "erreur", "vous devez remplir tous les champs", AlertType.ERROR);
             } else {
                 Billet billet = new Billet(id, match, bloc, prix);
@@ -136,11 +143,23 @@ public class BilletAjoutModifyController implements Initializable {
     public void ajout() {
         try {
             Match match = matchComboBox.getSelectionModel().getSelectedItem();
-            String bloc = this.bloc.getText();
-            float prix = Float.parseFloat(this.prix.getText());
-            if (match == null || bloc.equals("") || prix == 0) {
+            String bloc = blocComboBox.getSelectionModel().getSelectedItem();
+
+            float prix;
+            if (match == null || bloc == null) {
                 showAlert("champ text", "erreur", "vous devez remplir tous les champs", AlertType.ERROR);
             } else {
+                if (bloc.equals("A    10D")) {
+                    prix = 10;
+                } else if (bloc.equals("B    25D")) {
+                    prix = 25;
+                } else if (bloc.equals("C    30D")) {
+                    prix = 30;
+                } else {
+                    prix = 15;
+                }
+                bloc = bloc.charAt(0) + "";
+
                 Billet billet = new Billet(match, bloc, prix);
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("Payment.fxml"));
                 Parent root;

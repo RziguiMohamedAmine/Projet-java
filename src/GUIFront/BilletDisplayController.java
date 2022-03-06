@@ -8,6 +8,8 @@ package GUIFront;
 import entite.Billet;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -39,29 +41,74 @@ public class BilletDisplayController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         billetService = new BilletService();
         billetList = billetService.getAll();
+        int row = 0;
         MatchItemController matchItemController;
         try {
-
+            System.out.println(Timestamp.valueOf(LocalDateTime.now()));
 //            gridPane.add(anchorPane, 0, 1);
-            AnchorPane anchorPane;
+            AnchorPane anchorPane1;
             AnchorPane anchorPane2;
 
-            FXMLLoader fxmlloader2 = new FXMLLoader();
+            FXMLLoader fxmlloader1 = new FXMLLoader();
+
+            fxmlloader1.setLocation(getClass().getResource("RoundBare.fxml"));
+            anchorPane1 = fxmlloader1.load();
+            RoundBareController roundBareController = fxmlloader1.getController();
+            roundBareController.setLabel("Billet Active");
+            gridPane.add(anchorPane1, 0, row);
+            row++;
 
             for (int i = 0; i < billetList.size(); i++) {
 
                 b = billetList.get(i);
-                fxmlloader2 = new FXMLLoader();
+                if (b.getMatch().getDate().after(Timestamp.valueOf(LocalDateTime.now()))) {
+                    FXMLLoader fxmlloader2 = new FXMLLoader();
 
-                fxmlloader2.setLocation(getClass().getResource("MatchItem.fxml"));
-                anchorPane2 = fxmlloader2.load();
-                matchItemController = fxmlloader2.getController();
-                matchItemController.setBillet(b);
+                    fxmlloader2.setLocation(getClass().getResource("MatchItem.fxml"));
+                    anchorPane2 = fxmlloader2.load();
+                    matchItemController = fxmlloader2.getController();
+                    matchItemController.setBillet(b);
 
-                matchItemController = fxmlloader2.getController();
-                matchItemController.setDataBillet(b);
+                    matchItemController = fxmlloader2.getController();
+                    matchItemController.setDataBillet(b);
+                    matchItemController.setMatch(b.getMatch());
 
-                gridPane.add(anchorPane2, 0, i);
+                    gridPane.add(anchorPane2, 0, row);
+                    row++;
+                }
+
+            }
+
+            fxmlloader1 = new FXMLLoader();
+            fxmlloader1.setLocation(getClass().getResource("RoundBare.fxml"));
+            anchorPane1 = fxmlloader1.load();
+            roundBareController = fxmlloader1.getController();
+            roundBareController.setLabel("Billet Non Active");
+            gridPane.add(anchorPane1, 0, row);
+            row++;
+
+            AnchorPane a = new AnchorPane();
+            a.setStyle("-fx-height: 20px");
+            gridPane.add(a, 0, row);
+            row++;
+            for (int i = 0; i < billetList.size(); i++) {
+
+                b = billetList.get(i);
+                if (b.getMatch().getDate().before(Timestamp.valueOf(LocalDateTime.now()))) {
+                    FXMLLoader fxmlloader2 = new FXMLLoader();
+
+                    fxmlloader2.setLocation(getClass().getResource("MatchItem.fxml"));
+                    anchorPane2 = fxmlloader2.load();
+                    matchItemController = fxmlloader2.getController();
+                    matchItemController.setBillet(b);
+
+                    matchItemController = fxmlloader2.getController();
+                    matchItemController.setDataBillet(b);
+                    matchItemController.setMatch(b.getMatch());
+
+                    gridPane.add(anchorPane2, 0, row);
+                    row++;
+                }
 
             }
         } catch (IOException ex) {

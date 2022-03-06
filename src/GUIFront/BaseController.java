@@ -28,6 +28,8 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -72,6 +74,10 @@ public class BaseController implements Initializable {
     private Label stade;
     @FXML
     private DatePicker DatePiker;
+    @FXML
+    private AnchorPane sideBareAncorePane;
+    @FXML
+    private HBox controlHbox;
 
     /**
      * Initializes the controller class.
@@ -80,6 +86,7 @@ public class BaseController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         baseController = this;
         Parent root;
+        controlHbox.setVisible(true);
         DatePiker.setValue(LocalDate.now());
         try {
             root = FXMLLoader.load(getClass().getResource("MatchsDisplay.fxml"));
@@ -94,7 +101,9 @@ public class BaseController implements Initializable {
 
     public void setMatchSideBare(Match match) {
         this.match = match;
+        System.out.println(match);
         try {
+            sideBareAncorePane.setVisible(true);
             Date.setText(match.getDate().toString());
             nomEquipe1.setText(match.getEquipe1().getNom());
             nomEquipe2.setText(match.getEquipe2().getNom());
@@ -145,6 +154,7 @@ public class BaseController implements Initializable {
     public void LoadGestionBillet() {
         Parent root;
         try {
+            controlHbox.setVisible(false);
             root = FXMLLoader.load(getClass().getResource("BilletDisplay.fxml"));
 
             scroll.getChildren().removeAll();
@@ -178,16 +188,38 @@ public class BaseController implements Initializable {
         this.sidebar.setVisible(visible);
     }
 
+    public void setHboxVesibility(boolean visible) {
+        this.controlHbox.setVisible(visible);
+    }
+
     @FXML
     private void loadmatchbyDate(ActionEvent event) {
-        baseController = this;
+        sideBareAncorePane.setVisible(false);
+
         Parent root;
-        DatePiker.setValue(LocalDate.now());
         try {
             FXMLLoader fxml = new FXMLLoader(getClass().getResource("MatchsDisplay.fxml"));
 
             root = fxml.load();
             MatchsDisplayController matchsDisplayController = fxml.getController();
+            matchsDisplayController.satDate(DatePiker.getValue());
+
+            scroll.getChildren().removeAll();
+            scroll.getChildren().setAll(root);
+        } catch (IOException ex) {
+            Logger.getLogger(BaseController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @FXML
+    private void resetMatchs(ActionEvent event) {
+        Parent root;
+        try {
+            sideBareAncorePane.setVisible(false);
+
+            FXMLLoader fxml = new FXMLLoader(getClass().getResource("MatchsDisplay.fxml"));
+
+            root = fxml.load();
 
             scroll.getChildren().removeAll();
             scroll.getChildren().setAll(root);

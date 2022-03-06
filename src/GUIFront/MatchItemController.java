@@ -100,28 +100,6 @@ public class MatchItemController {
 
         BaseController baseController = BaseController.baseController;
         baseController.setMatchSideBare(match);
-//        try {
-//            FXMLLoader loader = new FXMLLoader(getClass().getResource("MatchDetails.fxml"));
-//
-//            Parent root;
-//
-//            root = loader.load();
-//
-//            MatchDetailsController matchDetailsController = loader.getController();
-//            matchDetailsController.setData(match);
-////            FXMLLoader fxmlLoader = new FXMLLoader();
-////            Pane p = fxmlLoader.load(getClass().getResource("Base.fxml").openStream());
-////            BaseController baseController = (BaseController) fxmlLoader.getController();
-////            baseController.setMatchSideBare(root);
-//
-//            Scene scene = new Scene(root);
-//            Stage stage = new Stage();
-//            stage.setScene(scene);
-//            stage.show();
-//        } catch (IOException ex) {
-//            Logger.getLogger(MatchItemController.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        lm.onClickListener(match);
     }
 
     public void setMatch(Match m) {

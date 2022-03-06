@@ -17,7 +17,7 @@ import javafx.scene.control.Label;
  * @author Houssem Charef
  */
 public class RoundBareController implements Initializable {
-    
+
     @FXML
     private Label roundLabel;
 
@@ -28,9 +28,9 @@ public class RoundBareController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }
-    
-    void setLabel(int round) {
-        roundLabel.setText("Round " + round);
+
+    void setLabel(String round) {
+        roundLabel.setText(round);
     }
-    
+
 }
