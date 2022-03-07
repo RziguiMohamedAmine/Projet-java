@@ -41,26 +41,27 @@ public class BilletDisplayController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         billetService = new BilletService();
-        billetList = billetService.getAll();
+        billetList = billetService.getBilletByUser(47);
         int row = 0;
-        if (billetList.size() > 0) {
+        try {
+            AnchorPane anchorPane1;
+            AnchorPane anchorPane2;
             MatchItemController matchItemController;
-            try {
-                AnchorPane anchorPane1;
-                AnchorPane anchorPane2;
 
-                FXMLLoader fxmlloader1 = new FXMLLoader();
+            FXMLLoader fxmlloader1 = new FXMLLoader();
 
-                fxmlloader1.setLocation(getClass().getResource("RoundBare.fxml"));
-                anchorPane1 = fxmlloader1.load();
-                RoundBareController roundBareController = fxmlloader1.getController();
-                roundBareController.setLabel("Billet Active");
-                gridPane.add(anchorPane1, 0, row);
-                row++;
-
+            fxmlloader1.setLocation(getClass().getResource("RoundBare.fxml"));
+            anchorPane1 = fxmlloader1.load();
+            RoundBareController roundBareController = fxmlloader1.getController();
+            roundBareController.setLabel("Billet Active");
+            gridPane.add(anchorPane1, 0, row);
+            row++;
+            if (billetList.size() > 0) {
                 for (int i = 0; i < billetList.size(); i++) {
 
                     b = billetList.get(i);
+                    System.out.println(b);
+
                     if (b.getMatch().getDate().after(Timestamp.valueOf(LocalDateTime.now()))) {
                         FXMLLoader fxmlloader2 = new FXMLLoader();
 
@@ -78,14 +79,33 @@ public class BilletDisplayController implements Initializable {
                     }
 
                 }
+            }
+            System.out.println(row + "" + billetList.size());
 
-                fxmlloader1 = new FXMLLoader();
-                fxmlloader1.setLocation(getClass().getResource("RoundBare.fxml"));
-                anchorPane1 = fxmlloader1.load();
-                roundBareController = fxmlloader1.getController();
-                roundBareController.setLabel("Billet Non Active");
-                gridPane.add(anchorPane1, 0, row);
+            if (row == 1) {
+                Label label = new Label("Pas de Donnée");
+                label.setStyle("-fx-font-size:20px");
+
+                gridPane.add(label, 1, row);
                 row++;
+            }
+
+            fxmlloader1 = new FXMLLoader();
+            fxmlloader1.setLocation(getClass().getResource("RoundBare.fxml"));
+            anchorPane1 = fxmlloader1.load();
+            roundBareController = fxmlloader1.getController();
+            roundBareController.setLabel("Billet Non Active");
+            gridPane.add(anchorPane1, 0, row);
+            row++;
+
+            System.out.println(row + " " + billetList.size());
+
+            if (row >= billetList.size() + 2) {
+                Label label = new Label("Pas de Donnée");
+                label.setStyle("-fx-font-size:20px");
+
+                gridPane.add(label, 1, row);
+            } else {
 
                 for (int i = 0; i < billetList.size(); i++) {
 
@@ -107,15 +127,11 @@ public class BilletDisplayController implements Initializable {
                     }
 
                 }
-            } catch (IOException ex) {
-                Logger.getLogger(MatchsDisplayController.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } else {
-            Label label = new Label("Pas de Donnée");
-            label.setStyle("-fx-font-size:20px");
 
-            gridPane.add(label, 1, 10);
+        } catch (IOException ex) {
+            Logger.getLogger(MatchsDisplayController.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
 
+    }
 }

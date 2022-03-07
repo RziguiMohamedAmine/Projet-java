@@ -42,11 +42,7 @@ public class HomeController implements Initializable {
             Parent fxml = FXMLLoader.load(getClass().getResource("../GUIFront/Base.fxml"));
             contentArea.getChildren().removeAll();
             contentArea.getChildren().setAll(fxml);
-//            TreeItem<String> rootItem = new TreeItem<>("gestion match");
-//            TreeItem<String> branchIntem1 = new TreeItem<>("Ajouter Match");
-//            TreeItem<String> branchIntem2 = new TreeItem<>("suprimer match");
-//            treeView.setRoot(rootItem);
-//            rootItem.getChildren().addAll(branchIntem1, branchIntem2);
+//           
 
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
@@ -58,24 +54,6 @@ public class HomeController implements Initializable {
         stage.close();
     }
 
-//    @FXML
-//    public void selctItem() {
-//        TreeItem<String> item = treeView.getSelectionModel().getSelectedItem();
-//
-//        if (item != null) {
-//            String itemText = item.getValue();
-//            itemText = itemText.replaceAll("\\s+", "");
-//            itemText = itemText + ".fxml";
-//
-//            try {
-//                Parent fxml = FXMLLoader.load(getClass().getResource(itemText));
-//                contentArea.getChildren().removeAll();
-//                contentArea.getChildren().setAll(fxml);
-//            } catch (IOException ex) {
-//                System.out.println(ex.getMessage());
-//            }
-//        }
-//    }
     @FXML
     private void home(ActionEvent event) {
 
@@ -93,6 +71,21 @@ public class HomeController implements Initializable {
         }
     }
 
+//    @FXML
+//    private void redirectGestionBillet(ActionEvent event) {
+//        try {
+//            FXMLLoader fxml = new FXMLLoader(getClass().getResource("BilletTable.fxml"));
+//            Parent root = fxml.load();
+////            BaseController baseController = fxml.getController();
+////            baseController.setButtonVisible();
+////            baseController.LoadGestionBillet();
+//            contentArea.getChildren().removeAll();
+//            contentArea.getChildren().setAll(root);
+//        } catch (IOException ex) {
+//
+//            System.out.println(ex.getMessage());
+//        }
+//    }
     @FXML
     private void redirectGestionBillet(ActionEvent event) {
         try {

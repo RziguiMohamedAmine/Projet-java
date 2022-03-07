@@ -49,7 +49,7 @@ public class MatchsDisplayController implements Initializable {
         matchService = new MatchService();
         matchList = new ArrayList<>();
         matchList = matchService.getMatchFuture();
-        pagination.setPageCount(matchList.size() / 10);
+        pagination.setPageCount((matchList.size() / 10) + 1);
         pagination.setPageFactory(this::createPage);
 
     }
@@ -131,6 +131,16 @@ public class MatchsDisplayController implements Initializable {
         matchList.clear();
         gridPane.getChildren().clear();
         matchList.addAll(matchService.getMatchsByDate(date));
+        pagination.setPageCount((matchList.size() / 10) + 1);
+        pagination.setPageFactory(this::createPage);
+
+    }
+
+    public void satnomEquipe(String nomEquipe) {
+
+        matchList.clear();
+        gridPane.getChildren().clear();
+        matchList.addAll(matchService.getmatchsByEquipe(nomEquipe));
         pagination.setPageCount((matchList.size() / 10) + 1);
         pagination.setPageFactory(this::createPage);
 

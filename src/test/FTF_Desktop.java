@@ -72,7 +72,9 @@ public class FTF_Desktop {
 //        System.out.println(bs.reserverBillet(b));
 //        bs.QRcodeGen("fffff", 10);
 
-        System.out.println(ms.getMatchsByDate(LocalDate.now()));
+//        System.out.println(ms.getMatchsByDate(LocalDate.now()));
+        System.out.println(ms.getmatchsByEquipe("esp"));
+        
     }
     
 }

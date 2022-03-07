@@ -26,6 +26,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -33,6 +34,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import service.MatchService;
 
 /**
  * FXML Controller class
@@ -78,12 +80,18 @@ public class BaseController implements Initializable {
     private AnchorPane sideBareAncorePane;
     @FXML
     private HBox controlHbox;
+    @FXML
+    private TextField rechercheTextField;
+    @FXML
+    private Button rechercheButon;
+    private MatchService matchservice;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        matchservice = new MatchService();
         baseController = this;
         controlHbox.setVisible(true);
         DatePiker.setValue(LocalDate.now());
@@ -234,6 +242,28 @@ public class BaseController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(BaseController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    @FXML
+    private void recherche(ActionEvent event) {
+        sideBareAncorePane.setVisible(false);
+        String nomEquipe = rechercheTextField.getText();
+        if (!nomEquipe.isEmpty()) {
+            Parent root;
+            try {
+                FXMLLoader fxml = new FXMLLoader(getClass().getResource("MatchsDisplay.fxml"));
+
+                root = fxml.load();
+                MatchsDisplayController matchsDisplayController = fxml.getController();
+                matchsDisplayController.satnomEquipe(nomEquipe);
+
+                scroll.getChildren().removeAll();
+                scroll.getChildren().setAll(root);
+            } catch (IOException ex) {
+                Logger.getLogger(BaseController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
     }
 
 }

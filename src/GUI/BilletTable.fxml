@@ -47,7 +47,7 @@
          <children>
             <TableView fx:id="billetTableView" editable="true" prefHeight="688.0" prefWidth="1152.0" tableMenuButtonVisible="true">
                <columns>
-                  <TableColumn fx:id="idBillet" prefWidth="75.0" text="id Billet" />
+                  <TableColumn fx:id="idBillet" prefWidth="75.0" text="Reference" />
                   <TableColumn fx:id="bloc" prefWidth="75.0" text="Bloc" />
                   <TableColumn fx:id="prix" prefWidth="75.0" text="Prix" />
                   <TableColumn fx:id="equipe1" prefWidth="75.0" text="Equipe 1" />

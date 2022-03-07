@@ -95,11 +95,12 @@ public class BilletTableController implements Initializable {
     private void LoadData() {
 
         refreshTable();
-        idBillet.setCellValueFactory(new PropertyValueFactory<>("id"));
+        idBillet.setCellValueFactory(cellData
+                -> new SimpleStringProperty("B" + cellData.getValue().getId() * 3600 + ""));
         bloc.setCellValueFactory(new PropertyValueFactory<>("bloc"));
         prix.setCellValueFactory(new PropertyValueFactory<>("prix"));
         stade.setCellValueFactory(cellData
-                -> new SimpleStringProperty(cellData.getValue().getMatch().getStade()));
+                -> new SimpleStringProperty(cellData.getValue().getMatch().getEquipe1().getSatde()));
         equipe1.setCellValueFactory(cellData
                 -> new SimpleStringProperty(cellData.getValue().getMatch().getEquipe1().getNom()));
         equipe2.setCellValueFactory(cellData

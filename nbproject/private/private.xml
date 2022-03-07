@@ -3,19 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Users/Houssem%20Charef/Documents/NetBeansProjects/FTF_Desktop/src/GUIFront/ClassmentLabel.fxml</file>
             <file>file:/D:/Users/Houssem%20Charef/Documents/NetBeansProjects/FTF_Desktop/src/GUIFront/BaseController.java</file>
-            <file>file:/D:/Users/Houssem%20Charef/Documents/NetBeansProjects/FTF_Desktop/src/GUIFront/Base.fxml</file>
-            <file>file:/D:/Users/Houssem%20Charef/Documents/NetBeansProjects/FTF_Desktop/src/GUI/BilletAjoutModifyController.java</file>
-            <file>file:/D:/Users/Houssem%20Charef/Documents/NetBeansProjects/FTF_Desktop/src/GUIFront/ClassmentDisplay.fxml</file>
-            <file>file:/D:/Users/Houssem%20Charef/Documents/NetBeansProjects/FTF_Desktop/src/GUIFront/MatchItemController.java</file>
-            <file>file:/D:/Users/Houssem%20Charef/Documents/NetBeansProjects/FTF_Desktop/src/GUIFront/RoundBareController.java</file>
-            <file>file:/D:/Users/Houssem%20Charef/Documents/NetBeansProjects/FTF_Desktop/src/GUIFront/MatchsDisplayController.java</file>
-            <file>file:/D:/Users/Houssem%20Charef/Documents/NetBeansProjects/FTF_Desktop/src/GUIFront/MatchDetailsController.java</file>
-            <file>file:/D:/Users/Houssem%20Charef/Documents/NetBeansProjects/FTF_Desktop/src/GUIFront/ClassmentDisplayController.java</file>
-            <file>file:/D:/Users/Houssem%20Charef/Documents/NetBeansProjects/FTF_Desktop/src/GUIFront/ClassmentLabelController.java</file>
             <file>file:/D:/Users/Houssem%20Charef/Documents/NetBeansProjects/FTF_Desktop/src/service/BilletService.java</file>
             <file>file:/D:/Users/Houssem%20Charef/Documents/NetBeansProjects/FTF_Desktop/src/GUIFront/BilletDisplayController.java</file>
+            <file>file:/D:/Users/Houssem%20Charef/Documents/NetBeansProjects/FTF_Desktop/src/GUI/HomeController.java</file>
         </group>
     </open-files>
 </project-private>

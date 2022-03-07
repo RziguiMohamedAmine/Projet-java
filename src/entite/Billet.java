@@ -17,6 +17,7 @@ public class Billet {
     private Match match;
     private String bloc;
     private double prix;
+    private int id_user;
 
     public Billet() {
     }
@@ -32,6 +33,13 @@ public class Billet {
         this.match = match;
         this.bloc = bloc;
         this.prix = prix;
+    }
+
+    public Billet(Match match, String bloc, double prix, int id_user) {
+        this.match = match;
+        this.bloc = bloc;
+        this.prix = prix;
+        this.id_user = id_user;
     }
 
     @Override
@@ -90,6 +98,14 @@ public class Billet {
 
     public void setPrix(double prix) {
         this.prix = prix;
+    }
+
+    public int getId_user() {
+        return id_user;
+    }
+
+    public void setId_user(int id_user) {
+        this.id_user = id_user;
     }
 
 }
