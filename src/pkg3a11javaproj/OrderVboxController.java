@@ -5,19 +5,16 @@
 package pkg3a11javaproj;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import entite.Order;
 import entite.OrderItem;
-import entite.State;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -62,7 +59,7 @@ public class OrderVboxController  {
             try{
 
                 for (int i=0; i<orderItemList.size();i++){
-                    sum+=orderItemList.get(i).getQuantity()*orderItemList.get(i).getProduct().getPrice();
+                    sum+=orderItemList.get(i).getQuantity()*orderItemList.get(i).getProduct().getPrix();
                     FXMLLoader fxmlLoader = new FXMLLoader();
                     fxmlLoader.setLocation(getClass().getResource("OrderItemVBox.fxml"));
                     VBox cardBox = fxmlLoader.load();

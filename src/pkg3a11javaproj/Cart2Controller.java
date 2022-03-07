@@ -4,11 +4,9 @@
  */
 package pkg3a11javaproj;
 
-import entite.ItemSupport;
-import entite.Order;
-import entite.OrderItem;
-import entite.Product;
-import entite.User;
+import entite.*;
+import entite.produit;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -21,11 +19,13 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TableCell;
@@ -40,9 +40,20 @@ import javafx.util.Callback;
 import service.OrderItemService;
 import service.OrderService;
 import service.ServiceProduit;
+import service.UserService;
 
 public class Cart2Controller implements Initializable{
 
+    
+    @FXML
+    private ScrollPane bestSellersScrollPane;
+    
+    @FXML
+    private ScrollPane motherScrollPane;
+
+    @FXML
+    private VBox motherVbox;
+    
      @FXML
     private TableView<OrderItem> cart;
 
@@ -60,7 +71,8 @@ public class Cart2Controller implements Initializable{
     private TableColumn<OrderItem, Float> price;
 
   
-    
+    @FXML
+    private Button placeOrderBTN;
     
     @FXML
     private VBox shopppingCartVBox;
@@ -78,10 +90,10 @@ public class Cart2Controller implements Initializable{
     
     
     private void bestSellersUI(){
-        List<Product> bestSellersList = new ArrayList<>();
+        List<produit> bestSellersList = new ArrayList<>();
 
         bestSellersList=orderItemService.getBestSellers(5);
-        Iterator<Product> iter = bestSellersList.iterator();
+        Iterator<produit> iter = bestSellersList.iterator();
         if (!bestSellersList.isEmpty())
         {
             try{
@@ -106,7 +118,7 @@ public class Cart2Controller implements Initializable{
     
     private void recommandedProductsUI(){
         orderItemService.basketMarketAnalysis(orderItemService.getOrderItems(order.getId()));
-        List<Product> recommendedProductsList = new ArrayList<>();
+        List<produit> recommendedProductsList = new ArrayList<>();
         recommendedProductsList= orderItemService.basketMarketAnalysis(orderItemService.getOrderItems(order.getId()));
         if (!recommendedProductsList.isEmpty())
         {
@@ -128,7 +140,14 @@ public class Cart2Controller implements Initializable{
         }
     }
     
-  
+   private void handlePasserCommande(ActionEvent event) {
+        orderService.placeOrder(order);
+        placeOrderBTN.setVisible(false);
+        cart.getItems().clear();
+        totalPrice.setText("0.0");
+        totalPrice.setVisible(false);
+        totalPrice.setVisible(true);
+    }
     
     
     private void shoppingCartUI(){
@@ -160,12 +179,14 @@ public class Cart2Controller implements Initializable{
                 public void updateItem(OrderItem item, boolean empty) {
                     super.updateItem(item,empty);
                     if (!empty) { 
-                        name.setText(getTableView().getItems().get(getIndex()).getProduct().getName());
-                        price.setText("TND "+String.valueOf(getTableView().getItems().get(getIndex()).getProduct().getPrice()));
+                        name.setText(getTableView().getItems().get(getIndex()).getProduct().getNom());
+                        price.setText("TND "+String.valueOf(getTableView().getItems().get(getIndex()).getProduct().getPrix()));
                         imageview.setImage(new Image(getClass().getResourceAsStream(getTableView().getItems().get(getIndex()).getProduct().getImage()))); 
                         
                         
                         //btn 
+                        if (!cart.getItems().isEmpty())
+                                            placeOrderBTN.setVisible(true);
                         deleteBtn.setOnAction(event -> {
                                         OrderItem orderItem = getTableView().getItems().get(getIndex());
                                         OrderItemService orderItemService = new OrderItemService();
@@ -174,9 +195,11 @@ public class Cart2Controller implements Initializable{
 
                                         float total=0;
                                         for (int i= 0;i<cart.getItems().size();i++){
-                                            total += cart.getItems().get(i).getProduct().getPrice()*cart.getItems().get(i).getQuantity();
+                                            total += cart.getItems().get(i).getProduct().getPrix()*cart.getItems().get(i).getQuantity();
                                         }
                                         totalPrice.setText("Prix Total: TND "+String.valueOf(total));
+                                        if (cart.getItems().isEmpty())
+                                            placeOrderBTN.setVisible(false);
                                     });
                         setGraphic(hBox);
                     }
@@ -229,7 +252,7 @@ public class Cart2Controller implements Initializable{
                                 cart.getColumns().get(getIndex()).setVisible(true);
                                 float total=0;
                                 for (int i= 0;i<cart.getItems().size();i++){
-                                    total += cart.getItems().get(i).getProduct().getPrice()*cart.getItems().get(i).getQuantity();
+                                    total += cart.getItems().get(i).getProduct().getPrix()*cart.getItems().get(i).getQuantity();
                                 }
                                 totalPrice.setText("Prix Total: TND " + String.valueOf(total));
                             }
@@ -244,7 +267,7 @@ public class Cart2Controller implements Initializable{
                             count.setVisible(false);
                         } else {
                             valueFactory.setMin(1);
-                            valueFactory.setMax(item.getProduct().getQuantity());
+                            valueFactory.setMax(item.getProduct().getStock());
                             valueFactory.setValue(item.getQuantity());
                             count.setVisible(true);
                         }
@@ -259,31 +282,51 @@ public class Cart2Controller implements Initializable{
    
     
     private void priceColumn(){
-         price.setCellValueFactory(tf->new SimpleFloatProperty(tf.getValue().getQuantity()*tf.getValue().getProduct().getPrice()).asObject());
+         price.setCellValueFactory(tf->new SimpleFloatProperty(tf.getValue().getQuantity()*tf.getValue().getProduct().getPrix()).asObject());
     }
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         orderItemService = new OrderItemService();
          orderService = new OrderService();
-         user = new User(4567);
-         
+         user = new User();
+         UserService userService = new UserService();
+         user = userService.getOne(4567);
+         //System.out.println(user);
          order = new Order();
         order = orderService.getOrInitUserCart(user);
         bestSellersUI();
         recommandedProductsUI();
         shoppingCartUI();
+        placeOrderBTN.setOnAction(this::handlePasserCommande);
         
         ServiceProduit serviceProduit = new ServiceProduit();
          ObservableList<OrderItem> observableList = FXCollections.observableArrayList(orderItemService.getOrderItems(order.getId()));
          cart.setEditable(true);
          cart.setItems(observableList);
-
+         if (cart.getItems().isEmpty())
+             placeOrderBTN.setVisible(false);
         float total=0;
         for (int i= 0;i<cart.getItems().size();i++){
-            total += cart.getItems().get(i).getProduct().getPrice()*cart.getItems().get(i).getQuantity();
+            total += cart.getItems().get(i).getProduct().getPrix()*cart.getItems().get(i).getQuantity();
         }
         totalPrice.setText("Prix Total: TND " + String.valueOf(total));
+        
+        motherVbox.prefWidthProperty().bind(motherScrollPane.widthProperty());
+        motherVbox.prefHeightProperty().bind(motherScrollPane.heightProperty());
+        
+        cart.setFixedCellSize(100);
+       
+    cart.prefHeightProperty().bind(cart.fixedCellSizeProperty().multiply(Bindings.size(cart.getItems()).add(1.01)));
+    cart.minHeightProperty().bind(cart.prefHeightProperty());
+    cart.maxHeightProperty().bind(cart.prefHeightProperty());
+  
+    
+    product.prefWidthProperty().bind(cart.widthProperty().divide(2)); // w * 1/4
+quantity.prefWidthProperty().bind(cart.widthProperty().divide(4)); // w * 1/2
+price.prefWidthProperty().bind(cart.widthProperty().divide(4)); // w * 1/4
+    
+    bestSellersScrollPane.minHeightProperty().bind(bestSellersHBox.heightProperty());
     }
 
 }

@@ -4,12 +4,8 @@
  */
 package pkg3a11javaproj;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import entite.OrderItem;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -35,9 +31,9 @@ public class OrderItemVBoxController  {
 
     public void setData(OrderItem orderItem){
         image.setImage(new Image(getClass().getResourceAsStream(orderItem.getProduct().getImage())));
-        name.setText(orderItem.getProduct().getName());
+        name.setText(orderItem.getProduct().getNom());
         quantity.setText("x"+String.valueOf(orderItem.getQuantity()));
-        price.setText("TND "+String.valueOf(orderItem.getProduct().getPrice()));
+        price.setText("TND "+String.valueOf(orderItem.getProduct().getPrix()));
     }
 
     

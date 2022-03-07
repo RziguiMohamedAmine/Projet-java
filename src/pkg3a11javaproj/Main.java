@@ -22,9 +22,9 @@ public class Main extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        //Parent root = FXMLLoader.load(getClass().getResource("cart.fxml"));
-        //Parent root = FXMLLoader.load(getClass().getResource("orders.fxml"));
-        Parent root = FXMLLoader.load(getClass().getResource("commandeAdmin.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("cart.fxml"));
+     // Parent root = FXMLLoader.load(getClass().getResource("orders.fxml"));
+       //Parent root = FXMLLoader.load(getClass().getResource("commandeAdmin.fxml"));
         Scene scene = new Scene(root);
         
         stage.setScene(scene);
@@ -37,7 +37,8 @@ public class Main extends Application {
     public static void main(String[] args) {
         launch(args);
         OrderService orderService = new OrderService();
-        User user = new User(4567);
+        User user = new User(71);
+        
 
         Order order = new Order();
         order = orderService.getOrInitUserCart(user);

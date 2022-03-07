@@ -3,19 +3,19 @@ package entite;
 public class OrderItem {
     private int id;
     private Order order; //ORDER
-    private Product product;//PRODUCT
+    private produit produit;//PRODUCT
     private int quantity;
 
-    public OrderItem(int id, Order order, Product product, int quantity) {
+    public OrderItem(int id, Order order, produit produit, int quantity) {
         this.id = id;
         this.order = order;
-        this.product = product;
+        this.produit = produit;
         this.quantity = quantity;
     }
 
-    public OrderItem(Order order, Product product, int quantity) {
+    public OrderItem(Order order, produit produit, int quantity) {
         this.order = order;
-        this.product = product;
+        this.produit = produit;
         this.quantity = quantity;
     }
 
@@ -35,12 +35,12 @@ public class OrderItem {
         this.order = order;
     }
 
-    public Product getProduct() {
-        return product;
+    public produit getProduct() {
+        return produit;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setProduct(produit produit) {
+        this.produit = produit;
     }
 
     public int getQuantity() {
@@ -62,7 +62,7 @@ public class OrderItem {
         return "OderItem{" +
                 "id=" + id +
                 ", orderId=" + order +
-                ", productId=" + product +
+                ", productId=" + produit +
                 ", quantity=" + quantity +
                 '}';
     }
@@ -72,6 +72,6 @@ public class OrderItem {
         if (this == o) return true;
         if (!(o instanceof OrderItem)) return false;
         OrderItem orderItem = (OrderItem) o;
-        return  order.equals(orderItem.getOrder()) && product.equals(orderItem.getProduct() ) ;
+        return  order.equals(orderItem.getOrder()) && produit.equals(orderItem.getProduct() ) ;
     }
 }

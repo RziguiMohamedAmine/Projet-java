@@ -65,6 +65,7 @@ public class AdminVboxController {
                     userOrdersVbox.getChildren().add(cardBox);
                     
                     userhbox.setOnMouseClicked(e->{
+                        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
                         hboxtoggle.setManaged(!hboxtoggle.isManaged());
                         hboxtoggle.setVisible(!hboxtoggle.isVisible());
                     

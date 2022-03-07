@@ -5,13 +5,7 @@
 package pkg3a11javaproj;
 
 import entite.OrderItem;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
-import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
@@ -48,11 +42,11 @@ public class CartItemController  {
     
     public void setData(OrderItem orderItem,VBox shopppingCartVBox){
                 image.setImage(new Image(getClass().getResourceAsStream(orderItem.getProduct().getImage())));
-                name.setText(orderItem.getProduct().getName());
-                price.setText("TND "+String.valueOf(orderItem.getProduct().getPrice()));
-                subtotal.setText("TND "+String.valueOf(orderItem.getQuantity()*orderItem.getProduct().getPrice()));
+                name.setText(orderItem.getProduct().getNom());
+                price.setText("TND "+String.valueOf(orderItem.getProduct().getPrix()));
+                subtotal.setText("TND "+String.valueOf(orderItem.getQuantity()*orderItem.getProduct().getPrix()));
                 
-        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,orderItem.getProduct().getQuantity());
+        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,orderItem.getProduct().getStock());
         valueFactory.setValue(orderItem.getQuantity());
         quantity.setValueFactory(valueFactory);
         
@@ -62,7 +56,7 @@ public class CartItemController  {
         {
             orderItem.setQuantity(newValue);
             orderItemService.update(orderItem);
-            subtotal.setText("TND "+ String.valueOf(orderItem.getQuantity()*orderItem.getProduct().getPrice()));
+            subtotal.setText("TND "+ String.valueOf(orderItem.getQuantity()*orderItem.getProduct().getPrix()));
             //List<OrderItem> orderItemsList= new ArrayList<>();
             //orderItemsList=orderItemService.getOrderItems(orderItem.getOrder().getId());
            /*float total=0;

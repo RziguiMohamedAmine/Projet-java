@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<ScrollPane fx:id="motherScrollPane" maxHeight="800.0" prefHeight="700.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pkg3a11javaproj.Cart2Controller">
+   <content>
+      <VBox fx:id="motherVbox" alignment="TOP_CENTER" spacing="20.0">
+         <children>
+            <Label text="Panier">
+               <font>
+                  <Font size="18.0" />
+               </font></Label>
+            <TableView fx:id="cart" editable="true" style="-fx-table-cell-border-color: transparent;" stylesheets="@../public/style.css" VBox.vgrow="ALWAYS">
+              <columns>
+                <TableColumn fx:id="product" editable="false" maxWidth="1.7976931348623157E308" minWidth="300.0" prefWidth="-1.0" resizable="false" sortable="false" text="Article" />
+                <TableColumn fx:id="quantity" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="-1.0" resizable="false" text="Quantité" />
+                  <TableColumn fx:id="price" editable="false" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="-1.0" resizable="false" text="Prix" />
+              </columns>
+            </TableView>
+            <HBox alignment="TOP_RIGHT" VBox.vgrow="ALWAYS">
+               <children>
+                  <Label />
+                  <Label fx:id="totalPrice" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="19.0" prefWidth="173.0" text="Price" textAlignment="RIGHT">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                     <padding>
+                        <Insets right="15.0" />
+                     </padding>
+                  </Label>
+               </children>
+            </HBox>
+            <Button fx:id="placeOrderBTN" mnemonicParsing="false" style="-fx-background-color: #ff523b; -fx-border-radius: 10; -fx-cursor: hand; -fx-background-radius: 7; -fx-text-fill: #fff;" text="Passer la commande" />
+            <Separator prefWidth="200.0" />
+            <Label text="Meilleures ventes">
+               <font>
+                  <Font size="18.0" />
+               </font></Label>
+            <ScrollPane fx:id="bestSellersScrollPane" VBox.vgrow="ALWAYS">
+               <content>
+                  <HBox fx:id="bestSellersHBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="15.0" />
+               </content>
+               <padding>
+                  <Insets right="1.0" />
+               </padding>
+               <VBox.margin>
+                  <Insets right="1.0" />
+               </VBox.margin>
+            </ScrollPane>
+            <Separator prefWidth="200.0" />
+            <Label text="Articles recommandés selon votre panier">
+               <font>
+                  <Font size="18.0" />
+               </font></Label>
+            <ScrollPane minHeight="210.0" prefHeight="210.0">
+               <content>
+                  <HBox fx:id="recommendedProductsHBox" spacing="15.0" />
+               </content>
+            </ScrollPane>
+         </children>
+      </VBox>
+   </content>
+</ScrollPane>

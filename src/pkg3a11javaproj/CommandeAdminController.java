@@ -6,6 +6,7 @@ package pkg3a11javaproj;
 
 import entite.Order;
 import entite.State;
+import entite.User;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import service.OrderService;
+import service.UserService;
 
 /**
  * FXML Controller class
@@ -33,22 +35,29 @@ public class CommandeAdminController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         
-        ArrayList<Integer> usersList = new ArrayList<>();
-        usersList.add(4567);
-        usersList.add(5);
+        List<User> usersList = new ArrayList<>();
+        UserService userService = new UserService();
+        usersList=userService.getAll();
+        
+        //usersList.add(71);
+       // usersList.add(5);
         
         if (!usersList.isEmpty())
         {
             try{
 
                 for (int i=0; i<usersList.size();i++){
-                    FXMLLoader fxmlLoader = new FXMLLoader();
+                    if (!orderService.getUserOrders(usersList.get(i).getId(), State.placed.toString()).isEmpty())
+                    {
+                        FXMLLoader fxmlLoader = new FXMLLoader();
                     fxmlLoader.setLocation(getClass().getResource("adminVbox.fxml"));
                     VBox cardBox = fxmlLoader.load();
                     new AdminVboxController();
                     AdminVboxController cardController = fxmlLoader.getController();
-                    cardController.setData(usersList.get(i));
+                    cardController.setData(usersList.get(i).getId());
                     allUsersOrdersVBOX.getChildren().add(cardBox);
+                    }
+                    
                 }
             }catch (IOException e){
                 e.printStackTrace();

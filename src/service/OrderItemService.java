@@ -22,7 +22,7 @@ public class OrderItemService implements IService<OrderItem>{
 
 
     @Override
-    public Boolean insert(OrderItem item) {
+    public boolean insert(OrderItem item) {
         if (!getAll().contains(item)){ // if it doesn't exist then insert it
             String req = "insert into order_items (order_id,product_id,quantity) values (?,?,?)";
             try {
@@ -42,7 +42,7 @@ public class OrderItemService implements IService<OrderItem>{
     }
 
     @Override
-    public Boolean update(OrderItem item) {
+    public boolean update(OrderItem item) {
         String req = "update order_items set quantity=? where order_id=? and product_id=?";
         try {
 
@@ -61,7 +61,7 @@ public class OrderItemService implements IService<OrderItem>{
     }
 
     @Override
-    public Boolean delete(OrderItem item) {
+    public boolean delete(OrderItem item) {
         String req = "delete from order_items where order_id=? and product_id=?"; //remove product from cart
         try {
             pst = cnx.prepareStatement(req);
@@ -85,7 +85,7 @@ public class OrderItemService implements IService<OrderItem>{
             pst= cnx.prepareStatement(req);
             ResultSet rs= pst.executeQuery();
             while(rs.next()){
-                itemsList.add(new OrderItem(rs.getInt(1),new Order(rs.getInt(2)),new ServiceProduit().getOne (rs.getInt(3)),rs.getInt(4)));
+                itemsList.add(new OrderItem(rs.getInt(1),new OrderService().getOne(rs.getInt(2)) ,new ServiceProduit().getOne (rs.getInt(3)),rs.getInt(4)));
             }
 
         } catch (SQLException ex) {
@@ -102,7 +102,7 @@ public class OrderItemService implements IService<OrderItem>{
             pst.setInt(1,id);
             ResultSet rs= pst.executeQuery();
             if(rs.next()) {
-                OrderItem item = new OrderItem(rs.getInt(1),new Order(rs.getInt(2)),new ServiceProduit().getOne (rs.getInt(3)),rs.getInt(4));
+                OrderItem item = new OrderItem(rs.getInt(1),new OrderService().getOne(rs.getInt(2)) ,new ServiceProduit().getOne (rs.getInt(3)),rs.getInt(4));
                 return item;
             }
 
@@ -122,7 +122,7 @@ public class OrderItemService implements IService<OrderItem>{
             pst.setInt(1,orderId);
             ResultSet rs= pst.executeQuery();
             while(rs.next()){
-                orderItemsList.add(new OrderItem(rs.getInt(1),new Order(rs.getInt(2)),new ServiceProduit().getOne((rs.getInt(3))),rs.getInt(4)));
+                orderItemsList.add(new OrderItem(rs.getInt(1),new OrderService().getOne(rs.getInt(2)) ,new ServiceProduit().getOne((rs.getInt(3))),rs.getInt(4)));
             }
 
         } catch (SQLException ex) {
@@ -131,7 +131,7 @@ public class OrderItemService implements IService<OrderItem>{
         return orderItemsList;
     }
 
-    public List<Product> getBestSellers(int limit){
+    public List<produit> getBestSellers(int limit){
         String req="SELECT product_id,count(product_id)\n" +
                 "FROM order_items\n" +
                 "WHERE order_id in (SELECT id FROM orders WHERE LOWER(state)=LOWER(?))\n"+
@@ -139,7 +139,7 @@ public class OrderItemService implements IService<OrderItem>{
                 "ORDER BY count(product_id) DESC\n" +
                 "LIMIT ?";
         List<Integer> orderItemsList=new ArrayList<>();
-        List<Product> productList = new ArrayList<>();
+        List<produit> produitList = new ArrayList<>();
         try {
             pst= cnx.prepareStatement(req);
             pst.setString(1,State.placed.toString());
@@ -147,13 +147,13 @@ public class OrderItemService implements IService<OrderItem>{
             ResultSet rs= pst.executeQuery();
             while(rs.next()){
                 //orderItemsList.add(rs.getInt(1)); // new Integer () ????
-                productList.add(new ServiceProduit().getOne(rs.getInt(1)));
+                produitList.add(new ServiceProduit().getOne(rs.getInt(1)));
             }
 
         } catch (SQLException ex) {
             Logger.getLogger(OrderItemService.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return productList;
+        return produitList;
     }
 
     public List<ItemSupport> getRecommendedItemsSupports(List<ItemSupport> recommendedProducts){
@@ -183,8 +183,8 @@ public class OrderItemService implements IService<OrderItem>{
         return recommendedProducts;
     }
 
-    public List<Product> basketMarketAnalysis (List<OrderItem> cartOrderItems){
-        List<Product> productList = new ArrayList<>();
+    public List<produit> basketMarketAnalysis (List<OrderItem> cartOrderItems){
+        List<produit> produitList = new ArrayList<>();
         cartOrderItems.forEach(e-> System.out.print(e.getProduct()+" "));
         System.out.println("");
         AprioriSet recommendedItems = new AprioriSet();
@@ -220,7 +220,7 @@ public class OrderItemService implements IService<OrderItem>{
                     if (!cartItemsIds.contains(rs.getInt(1))) //rs.getInt(2)>= minimumSupport &&
                     {
                         recommendedItems.getSuperSet().add(new ItemSupport(rs.getInt(1),rs.getInt(2)));
-                        productList.add(new ServiceProduit().getOne(rs.getInt(1)));
+                        produitList.add(new ServiceProduit().getOne(rs.getInt(1)));
                     }
 
                     else if (!b){
@@ -239,7 +239,7 @@ public class OrderItemService implements IService<OrderItem>{
             System.out.println("Recommended products :"+recommendedItems);
         }
 
-        return productList;
+        return produitList;
     }
 
     public int getTotalOrdersNumber (){

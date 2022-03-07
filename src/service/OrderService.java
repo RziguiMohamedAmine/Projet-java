@@ -1,8 +1,11 @@
 package service;
 
 import entite.Order;
+import entite.OrderItem;
 import entite.State;
 import entite.User;
+import java.io.FileNotFoundException;
+import java.net.MalformedURLException;
 import java.net.PasswordAuthentication;
 import utils.DataSource;
 
@@ -33,7 +36,7 @@ public class OrderService implements IService<Order> {
 
 
     @Override
-    public Boolean insert(Order order) {
+    public boolean insert(Order order) {
         String req = "insert into orders (user_id) values (?)";
         try {
             pst = cnx.prepareStatement(req);
@@ -48,7 +51,7 @@ public class OrderService implements IService<Order> {
     }
 
     @Override
-    public Boolean update(Order order) {
+    public boolean update(Order order) {
         String req = "update orders set state=? where id=?";
         try {
             pst = cnx.prepareStatement(req);
@@ -66,7 +69,7 @@ public class OrderService implements IService<Order> {
     }
 
     @Override
-    public Boolean delete(Order order) {
+    public boolean delete(Order order) {
         String req = "delete from orders where id=?"; //delete order
         try {
             pst = cnx.prepareStatement(req);
@@ -88,7 +91,7 @@ public class OrderService implements IService<Order> {
             pst= cnx.prepareStatement(req);
             ResultSet rs= pst.executeQuery();
             while(rs.next()){
-                ordersList.add(new Order(rs.getInt(1),new User(rs.getInt(2)),rs.getString(3),rs.getDate(4)));
+                ordersList.add(new Order(rs.getInt(1),new UserService().getOne(rs.getInt(2)),rs.getString(3),rs.getDate(4)));
             }
 
         } catch (SQLException ex) {
@@ -105,7 +108,7 @@ public class OrderService implements IService<Order> {
             pst.setInt(1,id);
             ResultSet rs= pst.executeQuery();
             if(rs.next()) {
-                Order order = new Order(rs.getInt(1),new User(rs.getInt(2)),rs.getString(3),rs.getDate(4));
+                Order order = new Order(rs.getInt(1),new UserService().getOne(rs.getInt(2)),rs.getString(3),rs.getDate(4));
                 return order;
             }
 
@@ -124,7 +127,7 @@ public class OrderService implements IService<Order> {
             pst.setString(2,state);
             ResultSet rs= pst.executeQuery();
             while(rs.next()){
-                userOrdersList.add(new Order(rs.getInt(1),new User(rs.getInt(2)),rs.getString(3),rs.getDate(4)));
+                userOrdersList.add(new Order(rs.getInt(1),new UserService().getOne(rs.getInt(2)),rs.getString(3),rs.getDate(4)));
             }
 
         } catch (SQLException ex) {
@@ -144,9 +147,19 @@ public class OrderService implements IService<Order> {
 
     public void placeOrder(Order order){
         OrderItemService orderItemService = new OrderItemService();
-        if (orderItemService.getOrderItems(order.getId()).isEmpty())
+        List<OrderItem> orderItemsList = new ArrayList<>();
+        orderItemsList=orderItemService.getOrderItems(order.getId());
+        if (orderItemsList.isEmpty())
             System.out.println("Cannot proceed : empty cart!");
         else {
+            Invoice invoice = new Invoice();
+            try {
+                invoice.genereateInvoice(orderItemsList);
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(OrderService.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (MalformedURLException ex) {
+                Logger.getLogger(OrderService.class.getName()).log(Level.SEVERE, null, ex);
+            }
             order.setState(State.placed.toString());
             update(order);
             getOrInitUserCart(order.getUser());
