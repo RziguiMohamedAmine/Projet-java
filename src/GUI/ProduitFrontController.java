@@ -58,7 +58,7 @@ public class ProduitFrontController implements Initializable {
      * Initializes the controller class.
      */
    
-     private void setChosenTeam(produit p) throws FileNotFoundException {
+     private void setChosenProduct(produit p) throws FileNotFoundException {
          this.p = p;
          LabelNomProduit.setText(p.getNom());
           Image  image = new Image(new FileInputStream(p.getImage()));
@@ -74,14 +74,15 @@ public class ProduitFrontController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-         listprod.addAll(sp.getAll());
-      //System.out.println(equipeList.size());
-       // System.out.println(equipeList);
+         
+        
+        listprod.addAll(sp.getAll());
+     
         if(listprod.size()>0)
         {
           try {
-              // System.out.println(equipeList);
-              setChosenTeam(listprod.get(0));
+           
+              setChosenProduct(listprod.get(0));
           } catch (FileNotFoundException ex) {
               Logger.getLogger(ProduitFrontController.class.getName()).log(Level.SEVERE, null, ex);
           }
@@ -89,7 +90,7 @@ public class ProduitFrontController implements Initializable {
                 @Override
                 public void onClickListener(produit p) {
                     try {
-                        setChosenTeam(p);
+                        setChosenProduct(p);
                     } catch (FileNotFoundException ex) {
                         Logger.getLogger(ProduitFrontController.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -99,11 +100,11 @@ public class ProduitFrontController implements Initializable {
         
         int column=0;
         int row =1;
-        //System.out.println(equipeList.size());
+     
         try {
         for(int i=0;i<listprod.size();i++)
         { 
-              //System.out.println(equipeList.get(i));
+              
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("Item.fxml"));
             
@@ -133,7 +134,7 @@ public class ProduitFrontController implements Initializable {
         }
         
         } catch (IOException ex) {
-                    ex.getMessage();
+                  System.out.println(ex.getMessage());
         } 
     }    
     

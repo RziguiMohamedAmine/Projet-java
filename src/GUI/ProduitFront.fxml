@@ -19,9 +19,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="1315.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ProduitFrontController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ProduitFrontController">
    <children>
-      <BorderPane prefHeight="800.0" prefWidth="1300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <BorderPane prefHeight="900.0" prefWidth="1300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <left>
             <VBox prefHeight="200.0" prefWidth="435.0" styleClass="right-bar" stylesheets="@Style.css" BorderPane.alignment="CENTER">
                <children>
@@ -39,7 +39,7 @@
                         <Insets left="30.0" right="30.0" />
                      </VBox.margin>
                      <children>
-                        <TextField alignment="CENTER" prefHeight="40.0" prefWidth="245.0" promptText="Tapez ici pour rechercher" styleClass="transparent" stylesheets="@Style.css">
+                        <TextField fx:id="filterField" alignment="CENTER" prefHeight="40.0" prefWidth="245.0" promptText="Tapez ici pour rechercher" styleClass="transparent" stylesheets="@Style.css">
                            <HBox.margin>
                               <Insets left="20.0" />
                            </HBox.margin>
@@ -132,18 +132,18 @@
                         <Insets left="20.0" right="20.0" />
                      </VBox.margin>
                      <children>
-                        <Label prefHeight="57.0" prefWidth="94.0" text="Langue" textFill="#878787">
+                        <Label prefHeight="57.0" prefWidth="359.0" text="Langue" textFill="#878787">
                            <font>
                               <Font name="Cambria Bold" size="18.0" />
                            </font>
                         </Label>
-                        <Label prefHeight="57.0" prefWidth="91.0" text="Français" textFill="#878787" underline="true">
+                        <Label prefHeight="57.0" prefWidth="365.0" text="Français" textFill="#878787" underline="true">
                            <font>
                               <Font name="Cambria" size="18.0" />
                            </font>
                         </Label>
                         <Pane prefHeight="65.0" prefWidth="390.0" HBox.hgrow="ALWAYS" />
-                        <Label prefHeight="57.0" prefWidth="102.0" text="Mon compte" textFill="#878787">
+                        <Label prefHeight="61.0" prefWidth="416.0" text="Mon compte" textFill="#878787">
                            <font>
                               <Font name="Cambria Bold" size="18.0" />
                            </font>

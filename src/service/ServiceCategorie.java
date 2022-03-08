@@ -19,8 +19,8 @@ import java.util.logging.Logger;
 public class ServiceCategorie implements IService<categorie> {
 
     
-    private Connection conn;
-     private Statement ste;
+      private Connection conn;
+      private Statement ste;
       PreparedStatement pst;
       ResultSet rs;
 
@@ -55,7 +55,7 @@ public class ServiceCategorie implements IService<categorie> {
              pst= conn.prepareStatement(req);
              pst.setString(1, t.getNom());
              
-             pst.setInt(6, t.getId());
+             pst.setInt(2, t.getId());
              
              update=pst.executeUpdate()>0;
              

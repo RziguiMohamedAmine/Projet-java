@@ -28,7 +28,7 @@ public class Federation {
         ServiceAvis sa=new ServiceAvis();
         UserService su =new UserService();
         
-        categorie c= new categorie(4,"maillo");
+        categorie c= new categorie(4,"maillot");
         produit p = new produit(37, "nom", "image", 20, "desc", c, 60);
          User u1=new User(2,"hamdi","aouichaoui","hamdi@esprit.tn","0000","87521221","admin","image");
          
@@ -36,8 +36,8 @@ public class Federation {
          //su.insert(u1);
 //         Avis a=new Avis(u1,p,9);
       //**********ajout***********
-       //sp.insert(p);
-       //sc.insert(new categorie(1,"Pantalon"));
+       sp.insert(p);
+       sc.insert(new categorie(1,"Pantalon"));
       
        //************Suppression************
       // p.setId(12);

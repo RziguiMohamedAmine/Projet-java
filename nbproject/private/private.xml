@@ -3,14 +3,23 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/sof/Desktop/ProjetJv/Projet-java/src/GUI/CategorieAjoutModifController.java</file>
-            <file>file:/C:/Users/sof/Desktop/ProjetJv/Projet-java/src/GUI/ProduitGestionController.java</file>
-            <file>file:/C:/Users/sof/Desktop/ProjetJv/Projet-java/src/entite/produit.java</file>
-            <file>file:/C:/Users/sof/Desktop/ProjetJv/Projet-java/src/GUI/CategorieGestionController.java</file>
-            <file>file:/C:/Users/sof/Desktop/ProjetJv/Projet-java/src/GUI/ProduitAjoutModif.fxml</file>
-            <file>file:/C:/Users/sof/Desktop/ProjetJv/Projet-java/src/service/ServiceProduit.java</file>
-            <file>file:/C:/Users/sof/Desktop/ProjetJv/Projet-java/src/GUI/ProduitAjoutModifController.java</file>
-            <file>file:/C:/Users/sof/Desktop/ProjetJv/Projet-java/src/GUI/Style.css</file>
+            <file>file:/C:/Users/sof/Desktop/sofien/Projet-java/src/GUI/TailleAjoutModifController.java</file>
+            <file>file:/C:/Users/sof/Desktop/sofien/Projet-java/src/service/ServiceCategorie.java</file>
+            <file>file:/C:/Users/sof/Desktop/sofien/Projet-java/src/GUI/Home.fxml</file>
+            <file>file:/C:/Users/sof/Desktop/sofien/Projet-java/src/entite/produit.java</file>
+            <file>file:/C:/Users/sof/Desktop/sofien/Projet-java/src/GUI/ProduitAjoutModifController.java</file>
+            <file>file:/C:/Users/sof/Desktop/sofien/Projet-java/src/GUI/CategorieGestionController.java</file>
+            <file>file:/C:/Users/sof/Desktop/sofien/Projet-java/src/GUI/ProduitFront.fxml</file>
+            <file>file:/C:/Users/sof/Desktop/sofien/Projet-java/src/GUI/Item.fxml</file>
+            <file>file:/C:/Users/sof/Desktop/sofien/Projet-java/src/GUI/Main.java</file>
+            <file>file:/C:/Users/sof/Desktop/sofien/Projet-java/src/GUI/TailleGestionController.java</file>
+            <file>file:/C:/Users/sof/Desktop/sofien/Projet-java/src/GUI/ProduitFrontController.java</file>
+            <file>file:/C:/Users/sof/Desktop/sofien/Projet-java/src/GUI/ProduitGestionController.java</file>
+            <file>file:/C:/Users/sof/Desktop/sofien/Projet-java/src/entite/taille.java</file>
+            <file>file:/C:/Users/sof/Desktop/sofien/Projet-java/src/GUI/ItemController.java</file>
+            <file>file:/C:/Users/sof/Desktop/sofien/Projet-java/src/entite/categorie.java</file>
+            <file>file:/C:/Users/sof/Desktop/sofien/Projet-java/src/service/ServiceTaille.java</file>
+            <file>file:/C:/Users/sof/Desktop/sofien/Projet-java/src/service/ServiceProduit.java</file>
         </group>
     </open-files>
 </project-private>

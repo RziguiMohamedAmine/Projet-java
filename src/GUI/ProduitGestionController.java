@@ -18,6 +18,8 @@ import java.util.logging.Logger;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -30,6 +32,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
@@ -44,10 +47,11 @@ import service.ServiceProduit;
  * @author sof
  */
 public class ProduitGestionController implements Initializable {
-ObservableList<produit> produitList = FXCollections.observableArrayList();
+    ObservableList<produit> produitList = FXCollections.observableArrayList();
     produit Produit;
     ServiceAvis serviceAvis;
     private ServiceProduit serviceProduit;
+    private ProduitGestionController produitGestionController;
 
     @FXML
     private TableView<produit> produitTableView;
@@ -65,6 +69,12 @@ ObservableList<produit> produitList = FXCollections.observableArrayList();
     private TableColumn<produit, String> action;
     @FXML
     private TableColumn<produit, String> stock;
+    @FXML
+    private TextField filterField;
+    @FXML
+    private TableColumn<produit, String> code;
+    @FXML
+    private TableColumn<produit, String> taille;
        
     
     
@@ -74,6 +84,7 @@ ObservableList<produit> produitList = FXCollections.observableArrayList();
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        produitGestionController=this;
         serviceProduit = new ServiceProduit();
         serviceAvis = new ServiceAvis();
         LoadData();
@@ -88,6 +99,24 @@ ObservableList<produit> produitList = FXCollections.observableArrayList();
 
     }
     
+     @FXML
+    private void redirectProduitAjoutEdit(ActionEvent event) {
+          try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("ProduitAjoutModif.fxml"));
+
+            Parent root = loader.load();
+            ProduitAjoutModifController produitAjoutModifController=(ProduitAjoutModifController)loader.getController();
+            produitAjoutModifController.initializeController(this);
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+            
+        }
+    }
+    
    private void LoadData() {
 
         refreshTable();
@@ -96,14 +125,52 @@ ObservableList<produit> produitList = FXCollections.observableArrayList();
         description.setCellValueFactory(new PropertyValueFactory<>("description"));
         prix.setCellValueFactory(new PropertyValueFactory<>("prix"));
         stock.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        code.setCellValueFactory(new PropertyValueFactory<>("code"));
+//        taille.setCellValueFactory(new PropertyValueFactory<>("taille"));
 
         categorie.setCellValueFactory(cellData
                 -> new SimpleStringProperty(cellData.getValue().getCat().getNom()));
+        
+//        taille.setCellValueFactory(cellData
+//                -> new SimpleStringProperty(cellData.getValue().getTai().getNom()));
+         
 
         Callback<TableColumn<produit, String>, TableCell<produit, String>> cellFoctory = (TableColumn<produit, String> param) -> {
-            // make cell containing buttons
+            
+                 FilteredList<produit> filteredData = new FilteredList<>(produitList, b -> true);
+		 filterField.textProperty().addListener((observable, oldValue, newValue) -> {
+			filteredData.setPredicate(produit -> {
+								
+				if (newValue == null || newValue.isEmpty()) {
+					return true;
+				}
+				String lowerCaseFilter = newValue.toLowerCase();
+				
+				if (produit.getNom().toLowerCase().indexOf(lowerCaseFilter) != -1 ) {
+					return true; // Filter matches first name.
+				} else if (produit.getDescription().toLowerCase().indexOf(lowerCaseFilter) != -1) {
+					return true; // Filter matches last name.
+				}
+				else if (String.valueOf(produit.getPrix()).indexOf(lowerCaseFilter)!=-1)
+				     return true;
+				     else  
+				    	 return false; // Does not match.
+			});
+		});
+		
+		SortedList<produit> sortedData = new SortedList<>(filteredData);
+		sortedData.comparatorProperty().bind(produitTableView.comparatorProperty());
+		produitTableView.setItems(sortedData);
+                
+            
             final TableCell<produit, String> cell = new TableCell<produit, String>() {
+               
+                
+                
+                
                 @Override
+                
+                
                 public void updateItem(String item, boolean empty) {
                     super.updateItem(item, empty);
                     //that cell created only on non-empty rows
@@ -151,6 +218,7 @@ ObservableList<produit> produitList = FXCollections.observableArrayList();
                                 ProduitAjoutModifController produitAjoutModifController = loader.getController();
                                 produitAjoutModifController.setTextField(Produit);
                                 produitAjoutModifController.setButton();
+                                produitAjoutModifController.initializeController(produitGestionController);
                                 Scene scene = new Scene(root);
                                 Stage stage = new Stage();
                                 stage.setScene(scene);
@@ -165,7 +233,7 @@ ObservableList<produit> produitList = FXCollections.observableArrayList();
                               List<Float> list=  serviceAvis.getCountAverageAvisByProduit(p.getId());
                               
                               Alert alert= new Alert(AlertType.INFORMATION);
-                              alert.setContentText("moyenne de avis = "+ list.get(1) + "\n nombre des personnes qui on donnée des avis: "+ Math.round(list.get(0)));
+                              alert.setContentText("moyenne des avis = "+ list.get(1) + "\n nombre des personnes qui ont donnée des avis: "+ Math.round(list.get(0)));
                               alert.show();
 //                            
                         });
@@ -189,22 +257,6 @@ ObservableList<produit> produitList = FXCollections.observableArrayList();
         action.setCellFactory(cellFoctory);
     }
 
-    @FXML
-    private void redirectProduitAjoutEdit(ActionEvent event) {
-          try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("ProduitAjoutModif.fxml"));
-
-            Parent root = loader.load();
-            ProduitAjoutModifController produitAjoutModifController=(ProduitAjoutModifController)loader.getController();
-            produitAjoutModifController.initializeController(this);
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-            
-        }
-    }
+   
     
 }

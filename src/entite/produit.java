@@ -18,6 +18,8 @@ public class produit {
     private String description;
     private categorie cat;
     private int stock;
+    private int code ;
+    
 
     public produit() {
     }
@@ -54,6 +56,16 @@ public class produit {
     }
 
     public produit( String nom, String image, float prix, String description, categorie cat, int stock) {
+        
+        this.nom = nom;
+        this.image = image;
+        this.prix = prix;
+        this.description = description;
+        this.cat = cat;
+        this.stock = stock;
+    }
+
+    public produit(int id, String nom, String image, float prix, String description, categorie cat, int stock, int code) {
         this.id = id;
         this.nom = nom;
         this.image = image;
@@ -61,6 +73,29 @@ public class produit {
         this.description = description;
         this.cat = cat;
         this.stock = stock;
+        this.code = code;
+    }
+
+    public produit(String nom, String image, float prix, String description, categorie cat, int stock, int code) {
+        this.nom = nom;
+        this.image = image;
+        this.prix = prix;
+        this.description = description;
+        this.cat = cat;
+        this.stock = stock;
+        this.code = code;
+    }
+
+    
+    
+    
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
     }
 
     
@@ -153,9 +188,13 @@ public class produit {
 
     @Override
     public String toString() {
-        return "produit{" + "id=" + id + ", nom=" + nom + ", image=" + image + ", prix=" + prix + ", description=" + description + ", cat=" + cat + ", stock=" + stock + '}';
+        return "produit{" + "id=" + id + ", nom=" + nom + ", image=" + image + ", prix=" + prix + ", description=" + description + ", cat=" + cat + ", stock=" + stock + ", code=" + code + '}';
     }
 
+    
+
+    
+    
    
     
 
