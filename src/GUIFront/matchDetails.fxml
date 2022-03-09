@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="732.0" prefWidth="485.0" styleClass="white-background" stylesheets="@style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUIFront.MatchDetailsController">
+   <children>
+      <VBox prefHeight="732.0" prefWidth="485.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <VBox prefHeight="242.0" prefWidth="485.0" styleClass="rounded-bottom-background" stylesheets="@style.css">
+               <children>
+                  <HBox prefHeight="279.0" prefWidth="485.0">
+                     <children>
+                        <VBox prefHeight="43.0" prefWidth="50.0" />
+                        <Label alignment="CENTER" prefHeight="56.0" prefWidth="542.0" stylesheets="@style.css" text="Ligue 1" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets top="10.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="326.0" prefWidth="485.0">
+                     <children>
+                        <VBox alignment="CENTER" prefHeight="157.0" prefWidth="128.0">
+                           <children>
+                              <ImageView fx:id="imageViewEquipe1" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../GUI/images/ess.png" />
+                                 </image>
+                              </ImageView>
+                              <Label fx:id="nomEquipe1" alignment="CENTER" prefWidth="1032.0" stylesheets="@style.css" text="ESS" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="157.0" prefWidth="244.0">
+                           <children>
+                              <Label fx:id="Resultat" alignment="CENTER" prefHeight="93.0" prefWidth="233.0" stylesheets="@style.css" text="3 - 0" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="36.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="Date" alignment="CENTER" prefHeight="3.0" prefWidth="233.0" stylesheets="@style.css" text="10.12.2019" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="17.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER" prefHeight="157.0" prefWidth="128.0">
+                           <children>
+                              <ImageView fx:id="imageViewEquipe2" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../GUI/images/ess.png" />
+                                 </image>
+                              </ImageView>
+                              <Label fx:id="nomEquipe2" alignment="CENTER" prefWidth="1032.0" stylesheets="@style.css" text="ESS" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox prefHeight="389.0" prefWidth="485.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="80.0" prefWidth="485.0" stylesheets="@style.css" text="Match details">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <HBox prefHeight="59.0" prefWidth="485.0">
+                     <children>
+                        <Label fx:id="entreneurEquipe1" alignment="CENTER" prefHeight="59.0" prefWidth="137.0" stylesheets="@style.css" text="houssem">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="CENTER" prefHeight="59.0" prefWidth="214.0" stylesheets="@style.css" text="Entreneur" textFill="#b1b1b1">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="entreneurEquipe2" alignment="CENTER" prefHeight="76.0" prefWidth="123.0" stylesheets="@style.css" text="houssem">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <Label alignment="CENTER" prefHeight="53.0" prefWidth="485.0" stylesheets="@style.css" text="Arbittre" textFill="#b1b1b1">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="arbitre" alignment="CENTER" prefHeight="53.0" prefWidth="485.0" stylesheets="@style.css" text="houssem charef">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" prefHeight="53.0" prefWidth="485.0" stylesheets="@style.css" text="Stade" textFill="#b1b1b1">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="stade" alignment="CENTER" prefHeight="53.0" prefWidth="485.0" stylesheets="@style.css" text="Sousse">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
