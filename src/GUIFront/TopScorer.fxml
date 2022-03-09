@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" onMousePressed="#click" prefHeight="304.0" prefWidth="321.0" stylesheets="@teamsfront.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUIFront.TopScorerController">
+<AnchorPane id="AnchorPane" onMousePressed="#click" prefHeight="219.0" prefWidth="268.0" stylesheets="@teamsfront.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUIFront.TopScorerController">
    <children>
       <VBox alignment="TOP_CENTER" layoutX="25.0" layoutY="8.0" prefHeight="306.0" prefWidth="315.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -41,9 +41,9 @@
                         <Insets left="6.0" />
                      </HBox.margin>
                   </Label>
-                  <Label fx:id="nb_but" layoutX="16.0" layoutY="10.0" prefHeight="100.0" prefWidth="104.0" text="nb_but">
+                  <Label fx:id="nb" prefHeight="81.0" prefWidth="127.0" text="Label">
                      <font>
-                        <Font name="System Bold" size="18.0" />
+                        <Font name="Arial Bold" size="29.0" />
                      </font>
                   </Label>
                </children>

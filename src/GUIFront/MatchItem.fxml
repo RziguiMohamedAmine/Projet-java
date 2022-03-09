@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="MatchItem" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="825.0" style="-fx-background-color: white; -fx-border-color: black;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUIFront.MatchItemController">
+   <children>
+      <VBox layoutX="41.0" layoutY="-70.0" onMouseClicked="#openMatchDetails" prefHeight="200.0" prefWidth="100.0" style="-fx-border-bottom: 2px;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <GridPane prefHeight="60.0" prefWidth="824.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="270.0" minWidth="10.0" prefWidth="191.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="573.0" minWidth="10.0" prefWidth="542.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="182.0" minWidth="10.0" prefWidth="89.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label fx:id="date" alignment="CENTER" contentDisplay="CENTER" prefHeight="24.0" prefWidth="237.0" text="date" textOverrun="CENTER_ELLIPSIS" GridPane.rowSpan="2">
+                     <font>
+                        <Font name="Bradley Hand ITC" size="17.0" />
+                     </font>
+                  </Label>
+                  <ImageView fx:id="logoEquipe1" fitHeight="23.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" />
+                  <Label fx:id="equipe1Label" layoutX="10.0" layoutY="10.0" prefHeight="60.0" prefWidth="422.0" text="equipe1" translateX="50.0" GridPane.columnIndex="1">
+                     <font>
+                        <Font name="Book Antiqua Bold Italic" size="15.0" />
+                     </font>
+                  </Label>
+                  <ImageView fx:id="logoEquipe2" fitHeight="23.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label fx:id="equipe2Label" prefHeight="43.0" prefWidth="430.0" text="equipe2" translateX="50.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="Book Antiqua Bold Italic" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="butEquipe2Label" prefHeight="17.0" prefWidth="91.0" text="0" GridPane.columnIndex="2">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="butEquipe1Label" prefHeight="17.0" prefWidth="138.0" text="1" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Label>
+               </children>
+            </GridPane>
+         </children>
+      </VBox>
+   </children>
+   <cursor>
+      <Cursor fx:constant="OPEN_HAND" />
+   </cursor>
+</AnchorPane>

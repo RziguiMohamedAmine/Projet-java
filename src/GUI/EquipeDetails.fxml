@@ -115,7 +115,7 @@
             <TextField fx:id="levelupdate" prefHeight="35.0" prefWidth="174.0" />
          </children>
       </HBox>
-      <Button fx:id="update" layoutX="809.0" layoutY="506.0" mnemonicParsing="false" onMouseClicked="#updatee" prefHeight="42.0" prefWidth="121.0" style="-fx-background-color: #00E676;" text="Update">
+      <Button fx:id="update" layoutX="946.0" layoutY="506.0" mnemonicParsing="false" onMouseClicked="#updatee" prefHeight="42.0" prefWidth="121.0" style="-fx-background-color: #00E676;" text="Update">
          <font>
             <Font name="Century Gothic" size="21.0" />
          </font>
@@ -139,6 +139,11 @@
             <TextField fx:id="stadeupdate" prefHeight="35.0" prefWidth="174.0" />
          </children>
       </HBox>
+      <Button fx:id="save" layoutX="790.0" layoutY="506.0" mnemonicParsing="false" onAction="#save" prefHeight="42.0" prefWidth="112.0" text="Save">
+         <font>
+            <Font name="Century Gothic" size="21.0" />
+         </font>
+      </Button>
    </children>
    <effect>
       <Blend />

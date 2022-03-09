@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
@@ -21,7 +22,7 @@
    <children>
       <BorderPane layoutY="-16.0" prefHeight="826.0" prefWidth="1315.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <left>
-            <VBox alignment="TOP_CENTER" prefHeight="724.0" prefWidth="435.0" stylesheets="@teamsfront.css" BorderPane.alignment="TOP_LEFT">
+            <VBox alignment="TOP_CENTER" prefHeight="825.0" prefWidth="435.0" stylesheets="@teamsfront.css" BorderPane.alignment="TOP_LEFT">
                <children>
                   <HBox alignment="CENTER" prefHeight="91.0" prefWidth="435.0">
                      <children>
@@ -37,27 +38,30 @@
                         <Insets left="30.0" right="30.0" />
                      </VBox.margin>
                      <children>
-                        <TextField prefHeight="40.0" prefWidth="245.0" promptText="Search" styleClass="transparent" stylesheets="@teamsfront.css">
+                        <TextField fx:id="searchfld" prefHeight="40.0" prefWidth="245.0" promptText="Search" styleClass="transparent" stylesheets="@teamsfront.css">
                            <HBox.margin>
                               <Insets left="20.0" />
                            </HBox.margin>
                         </TextField>
-                        <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" styleClass="search-button" stylesheets="@teamsfront.css" text="Search" textFill="WHITE" />
                      </children>
                      <styleClass>
                         <String fx:value="search-box" />
                         <String fx:value="shadow" />
                      </styleClass>
                   </HBox>
-                  <Pane prefHeight="62.0" prefWidth="435.0" />
-                  <VBox fx:id="chosenTeam" alignment="CENTER" prefHeight="565.0" prefWidth="335.0" stylesheets="@teamsfront.css">
+                  <Pane prefHeight="62.0" prefWidth="435.0">
+                     <children>
+                        <Button layoutX="118.0" layoutY="11.0" mnemonicParsing="false" onAction="#top" prefHeight="40.0" prefWidth="200.0" styleClass="search-button" stylesheets="@teamsfront.css" text="Top Scorer" textFill="WHITE" />
+                     </children></Pane>
+                  <Button fx:id="teams" mnemonicParsing="false" onAction="#teams" prefHeight="40.0" prefWidth="200.0" styleClass="search-button" stylesheets="@teamsfront.css" text="All Teams" textFill="WHITE" />
+                  <VBox fx:id="chosenTeam" alignment="CENTER" prefHeight="530.0" prefWidth="335.0" stylesheets="@teamsfront.css">
                      <VBox.margin>
-                        <Insets left="50.0" right="50.0" top="11.0" />
+                        <Insets left="50.0" right="50.0" top="19.0" />
                      </VBox.margin>
                      <children>
                         <HBox prefHeight="81.0" prefWidth="335.0">
                            <children>
-                              <Label prefHeight="85.0" prefWidth="160.0" text="Nom" textFill="WHITE">
+                              <Label fx:id="nomj" prefHeight="85.0" prefWidth="160.0" text="Nom" textFill="WHITE">
                                  <font>
                                     <Font name="Arial Bold" size="24.0" />
                                  </font>
@@ -79,9 +83,9 @@
                            </VBox.margin>
                         </HBox>
                         <ImageView fx:id="imageequipe" fitHeight="170.0" fitWidth="285.0" pickOnBounds="true" preserveRatio="true" />
-                        <HBox prefHeight="84.0" prefWidth="335.0">
+                        <HBox prefHeight="50.0" prefWidth="335.0">
                            <children>
-                              <Label prefHeight="85.0" prefWidth="160.0" text="Entreneur" textFill="WHITE">
+                              <Label fx:id="date" prefHeight="71.0" prefWidth="206.0" text="Entreneur" textFill="WHITE">
                                  <font>
                                     <Font name="Arial Bold" size="24.0" />
                                  </font>
@@ -106,7 +110,7 @@
                         </HBox>
                         <HBox layoutX="10.0" layoutY="361.0" prefHeight="70.0" prefWidth="335.0">
                            <children>
-                              <Label prefHeight="65.0" prefWidth="147.0" text="Stade" textFill="WHITE">
+                              <Label fx:id="nation" prefHeight="65.0" prefWidth="147.0" text="Stade" textFill="WHITE">
                                  <font>
                                     <Font name="Arial Bold" size="24.0" />
                                  </font>
@@ -114,20 +118,54 @@
                                     <Insets left="14.0" right="10.0" />
                                  </HBox.margin>
                               </Label>
-                              <Label fx:id="stade" layoutX="10.0" layoutY="10.0" prefHeight="85.0" prefWidth="160.0" text="Stade" textFill="WHITE">
+                              <Label fx:id="stade" layoutX="10.0" layoutY="10.0" prefHeight="59.0" prefWidth="124.0" text="Stade" textFill="WHITE">
+                                 <font>
+                                    <Font name="Arial Bold" size="24.0" />
+                                 </font>
+                              </Label>
+                              <FontAwesomeIconView fx:id="map" glyphName="MAP_MARKER" onMouseClicked="#map" size="24" wrappingWidth="13.428571701049805">
+                                 <HBox.margin>
+                                    <Insets right="30.0" top="14.0" />
+                                 </HBox.margin>
+                              </FontAwesomeIconView>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="41.0" top="1.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox prefHeight="54.0" prefWidth="335.0">
+                           <children>
+                              <Label fx:id="nb_but" prefHeight="43.0" prefWidth="227.0" textFill="WHITE">
+                                 <font>
+                                    <Font name="Arial Bold" size="24.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="11.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Label fx:id="but" layoutX="10.0" layoutY="10.0" prefHeight="43.0" prefWidth="94.0" textFill="WHITE">
                                  <font>
                                     <Font name="Arial Bold" size="24.0" />
                                  </font>
                               </Label>
                            </children>
                            <VBox.margin>
-                              <Insets bottom="41.0" />
+                              <Insets top="-18.0" />
                            </VBox.margin>
                         </HBox>
                         <Button fx:id="effectif" mnemonicParsing="false" onAction="#effectif" prefHeight="42.0" prefWidth="165.0" stylesheets="@teamsfront.css" text="Effectif" textFill="WHITE">
                            <VBox.margin>
                               <Insets bottom="16.0" />
                            </VBox.margin>
+                           <styleClass>
+                              <String fx:value="search-button" />
+                              <String fx:value="shadow" />
+                           </styleClass>
+                           <font>
+                              <Font name="Arial Bold" size="19.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="matchs" layoutX="95.0" layoutY="489.0" mnemonicParsing="false" onAction="#matchs" prefHeight="42.0" prefWidth="165.0" stylesheets="@teamsfront.css" text="Matchs" textFill="WHITE">
                            <styleClass>
                               <String fx:value="search-button" />
                               <String fx:value="shadow" />

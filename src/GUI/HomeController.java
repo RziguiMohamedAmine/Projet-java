@@ -69,10 +69,6 @@ public class HomeController implements Initializable {
          Stage stage =(Stage)((Node)event.getSource()).getScene().getWindow();
          stage.close();
     }
- @FXML
-       private void home(ActionEvent event) {
-       
-    }
     @FXML
     private void gestion_equipes(ActionEvent event) {
           try{
@@ -129,7 +125,6 @@ public class HomeController implements Initializable {
         }
     }
 
-    @FXML
     private void front(ActionEvent event) {
              try{
             Parent fxml=FXMLLoader.load(getClass().getResource("/GUIFront/teamsFront.fxml"));
@@ -140,6 +135,82 @@ public class HomeController implements Initializable {
             System.out.println(ex.getMessage());
         }
         
+    }
+
+    @FXML
+    private void redirectGestionMatch(ActionEvent event) {
+    }
+
+    @FXML
+    private void Gestion_User(ActionEvent event) {
+         try{
+            Parent fxml=FXMLLoader.load(getClass().getResource("/GUIFront/teamsFront.fxml"));
+            contentArea.getChildren().removeAll();
+            contentArea.getChildren().setAll(fxml);
+            
+            
+            // TreeItem<String> rootItem = new TreeItem("Gestion Equipes");
+            // TreeItem<String> branch1 = new TreeItem("Add Transfert");
+             
+            // TreeItem<String> branch2 = new TreeItem<>("Joueurs");                       
+            // rootItem.getChildren().addAll(branch1,branch2);
+            //  rootItem.getChildren().add(branch1);
+           //  treeview.setRoot(rootItem);
+             
+        }catch(IOException ex)
+        {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    @FXML
+    private void transfert(ActionEvent event) {
+         try{
+            Parent fxml=FXMLLoader.load(getClass().getResource("AddTransfert.fxml"));
+            contentArea.getChildren().removeAll();
+            contentArea.getChildren().setAll(fxml);
+            
+            
+            // TreeItem<String> rootItem = new TreeItem("Gestion Equipes");
+            // TreeItem<String> branch1 = new TreeItem("Add Transfert");
+             
+            // TreeItem<String> branch2 = new TreeItem<>("Joueurs");                       
+            // rootItem.getChildren().addAll(branch1,branch2);
+            //  rootItem.getChildren().add(branch1);
+           //  treeview.setRoot(rootItem);
+             
+        }catch(IOException ex)
+        {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    @FXML
+    private void produit(ActionEvent event) {
+    }
+
+    @FXML
+    private void categories(ActionEvent event) {
+    }
+
+    @FXML
+    private void panier(ActionEvent event) {
+    }
+
+    @FXML
+    private void Arbitres(ActionEvent event) {
+    }
+
+    @FXML
+    private void RolesArbitres(ActionEvent event) {
+    }
+
+    @FXML
+    private void redirectGestionBillet(ActionEvent event) {
+    }
+
+    @FXML
+    private void redirectToClasmment(ActionEvent event) {
     }
     
    

@@ -38,17 +38,21 @@ public class TopScorerController  {
     private Label prenom;
     @FXML
     private Label nomjoueur;   
-    private Label nb_but;
+    @FXML
+    private Label prenom1;
+    @FXML
+    private Label nb;
+
     @FXML
     private void click(MouseEvent event)
     {
-        l.onClickListener(joueur);
+        l.onClickListenerr(jm);
     }
-            
+  
             
     @FXML
     private ImageView img;
-    private listenerjoueur l;
+    private listenerTop l;
     /**
      * Initializes the controller class.
      * @param joueur
@@ -56,12 +60,14 @@ public class TopScorerController  {
      */
   
     
-    public void setData(JoueurMatch joueur) throws FileNotFoundException
+    public void setData(JoueurMatch joueur,listenerTop l) throws FileNotFoundException
     {
-        this.jm=joueur;    
+        this.jm=joueur;   
+        this.l=l;
         nomjoueur.setText(joueur.getJoueur().getNom());
         prenom.setText(joueur.getJoueur().getPrenom());
-        nb_but.setText(String.valueOf(joueur.getNb_but()));
+        //nb_buts.setText(String.valueOf(joueur.getNb_but()));
+        nb.setText(String.valueOf(joueur.getNb_but()));
         Image  image = new Image(new FileInputStream(joueur.getJoueur().getImage()));
         img.setImage(image);         
      

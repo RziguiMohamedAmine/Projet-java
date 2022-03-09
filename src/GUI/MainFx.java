@@ -23,6 +23,7 @@ import javafx.stage.StageStyle;
  *
  * @author moham
  */
+
 public class MainFx extends Application {
     double x,y;
     @Override

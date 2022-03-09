@@ -119,7 +119,46 @@ public class EquipeService implements IService<Equipe> {
         
          }
     
- 
+     public List<Equipe> Search(String nom) {
+      
+         List<Equipe> list =new ArrayList<>();
+        try {
+           pst=conn.prepareStatement("SELECT * from equipe WHERE nomeq like ?");
+              nom+= "%";
+                pst.setString(1,nom);
+              rs=pst.executeQuery();
+            while(rs.next())
+            {
+                list.add(new Equipe(rs.getInt("id"),rs.getString(2),rs.getString("logo"),rs.getString(4),rs.getString(5),rs.getString(6)));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(JoueurService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+       
+        
+         }
+    
+  @Override
+    public Equipe getOne(int id) {
+        String req="select * from equipe where id=?";
+        Equipe e=null;
+        try {
+            pst=conn.prepareStatement(req);
+            pst.setInt(1,id);
+            ResultSet resultSet = pst.executeQuery();
+             if (resultSet.next()) {              
+                    e = new Equipe(resultSet.getInt(1), resultSet.getString(2), 
+                          resultSet.getString(3), resultSet.getString(4),resultSet.getString(5),resultSet.getString(6));
+                }
+        } catch (SQLException ex) {
+            Logger.getLogger(JoueurService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+           
+        return e;
+        
+    }
+    
     public List<Equipe> getAllNom() {
         String req="select *from equipe ";
         List<Equipe> list =new ArrayList<>();
@@ -139,25 +178,6 @@ public class EquipeService implements IService<Equipe> {
          }
     
     
-     @Override
-    public Equipe getOne(int id) {
-        String req="select * from equipe where id=?";
-        Equipe e=null;
-        try {
-            pst=conn.prepareStatement(req);
-            pst.setInt(1,id);
-            ResultSet resultSet = pst.executeQuery();
-             if (resultSet.next()) {              
-                    e = new Equipe(resultSet.getInt(1), resultSet.getString(2), 
-                          resultSet.getString(3), resultSet.getString(4),resultSet.getString(5),resultSet.getString(6));
-                }
-        } catch (SQLException ex) {
-            Logger.getLogger(JoueurService.class.getName()).log(Level.SEVERE, null, ex);
-        }
-           
-        return e;
-        
-    }
     
     
     

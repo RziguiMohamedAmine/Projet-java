@@ -62,8 +62,6 @@ public class AddjoueurController implements Initializable {
     @FXML
     private TextField nation;
     @FXML
-    private TextField date;
-    @FXML
     private TextField taille;
     @FXML
     private TextField poids;
@@ -170,7 +168,7 @@ public class AddjoueurController implements Initializable {
               imagee = new Image(new FileInputStream(filename));
                imagev.setImage(imagee);
           } catch (FileNotFoundException ex) {
-              Logger.getLogger(AddEquipeController.class.getName()).log(Level.SEVERE, null, ex);
+              Logger.getLogger(MatchJoueurController.class.getName()).log(Level.SEVERE, null, ex);
           }
           
     }

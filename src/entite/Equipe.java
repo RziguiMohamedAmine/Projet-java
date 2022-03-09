@@ -43,7 +43,14 @@ public class Equipe {
         this.niveau = niveau;
         this.stade=stade;
     }
+      public Equipe(int id, String nom, String logo, String nom_entreneur, String niveau) {
+        this.id = id;
+        this.nom = nom;
+        this.logo = logo;
+        this.nom_entreneur = nom_entreneur;
+        this.niveau = niveau;
 
+    }
      public Equipe(int id, String nom, String logo,String stade) {
         this.id = id;
         this.nom = nom;

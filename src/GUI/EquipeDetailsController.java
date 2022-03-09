@@ -27,6 +27,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -90,6 +91,8 @@ public class EquipeDetailsController implements Initializable {
     private TextField stadeupdate;
     @FXML
     private TableColumn<Equipe,String> mapp;
+    @FXML
+    private Button save;
 
     /**
      * Initializes the controller class.
@@ -103,7 +106,11 @@ public class EquipeDetailsController implements Initializable {
                                 + "-glyph-size:28px;"
                                 +"-fx-background-color:#00E676;"
                         );
-          
+          save.setStyle(
+                                " -fx-cursor: hand ;"
+                                + "-glyph-size:28px;"
+                                +"-fx-background-color:#00E676;"
+                        );
     }    
 
     private void refreshTable() {
@@ -261,7 +268,7 @@ public class EquipeDetailsController implements Initializable {
                         );
                                            
                          
-                          mapIcon.setOnMouseClicked((MouseEvent event) -> {
+                         mapIcon.setOnMouseClicked((MouseEvent event) -> {
                             
                              equipe = equipeTable.getSelectionModel().getSelectedItem();                                        
                             FXMLLoader loader = new FXMLLoader ();
@@ -274,7 +281,7 @@ public class EquipeDetailsController implements Initializable {
                                 Logger.getLogger(JoueurDetailsController.class.getName()).log(Level.SEVERE, null, ex);
                             }
                                MapController mapController = loader.getController();                          
-                           mapController.setTextField(equipe.getStade());
+                              mapController.setTextField(equipe.getStade());
                               //System.out.println(equipe.getStade());
                             Parent parent = loader.getRoot();
                             Stage stage = new Stage();
@@ -284,7 +291,6 @@ public class EquipeDetailsController implements Initializable {
                           
 
                         }); 
-                         
                      
                         
                       
@@ -391,6 +397,37 @@ public class EquipeDetailsController implements Initializable {
         logoupdate.setText(filename);
         Image image;
           
+    }
+
+    @FXML
+    private void save(ActionEvent event) {
+        
+        String name =nomupdate.getText();
+         String logo =logoupdate.getText();
+         String coach=coachupdate.getText();
+         String level=levelupdate.getText();
+         String stade=stadeupdate.getText();
+          
+               if(name.isEmpty()||logo.isEmpty()||coach.isEmpty()||level.isEmpty())
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("Please fill all data");
+            alert.showAndWait();
+        }
+        else
+        {
+                
+            Equipe e=new Equipe(name,logo,coach,level,stade);
+             es.insert(e);
+             refreshTable();  
+             clean();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setContentText("Equipe Ajouté");
+            alert.showAndWait();
+            
+        }
     }
     
 

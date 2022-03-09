@@ -149,7 +149,7 @@ public class JoueurService implements IService<Joueur>{//relation entre entite e
         
          }
 
-
+      
     @Override
     public Joueur getOne(int id) {
         String req="select * from joueur where id=?";
@@ -245,7 +245,7 @@ public class JoueurService implements IService<Joueur>{//relation entre entite e
                 m.setId(rs.getInt("id_match"));
                 m.setEquipe1(new Equipe(rs.getInt(18),rs.getString(22),rs.getString(23),rs.getString("nom_entreneur"),rs.getString("niveau"),rs.getString("stade")));
                 m.setEquipe2(new Equipe(rs.getInt(19),rs.getString(28),rs.getString(28),rs.getString("nom_entreneur"),rs.getString("niveau"),rs.getString("stade")));
-                m.setDate(rs.getDate("date"));
+                m.setDate(rs.getTimestamp("date"));
                 jm.setId(rs.getInt(12));
                 jm.setJoueur(j);
                 jm.setMatch(m);

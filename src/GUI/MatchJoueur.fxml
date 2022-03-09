@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="504.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.MatchJoueurController">
+   <children>
+      <Text layoutX="70.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Joueur" wrappingWidth="65.33673095703125" />
+      <TextField fx:id="nomjoueur" layoutX="233.0" layoutY="155.0" prefHeight="25.0" prefWidth="182.0" stylesheets="@../GUIFront/teamsfront.css">
+         <styleClass>
+            <String fx:value="shadow" />
+            <String fx:value="search-box" />
+         </styleClass></TextField>
+      <Text layoutX="70.0" layoutY="220.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Match" />
+      <TextField fx:id="match" layoutX="233.0" layoutY="199.0" prefHeight="25.0" prefWidth="182.0" stylesheets="@../GUIFront/teamsfront.css">
+         <styleClass>
+            <String fx:value="shadow" />
+            <String fx:value="search-box" />
+         </styleClass></TextField>
+      <Text layoutX="68.0" layoutY="264.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Carton Jaune" />
+      <TextField fx:id="jaune" layoutX="233.0" layoutY="243.0" prefHeight="25.0" prefWidth="182.0" stylesheets="@../GUIFront/teamsfront.css">
+         <styleClass>
+            <String fx:value="shadow" />
+            <String fx:value="search-box" />
+         </styleClass></TextField>
+      <Text layoutX="70.0" layoutY="309.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Carton Rouge" wrappingWidth="96.30035400390625" />
+      <TextField fx:id="rouge" layoutX="233.0" layoutY="288.0" prefHeight="25.0" prefWidth="182.0" stylesheets="@../GUIFront/teamsfront.css">
+         <styleClass>
+            <String fx:value="shadow" />
+            <String fx:value="search-box" />
+         </styleClass></TextField>
+      <Button layoutX="205.0" layoutY="392.0" mnemonicParsing="false" onAction="#save" prefHeight="25.0" prefWidth="89.0" text="Save" />
+      <ImageView fx:id="logov" fitHeight="123.0" fitWidth="134.0" layoutX="554.0" layoutY="63.0" pickOnBounds="true" preserveRatio="true" />
+      <Text layoutX="68.0" layoutY="360.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre des buts" wrappingWidth="134.00001525878906" />
+      <TextField fx:id="buts" layoutX="233.0" layoutY="339.0" prefHeight="25.0" prefWidth="182.0" stylesheets="@../GUIFront/teamsfront.css">
+         <styleClass>
+            <String fx:value="shadow" />
+            <String fx:value="search-box" />
+         </styleClass></TextField>
+      <ComboBox fx:id="joueur" layoutX="479.0" layoutY="155.0" onAction="#selectjoueur" prefWidth="150.0" styleClass="comboBox" stylesheets="@../GUIFront/teamsfront.css" />
+      <ComboBox fx:id="Match" layoutX="479.0" layoutY="210.0" onAction="#selectmatch" prefWidth="150.0" styleClass="comboBox" stylesheets="@../GUIFront/teamsfront.css" />
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="800.0" style="-fx-background-color: #fc0307;" styleClass="bo" stylesheets="@../GUIFront/teamsfront.css">
+         <children>
+            <Label text="Add Statistcs Player">
+               <font>
+                  <Font name="Arial Bold" size="45.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+   </children>
+</Pane>

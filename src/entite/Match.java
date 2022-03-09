@@ -5,7 +5,8 @@
  */
 package entite;
 
-import java.sql.Date;
+import java.sql.Timestamp;
+import java.util.Objects;
 
 /**
  *
@@ -17,33 +18,45 @@ public class Match {
     private String stade;
     private long nb_spectateur;
     private Equipe equipe1, equipe2;
-    private int id_arbiter1, id_arbiter2, id_arbiter3, id_arbiter4;
-    private Date date;
+    private Arbitres arbiter1, arbiter2, arbiter3, arbiter4;
+    private Timestamp date;
+    private String saison;
+    private int round;
 
     public Match() {
     }
 
-    public Match(int nb_but1, int nb_but2, String stade, long nb_spectateur, Equipe equipe1, Equipe equipe2, int id_arbiter1, int id_arbiter2, int id_arbiter3, int id_arbiter4, Date date) {
+    public Match(int nb_but1, int nb_but2, String stade, long nb_spectateur, Equipe equipe1, Equipe equipe2, Arbitres id_arbiter1, Arbitres id_arbiter2, Arbitres id_arbiter3, Arbitres id_arbiter4, Timestamp date) {
         this.nb_but1 = nb_but1;
         this.nb_but2 = nb_but2;
         this.stade = stade;
         this.nb_spectateur = nb_spectateur;
         this.equipe1 = equipe1;
         this.equipe2 = equipe2;
-        this.id_arbiter1 = id_arbiter1;
-        this.id_arbiter2 = id_arbiter2;
-        this.id_arbiter3 = id_arbiter3;
-        this.id_arbiter4 = id_arbiter4;
+        this.arbiter1 = id_arbiter1;
+        this.arbiter2 = id_arbiter2;
+        this.arbiter3 = id_arbiter3;
+        this.arbiter4 = id_arbiter4;
         this.date = date;
     }
 
-    
-    public Match(int id, Equipe equipe1, Equipe equipe2) {
-        this.id = id;
+    public Match(int nb_but1, int nb_but2, String stade, long nb_spectateur, Equipe equipe1, Equipe equipe2, Arbitres id_arbiter1, Arbitres id_arbiter2, Arbitres id_arbiter3, Arbitres id_arbiter4, Timestamp date, String saison, int Round) {
+        this.nb_but1 = nb_but1;
+        this.nb_but2 = nb_but2;
+        this.stade = stade;
+        this.nb_spectateur = nb_spectateur;
         this.equipe1 = equipe1;
         this.equipe2 = equipe2;
+        this.arbiter1 = id_arbiter1;
+        this.arbiter2 = id_arbiter2;
+        this.arbiter3 = id_arbiter3;
+        this.arbiter4 = id_arbiter4;
+        this.date = date;
+        this.saison = saison;
+        this.round = Round;
     }
-    public Match(int id, int nb_but1, int nb_but2, String stade, long nb_spectateur, Equipe equipe1, Equipe equipe2, int id_arbiter1, int id_arbiter2, int id_arbiter3, int id_arbiter4, Date date) {
+
+    public Match(int id, int nb_but1, int nb_but2, String stade, long nb_spectateur, Equipe equipe1, Equipe equipe2, Arbitres id_arbiter1, Arbitres id_arbiter2, Arbitres id_arbiter3, Arbitres id_arbiter4, Timestamp date) {
         this.id = id;
         this.nb_but1 = nb_but1;
         this.nb_but2 = nb_but2;
@@ -51,11 +64,52 @@ public class Match {
         this.nb_spectateur = nb_spectateur;
         this.equipe1 = equipe1;
         this.equipe2 = equipe2;
-        this.id_arbiter1 = id_arbiter1;
-        this.id_arbiter2 = id_arbiter2;
-        this.id_arbiter3 = id_arbiter3;
-        this.id_arbiter4 = id_arbiter4;
+        this.arbiter1 = id_arbiter1;
+        this.arbiter2 = id_arbiter2;
+        this.arbiter3 = id_arbiter3;
+        this.arbiter4 = id_arbiter4;
         this.date = date;
+    }
+
+    public Match(int id, int nb_but1, int nb_but2, String stade, long nb_spectateur, Equipe equipe1, Equipe equipe2, Arbitres id_arbiter1, Arbitres id_arbiter2, Arbitres id_arbiter3, Arbitres id_arbiter4, Timestamp date, String saison) {
+        this.id = id;
+        this.nb_but1 = nb_but1;
+        this.nb_but2 = nb_but2;
+        this.stade = stade;
+        this.nb_spectateur = nb_spectateur;
+        this.equipe1 = equipe1;
+        this.equipe2 = equipe2;
+        this.arbiter1 = id_arbiter1;
+        this.arbiter2 = id_arbiter2;
+        this.arbiter3 = id_arbiter3;
+        this.arbiter4 = id_arbiter4;
+        this.date = date;
+        this.saison = saison;
+    }
+
+    public Match(int id, int nb_but1, int nb_but2, String stade, long nb_spectateur, Equipe equipe1, Equipe equipe2, Arbitres arbiter1, Arbitres arbiter2, Arbitres arbiter3, Arbitres arbiter4, Timestamp date, String saison, int round) {
+        this.id = id;
+        this.nb_but1 = nb_but1;
+        this.nb_but2 = nb_but2;
+        this.stade = stade;
+        this.nb_spectateur = nb_spectateur;
+        this.equipe1 = equipe1;
+        this.equipe2 = equipe2;
+        this.arbiter1 = arbiter1;
+        this.arbiter2 = arbiter2;
+        this.arbiter3 = arbiter3;
+        this.arbiter4 = arbiter4;
+        this.date = date;
+        this.saison = saison;
+        this.round = round;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 23 * hash + Objects.hashCode(this.equipe1);
+        hash = 23 * hash + Objects.hashCode(this.equipe2);
+        return hash;
     }
 
     @Override
@@ -70,13 +124,10 @@ public class Match {
             return false;
         }
         final Match other = (Match) obj;
-        if (this.id != other.id) {
+        if (!Objects.equals(this.equipe1, other.equipe2)) {
             return false;
         }
-        if (this.equipe1 != other.equipe1) {
-            return false;
-        }
-        if (this.equipe2 != other.equipe2) {
+        if (!Objects.equals(this.equipe2, other.equipe1)) {
             return false;
         }
         return true;
@@ -84,7 +135,7 @@ public class Match {
 
     @Override
     public String toString() {
-        return "Match{" + "id=" + id + ", nb_but1=" + nb_but1 + ", nb_but2=" + nb_but2 + ", stade=" + stade + ", nb_spectateur=" + nb_spectateur + ", equipe1=" + equipe1 + ", equipe2=" + equipe2 + ", id_arbiter1=" + id_arbiter1 + ", id_arbiter2=" + id_arbiter2 + ", id_arbiter3=" + id_arbiter3 + ", id_arbiter4=" + id_arbiter4 + ", date=" + date + '}';
+        return "Match{" + "id=" + id + ", nb_but1=" + nb_but1 + ", nb_but2=" + nb_but2 + ", stade=" + stade + ", nb_spectateur=" + nb_spectateur + ", equipe1=" + equipe1 + ", equipe2=" + equipe2 + ", arbiter1=" + arbiter1 + ", arbiter2=" + arbiter2 + ", arbiter3=" + arbiter3 + ", arbiter4=" + arbiter4 + ", date=" + date + ", saison=" + saison + ", round=" + round + '}';
     }
 
     public String getStade() {
@@ -143,44 +194,64 @@ public class Match {
         this.equipe2 = equipe2;
     }
 
-    public int getId_arbiter1() {
-        return id_arbiter1;
+    public Arbitres getArbiter1() {
+        return arbiter1;
     }
 
-    public void setId_arbiter1(int id_arbiter1) {
-        this.id_arbiter1 = id_arbiter1;
+    public void setArbiter1(Arbitres arbiter1) {
+        this.arbiter1 = arbiter1;
     }
 
-    public int getId_arbiter2() {
-        return id_arbiter2;
+    public Arbitres getArbiter2() {
+        return arbiter2;
     }
 
-    public void setId_arbiter2(int id_arbiter2) {
-        this.id_arbiter2 = id_arbiter2;
+    public void setArbiter2(Arbitres arbiter2) {
+        this.arbiter2 = arbiter2;
     }
 
-    public int getId_arbiter3() {
-        return id_arbiter3;
+    public Arbitres getArbiter3() {
+        return arbiter3;
     }
 
-    public void setId_arbiter3(int id_arbiter3) {
-        this.id_arbiter3 = id_arbiter3;
+    public void setArbiter3(Arbitres arbiter3) {
+        this.arbiter3 = arbiter3;
     }
 
-    public int getId_arbiter4() {
-        return id_arbiter4;
+    public Arbitres getArbiter4() {
+        return arbiter4;
     }
 
-    public void setId_arbiter4(int id_arbiter4) {
-        this.id_arbiter4 = id_arbiter4;
+    public void setArbiter4(Arbitres arbiter4) {
+        this.arbiter4 = arbiter4;
     }
 
-    public Date getDate() {
+    public Timestamp getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(Timestamp date) {
         this.date = date;
+    }
+
+    public String getSaison() {
+        return saison;
+    }
+
+    public void setSaison(String saison) {
+        this.saison = saison;
+    }
+
+    public int getRound() {
+        return round;
+    }
+
+    public void setRound(int round) {
+        this.round = round;
+    }
+
+    public void getEquipe1(Equipe equipe2) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

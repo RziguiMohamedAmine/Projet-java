@@ -70,7 +70,7 @@ public class MapController implements Initializable {
     
     
      
-    void setTextField(String stade) 
+   public void setTextField(String stade) 
      {
       
         e.setStade(stade);

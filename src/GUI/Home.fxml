@@ -50,7 +50,7 @@
          <children>
             <VBox alignment="TOP_CENTER" layoutY="7.0" prefHeight="910.0" prefWidth="218.0" spacing="6.0" style="-fx-background-color: #AAB2BD;" styleClass="bo" stylesheets="@../GUIFront/teamsfront.css">
                <children>
-                  <Button lineSpacing="10.0" mnemonicParsing="false" onAction="#home" prefHeight="37.0" prefWidth="200.0" style="-fx-background-color: #AAB2BD;" stylesheets="@../GUIFront/teamsfront.css" text="Home">
+                  <Button lineSpacing="10.0" mnemonicParsing="false" onAction="#redirectGestionMatch" prefHeight="37.0" prefWidth="200.0" style="-fx-background-color: #AAB2BD;" stylesheets="@../GUIFront/teamsfront.css" text="Home">
                      <VBox.margin>
                         <Insets right="2.0" />
                      </VBox.margin>
@@ -62,7 +62,7 @@
                         <String fx:value="shadow" />
                      </styleClass>
                   </Button>
-                  <Button layoutX="10.0" layoutY="10.0" lineSpacing="10.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: #AAB2BD;" stylesheets="@../GUIFront/teamsfront.css" text="Gestion des Utilisateurs">
+                  <Button layoutX="10.0" layoutY="10.0" lineSpacing="10.0" mnemonicParsing="false" onAction="#Gestion_User" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: #AAB2BD;" stylesheets="@../GUIFront/teamsfront.css" text="Gestion des Utilisateurs">
                      <font>
                         <Font name="Arial" size="13.0" />
                      </font>
@@ -71,7 +71,16 @@
                         <String fx:value="shadow" />
                      </styleClass>
                   </Button>
-                  <Button layoutX="10.0" layoutY="9.0" lineSpacing="10.0" mnemonicParsing="false" onAction="#AjouterEquipes" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: #AAB2BD;" stylesheets="@../GUIFront/teamsfront.css" text="Ajouter Equipes">
+                  <Button layoutX="10.0" layoutY="9.0" lineSpacing="10.0" mnemonicParsing="false" onAction="#AjouterEquipes" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: #AAB2BD;" stylesheets="@../GUIFront/teamsfront.css" text=" Joueur-Matchs">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <styleClass>
+                        <String fx:value="add-btn" />
+                        <String fx:value="shadow" />
+                     </styleClass>
+                  </Button>
+                  <Button layoutX="19.0" layoutY="97.0" lineSpacing="10.0" mnemonicParsing="false" onAction="#transfert" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: #AAB2BD;" stylesheets="@../GUIFront/teamsfront.css" text="Transferts">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -107,7 +116,7 @@
                         <String fx:value="shadow" />
                      </styleClass>
                   </Button>
-                  <Button layoutX="11.0" layoutY="164.0" lineSpacing="10.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: #AAB2BD;" stylesheets="@../GUIFront/teamsfront.css" text="Gestion des Billets">
+                  <Button layoutX="11.0" layoutY="164.0" lineSpacing="10.0" mnemonicParsing="false" onAction="#produit" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: #AAB2BD;" stylesheets="@../GUIFront/teamsfront.css" text="Gestion des Produits">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -116,7 +125,7 @@
                         <String fx:value="shadow" />
                      </styleClass>
                   </Button>
-                  <Button layoutX="11.0" layoutY="202.0" lineSpacing="10.0" mnemonicParsing="false" onAction="#front" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: #AAB2BD;" stylesheets="@../GUIFront/teamsfront.css" text="frontEquipe">
+                  <Button layoutX="11.0" layoutY="240.0" lineSpacing="10.0" mnemonicParsing="false" onAction="#categories" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: #AAB2BD;" stylesheets="@../GUIFront/teamsfront.css" text="Gestion des Categories">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -125,7 +134,7 @@
                         <String fx:value="shadow" />
                      </styleClass>
                   </Button>
-                  <Button layoutX="11.0" layoutY="240.0" lineSpacing="10.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: #AAB2BD;" stylesheets="@../GUIFront/teamsfront.css" text="Gestion des Categories">
+                  <Button layoutX="11.0" layoutY="317.0" lineSpacing="10.0" mnemonicParsing="false" onAction="#panier" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: #AAB2BD;" stylesheets="@../GUIFront/teamsfront.css" text="Gestion des Commandes">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -134,7 +143,7 @@
                         <String fx:value="shadow" />
                      </styleClass>
                   </Button>
-                  <Button layoutX="11.0" layoutY="279.0" lineSpacing="10.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: #AAB2BD;" stylesheets="@../GUIFront/teamsfront.css" text="Gestion des Commandes">
+                  <Button layoutX="11.0" layoutY="202.0" lineSpacing="10.0" mnemonicParsing="false" onAction="#Arbitres" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: #AAB2BD;" stylesheets="@../GUIFront/teamsfront.css" text="Gestion Arbitres">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -143,7 +152,25 @@
                         <String fx:value="shadow" />
                      </styleClass>
                   </Button>
-                  <Button layoutX="11.0" layoutY="317.0" lineSpacing="10.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: #AAB2BD;" stylesheets="@../GUIFront/teamsfront.css" text="Gestion des Panier">
+                  <Button layoutX="19.0" layoutY="449.0" lineSpacing="10.0" mnemonicParsing="false" onAction="#RolesArbitres" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: #AAB2BD;" stylesheets="@../GUIFront/teamsfront.css" text="Roles Arbitres">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <styleClass>
+                        <String fx:value="add-btn" />
+                        <String fx:value="shadow" />
+                     </styleClass>
+                  </Button>
+                  <Button layoutX="19.0" layoutY="493.0" lineSpacing="10.0" mnemonicParsing="false" onAction="#redirectGestionBillet" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: #AAB2BD;" stylesheets="@../GUIFront/teamsfront.css" text="Gestion Billet">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <styleClass>
+                        <String fx:value="add-btn" />
+                        <String fx:value="shadow" />
+                     </styleClass>
+                  </Button>
+                  <Button lineSpacing="10.0" mnemonicParsing="false" onAction="#redirectToClasmment" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: #AAB2BD;" stylesheets="@../GUIFront/teamsfront.css" text="Gestion Classment">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -162,5 +189,6 @@
       <String fx:value="right-bar" />
       <String fx:value="add-btn" />
       <String fx:value="bo" />
+      <String fx:value="transparent" />
    </styleClass>
 </BorderPane>
