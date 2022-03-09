@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane id="AnchorPane" prefHeight="554.0" prefWidth="1207.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.UpdateUserController">
+   <children>
+      <Label layoutX="13.0" layoutY="42.0" styleClass="tf_box" stylesheets="@style.css" text="Nom:" textFill="DIMGRAY" />
+      <Label layoutX="12.0" layoutY="89.0" styleClass="tf_box" stylesheets="@style.css" text="Prenom:" textFill="DIMGRAY" />
+      <Label layoutX="13.0" layoutY="143.0" styleClass="tf_box" stylesheets="@style.css" text="Mot de passe:" textFill="DIMGRAY" />
+      <Label layoutX="12.0" layoutY="193.0" styleClass="tf_box" stylesheets="@style.css" text="numéro de téléphone:" textFill="DIMGRAY" />
+      <TextField fx:id="tfNewNom" layoutX="201.0" layoutY="37.0" />
+      <TextField fx:id="tfNewPrenom" layoutX="201.0" layoutY="84.0" />
+      <TextField fx:id="tfNewPass" layoutX="201.0" layoutY="138.0" />
+      <TextField fx:id="tfNewTel" layoutX="201.0" layoutY="188.0" />
+      <Button fx:id="BtnUpdateUser" layoutX="188.0" layoutY="438.0" mnemonicParsing="false" onAction="#OnUpdateUser" prefHeight="31.0" prefWidth="87.0" styleClass="blue-btn" stylesheets="@style.css" text="Update" />
+      <GridPane layoutX="341.0" layoutY="379.0" prefHeight="90.0" prefWidth="307.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+      </GridPane>
+   </children>
+</AnchorPane>
