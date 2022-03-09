@@ -170,7 +170,7 @@ public class BilletAjoutModifyController implements Initializable {
                 }
                 bloc = bloc.charAt(0) + "";
 
-                Billet billet = new Billet(match, bloc, prix, 47);
+                Billet billet = new Billet(match, bloc, prix, 71);
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("Payment.fxml"));
                 Parent root;
                 root = loader.load();

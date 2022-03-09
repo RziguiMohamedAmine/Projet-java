@@ -41,7 +41,7 @@ public class BilletDisplayController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         billetService = new BilletService();
-        billetList = billetService.getBilletByUser(47);
+        billetList = billetService.getBilletByUser(71);
         int row = 0;
         try {
             AnchorPane anchorPane1;

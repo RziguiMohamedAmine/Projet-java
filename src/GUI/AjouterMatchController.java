@@ -47,17 +47,17 @@ import javafx.util.Callback;
  * @author Houssem Charef
  */
 public class AjouterMatchController implements Initializable {
-    
+
     List<Match> listMatch;
     ObservableList<Match> matchList = FXCollections.observableArrayList();
     MatchService matchService = new MatchService();
     Match match;
-    
+
     private AjouterMatchController ajouterMatchController;
-    
+
     @FXML
     TableView<Match> tableViewMatchs;
-    
+
     @FXML
     private TableColumn<Match, String> nom_equipe1;
     @FXML
@@ -93,11 +93,11 @@ public class AjouterMatchController implements Initializable {
         matchService = new MatchService();
         ajouterMatchController = this;
         LoadData();
-        
+
     }
-    
+
     public void refreshTable() {
-        
+
         matchList.clear();
         matchList.addAll(matchService.getAll());
         FilteredList<Match> filterData = recherche(matchList);
@@ -105,11 +105,11 @@ public class AjouterMatchController implements Initializable {
         rechercheTextFiled.setText("");
         rechercheTextFiled.setText(a);
         tableViewMatchs.setItems(filterData);
-        
+
     }
-    
+
     private void LoadData() {
-        
+
         refreshTable();
         date.setCellValueFactory(new PropertyValueFactory<>("date"));
         stade.setCellValueFactory(new PropertyValueFactory<>("stade"));
@@ -118,16 +118,16 @@ public class AjouterMatchController implements Initializable {
                 -> new SimpleStringProperty(cellData.getValue().getEquipe1().getNom()));
         nom_equipe2.setCellValueFactory(cellData
                 -> new SimpleStringProperty(cellData.getValue().getEquipe2().getNom()));
-        
+
         Arbitre1.setCellValueFactory(cellData
                 -> new SimpleStringProperty(cellData.getValue().getArbiter1().getNom()));
-        
+
         Arbitre2.setCellValueFactory(cellData
                 -> new SimpleStringProperty(cellData.getValue().getArbiter2().getNom()));
-        
+
         Arbitre3.setCellValueFactory(cellData
                 -> new SimpleStringProperty(cellData.getValue().getArbiter3().getNom()));
-        
+
         Arbitre4.setCellValueFactory(cellData
                 -> new SimpleStringProperty(cellData.getValue().getArbiter4().getNom()));
         resultat.setCellValueFactory(cellData -> new SimpleStringProperty((cellData.getValue().getNb_but1() == -1 ? "" : cellData.getValue().getNb_but1()) + " - "
@@ -167,14 +167,14 @@ public class AjouterMatchController implements Initializable {
 //        FilteredList<Match> filterData = recherche(matchList);
 //        tableViewMatchs.setItems(filterData);
         action.setCellFactory(createActionButton());
-        
+
     }
-    
+
     private FilteredList<Match> recherche(ObservableList matchList) {
         FilteredList<Match> filterData = new FilteredList<Match>(matchList, b -> true);
         rechercheTextFiled.textProperty().addListener((observable, oldValue, newValue) -> {
             filterData.setPredicate(matchSearchModel -> {
-                
+
                 if (newValue.isEmpty() || newValue == null) {
                     return true;
                 }
@@ -183,7 +183,7 @@ public class AjouterMatchController implements Initializable {
                     return true;
                 } else if (((Match) matchSearchModel).getEquipe2().getNom().toLowerCase().contains(serachKeeyword)) {
                     return true;
-                } else if (((Match) matchSearchModel).getStade().toLowerCase().contains(serachKeeyword)) {
+                } else if (((Match) matchSearchModel).getEquipe1().getSatde().toLowerCase().contains(serachKeeyword)) {
                     return true;
                 } else if (((Match) matchSearchModel).getEquipe2().getNom().toLowerCase().contains(serachKeeyword)) {
                     return true;
@@ -200,15 +200,15 @@ public class AjouterMatchController implements Initializable {
                 } else if (((Match) matchSearchModel).getDate().toString().toLowerCase().contains(serachKeeyword)) {
                     return true;
                 }
-                
+
                 return false;
             });
-            
+
         });
-        
+
         return filterData;
     }
-    
+
     private Callback<TableColumn<Match, String>, TableCell<Match, String>> createActionButton() {
         Callback<TableColumn<Match, String>, TableCell<Match, String>> cellFoctory = (TableColumn<Match, String> param) -> {
             // make cell containing buttons
@@ -220,9 +220,9 @@ public class AjouterMatchController implements Initializable {
                     if (empty) {
                         setGraphic(null);
                         setText(null);
-                        
+
                     } else {
-                        
+
                         FontAwesomeIconView deleteIcon = new FontAwesomeIconView(FontAwesomeIcon.TRASH);
                         FontAwesomeIconView editIcon = new FontAwesomeIconView(FontAwesomeIcon.PENCIL_SQUARE);
                         FontAwesomeIconView logoIcon = new FontAwesomeIconView(FontAwesomeIcon.PLUS_CIRCLE);
@@ -236,17 +236,17 @@ public class AjouterMatchController implements Initializable {
                                 + "-glyph-size:28px;"
                                 + "-fx-fill:#00E676;"
                         );
-                        
+
                         logoIcon.setStyle(
                                 " -fx-cursor: hand ;"
                                 + "-glyph-size:28px;"
                                 + "-fx-fill:#00E676;"
                         );
-                        
+
                         deleteIcon.setOnMouseClicked((MouseEvent event) -> {
                             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Confirmation de supprision ?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
                             alert.showAndWait();
-                            
+
                             if (alert.getResult() == ButtonType.YES) {
                                 match = tableViewMatchs.getSelectionModel().getSelectedItem();
                                 matchService.delete(match);
@@ -255,13 +255,13 @@ public class AjouterMatchController implements Initializable {
                         });
                         editIcon.setOnMouseClicked((MouseEvent event) -> {
                             try {
-                                
+
                                 match = tableViewMatchs.getSelectionModel().getSelectedItem();
                                 FXMLLoader loader = new FXMLLoader(getClass().getResource("MatchAjoutModify.fxml"));
-                                
+
                                 Parent root;
                                 root = loader.load();
-                                
+
                                 MatchAjoutModifyController matchAjoutModifyController = loader.getController();
                                 matchAjoutModifyController.initializeMatchController(ajouterMatchController);
                                 matchAjoutModifyController.initializeTextField(match);
@@ -274,7 +274,7 @@ public class AjouterMatchController implements Initializable {
                                 Logger.getLogger(AjouterMatchController.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         });
-                        
+
                         logoIcon.setOnMouseClicked((MouseEvent event) -> {
 
 //                             equipe = equipeTable.getSelectionModel().getSelectedItem();
@@ -286,34 +286,34 @@ public class AjouterMatchController implements Initializable {
 //                                Logger.getLogger(EquipeDetailsController.class.getName()).log(Level.SEVERE, null, ex);
 //                            }
                         });
-                        
+
                         HBox managebtn = new HBox(editIcon, deleteIcon, logoIcon);
                         managebtn.setStyle("-fx-alignment:center");
                         HBox.setMargin(deleteIcon, new Insets(2, 2, 0, 3));
                         HBox.setMargin(editIcon, new Insets(2, 3, 0, 2));
                         HBox.setMargin(logoIcon, new Insets(2, 3, 0, 2));
                         setGraphic(managebtn);
-                        
+
                         setText(null);
-                        
+
                     }
                 }
-                
+
             };
-            
+
             return cell;
         };
         return cellFoctory;
     }
-    
+
     @FXML
     public void RedirectToAjoutMatch() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("MatchAjoutModify.fxml"));
-            
+
             Parent root = loader.load();
             MatchAjoutModifyController matchAjoutModifyController = loader.getController();
-            
+
             matchAjoutModifyController.setButton("Ajouter");
             Scene scene = new Scene(root);
             Stage stage = new Stage();
@@ -323,12 +323,12 @@ public class AjouterMatchController implements Initializable {
             Logger.getLogger(AjouterMatchController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     @FXML
     private void tirageAuSort(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("TirageAuSort.fxml"));
-            
+
             Parent root = loader.load();
             TirageAuSortController tirageAuSortController = loader.getController();
             tirageAuSortController.initializeMatchController(this);
@@ -340,5 +340,5 @@ public class AjouterMatchController implements Initializable {
             Logger.getLogger(AjouterMatchController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
 }

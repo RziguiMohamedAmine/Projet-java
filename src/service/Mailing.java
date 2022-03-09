@@ -6,8 +6,12 @@
 package service;
 
 import entite.Billet;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.Properties;
+import java.util.logging.Logger;
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
@@ -64,7 +68,7 @@ public class Mailing {
     }
 
     private static Message prepareMessage(Session session, String email, String recepient, Billet billet) {
-        String htmlCode;
+        String htmlCode = "";
         Message message = new MimeMessage(session);
         try {
             message.setFrom(new InternetAddress(email));
@@ -72,22 +76,34 @@ public class Mailing {
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recepient));
             message.setSubject("billet match");
 
-            htmlCode = "<!doctype html>\n"
-                    + "<html lang=\"en-US\">\n"
-                    + "\n"
-                    + "<head>\n"
-                    + "    <meta content=\"text/html; charset=utf-8\" http-equiv=\"Content-Type\" />\n"
-                    + "    <title>mot de passe oublié</title>\n"
-                    + "    <meta name=\"description\" content=\"billet details \">\n"
-                    + "    <style type=\"text/css\">\n"
-                    + "        a:hover {text-decoration: underline !important;}\n"
-                    + "    </style>\n"
-                    + "</head>\n"
-                    + "\n"
-                    + "<body marginheight=\"0\" topmargin=\"0\" marginwidth=\"0\" style=\"margin: 0px; background-color: #f2f3f8;\" leftmargin=\"0\">\n"
-                    + " <p>" + billet + "</p>"
-                    + "<img width=200 height=200 src=\"cid:image\">"
-                    + "</html>";
+//            htmlCode = "<!doctype html>\n"
+//                    + "<html lang=\"en-US\">\n"
+//                    + "\n"
+//                    + "<head>\n"
+//                    + "    <meta content=\"text/html; charset=utf-8\" http-equiv=\"Content-Type\" />\n"
+//                    + "    <title>mot de passe oublié</title>\n"
+//                    + "    <meta name=\"description\" content=\"billet details \">\n"
+//                    + "    <style type=\"text/css\">\n"
+//                    + "        a:hover {text-decoration: underline !important;}\n"
+//                    + "    </style>\n"
+//                    + "</head>\n"
+//                    + "\n"
+//                    + "<body marginheight=\"0\" topmargin=\"0\" marginwidth=\"0\" style=\"margin: 0px; background-color: #f2f3f8;\" leftmargin=\"0\">\n"
+//                    + " <p>" + billet + "</p>"
+//                    + "<img width=200 height=200 src=\"cid:image\">"
+//                    + "</html>";
+            FileInputStream fis;
+            try {
+                fis = new FileInputStream("emailHtml.txt");
+                Properties prop = new Properties();
+                prop.load(fis);
+                htmlCode = prop.getProperty("stringtoolong");
+                System.out.println(htmlCode);
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(Mailing.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(Mailing.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
             MimeMultipart multipart = new MimeMultipart("related");
 
