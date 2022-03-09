@@ -95,7 +95,7 @@ public class UserService implements IService<User>{
         }return update;
 }
     
- 
+    @Override
     public boolean updateuser(User u) {
         String req="UPDATE user SET nom=?,prenom=?,pass=?,tel=? WHERE id=?";
         boolean update=false;

@@ -3,23 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package service;
-
-import java.util.List;
+package GUIFront;
 
 /**
  *
  * @author Houssem Charef
+ * @param <T>
  */
-public interface IService<T> {
+public interface Listener<T> {
 
-    boolean insert(T t);
-
-    boolean update(T t);
-
-    boolean delete(T t);
-
-    List<T> getAll();
-
-    T getOne(int id);
+    public void onClickListener(T entity);
 }

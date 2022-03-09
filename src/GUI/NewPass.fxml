@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.NewPassController">
+   <children>
+      <HBox layoutX="10.0" layoutY="92.0" prefHeight="39.0" prefWidth="201.0" styleClass="tf_box">
+         <children>
+            <TextField fx:id="tfCode" prefHeight="39.0" prefWidth="200.0" promptText="code de verification " styleClass="tf_box" stylesheets="@style.css" />
+         </children>
+      </HBox>
+      <HBox layoutX="10.0" layoutY="145.0" prefHeight="39.0" prefWidth="252.0" styleClass="tf_box">
+         <children>
+            <PasswordField fx:id="tfNewPass" prefHeight="31.0" prefWidth="238.0" promptText="nouveau mot de passe" styleClass="tf_box" stylesheets="@style.css" />
+         </children>
+      </HBox>
+      <Button layoutX="436.0" layoutY="226.0" mnemonicParsing="false" onAction="#OnNewPass" prefHeight="32.0" prefWidth="99.0" styleClass="blue-btn" stylesheets="@style.css" text="valider" />
+   </children>
+</AnchorPane>
