@@ -18,6 +18,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import org.controlsfx.control.Rating?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ProduitFrontController">
    <children>
@@ -94,6 +95,8 @@
                               <Insets bottom="20.0" />
                            </VBox.margin>
                         </ImageView>
+                        <Rating fx:id="rating" disable="true" prefHeight="13.0" prefWidth="176.0" rating="0.0" />
+                        <Label fx:id="moyLabel" text="(30)" />
                         <Separator prefWidth="200.0" />
                         <HBox alignment="CENTER" prefHeight="61.0" prefWidth="335.0">
                            <children>

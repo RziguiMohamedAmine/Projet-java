@@ -21,12 +21,15 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import org.controlsfx.control.Rating;
+import service.ServiceAvis;
 import service.ServiceProduit;
 
 /**
@@ -48,25 +51,35 @@ public class ProduitFrontController implements Initializable {
     produit p;
     produit pr=null;
     Listeneritem l;
+    ServiceAvis serviceAvis;
     @FXML
     private ImageView ImgProduit;
     @FXML
     private ScrollPane scroll;
     @FXML
     private GridPane grid;
+    @FXML
+    private TextField filterField;
+    @FXML
+    private Rating rating;
+    @FXML
+    private Label moyLabel;
     /**
      * Initializes the controller class.
      */
    
      private void setChosenProduct(produit p) throws FileNotFoundException {
          this.p = p;
-         LabelNomProduit.setText(p.getNom());
+          LabelNomProduit.setText(p.getNom());
           Image  image = new Image(new FileInputStream(p.getImage()));
           LabelPrixProduit.setText(String.valueOf(p.getPrix()));
-        ImgProduit.setImage(image);
+          ImgProduit.setImage(image);
+          
+          List<Float> listRating=serviceAvis.getCountAverageAvisByProduit(p.getId());
+        rating.ratingProperty().setValue(listRating.get(1));
+        moyLabel.setText("("+listRating.get(0)+")");
 
-//        chosenTeam.setStyle("-fx-background-color: #857777;\n" +
-//                "    -fx-background-radius: 30;");
+           
     }
     
     
@@ -74,7 +87,7 @@ public class ProduitFrontController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-         
+         serviceAvis = new ServiceAvis();
         
         listprod.addAll(sp.getAll());
      
@@ -88,6 +101,8 @@ public class ProduitFrontController implements Initializable {
           }
             l=new Listeneritem() {
                 @Override
+               
+                
                 public void onClickListener(produit p) {
                     try {
                         setChosenProduct(p);

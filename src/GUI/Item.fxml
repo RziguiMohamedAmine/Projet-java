@@ -10,10 +10,11 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import org.controlsfx.control.Rating?>
 
-<AnchorPane id="AnchorPane" onMousePressed="#click" prefHeight="283.0" prefWidth="270.0" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ItemController">
+<AnchorPane id="AnchorPane" onMousePressed="#click" prefHeight="369.0" prefWidth="270.0" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ItemController">
    <children>
-      <VBox alignment="TOP_CENTER" layoutY="6.0" prefHeight="245.0" prefWidth="270.0" AnchorPane.bottomAnchor="37.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="6.0">
+      <VBox alignment="TOP_CENTER" layoutY="6.0" prefHeight="220.0" prefWidth="270.0" AnchorPane.bottomAnchor="143.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="6.0">
          <children>
             <HBox prefHeight="35.0" prefWidth="225.0">
                <children>
@@ -45,12 +46,18 @@
             </ImageView>
          </children>
       </VBox>
-      <Label alignment="CENTER" layoutX="30.0" layoutY="287.0" prefHeight="25.0" prefWidth="103.0" text="Taille" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="263.0">
+      <Label alignment="CENTER" layoutX="30.0" layoutY="306.0" prefHeight="35.0" prefWidth="103.0" text="Taille" AnchorPane.bottomAnchor="28.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="306.0">
          <font>
             <Font name="Cambria Bold" size="13.0" />
          </font>
       </Label>
-      <ComboBox fx:id="tailleBox" layoutX="133.0" layoutY="263.0" prefHeight="25.0" prefWidth="115.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="133.0" AnchorPane.topAnchor="263.0" />
+      <ComboBox fx:id="tailleBox" layoutX="133.0" layoutY="307.0" prefHeight="35.0" prefWidth="115.0" AnchorPane.bottomAnchor="27.0" AnchorPane.leftAnchor="133.0" AnchorPane.topAnchor="307.0" />
+      <Rating fx:id="rating" layoutX="47.0" layoutY="244.0" rating="0.0" />
+      <Label fx:id="msg" alignment="CENTER" layoutX="46.0" layoutY="276.0" prefHeight="17.0" prefWidth="176.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
    </children>
    <styleClass>
       <String fx:value="product-item" />

@@ -51,7 +51,23 @@ public class ServiceAvis implements IService<Avis>{
     
     @Override
     public boolean update(Avis t) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean update=false;
+        String req ="update avis set avis = ? where id_user=? and id_produit=?";
+         
+       
+           try {
+             pst= conn.prepareStatement(req);
+             pst.setFloat(1, t.getAvis());
+             
+             pst.setInt(2, t.getUser().getId());
+                          pst.setInt(3, t.getProduit().getId());
+
+             
+             update=pst.executeUpdate()>0;
+             
+         } catch (SQLException ex) {
+             Logger.getLogger(ServiceCategorie.class.getName()).log(Level.SEVERE, null, ex);
+         } return update;
     }
 
     @Override
@@ -134,6 +150,28 @@ public class ServiceAvis implements IService<Avis>{
     @Override
     public Avis getOne(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public boolean userExiste(Avis a){
+         String  req="SELECT count(*) count FROM `avis` WHERE id_produit=? and id_user=?";
+        List<Float> list = new ArrayList<>();
+        try {
+            pst= conn.prepareStatement(req);
+            pst.setInt(1,a.getProduit().getId());
+            pst.setInt(2,a.getUser().getId());
+
+                       
+            rs = pst.executeQuery();
+             if (rs.next())
+             {           
+               return rs.getInt("count")>0;
+             }
+             
+        } catch (SQLException ex) {
+            Logger.getLogger(ServiceCategorie.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
+        return false;
     }
     
     

@@ -5,6 +5,8 @@
  */
 package GUI;
 
+import entite.Avis;
+import entite.User;
 import entite.categorie;
 import entite.produit;
 import entite.taille;
@@ -12,6 +14,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -22,6 +26,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.util.StringConverter;
+import org.controlsfx.control.Rating;
+import service.ServiceAvis;
 import service.ServiceCategorie;
 import service.ServiceTaille;
 
@@ -43,14 +49,19 @@ public class ItemController implements Initializable {
     private Listeneritem l;
     @FXML
     private ComboBox<taille> tailleBox;
-     @FXML
-     
     private ServiceTaille serviceTaille;
     private ObservableList<taille> tailleList = FXCollections.observableArrayList();
-   @FXML
+    @FXML
+    private Rating rating;
+    @FXML
+    private Label msg;
+    ServiceAvis serviceAvis;
+    
+    @FXML
     private void click(MouseEvent event)
     {
         l.onClickListener(p);
+        
     }
     /**
      * Initializes the controller class.
@@ -59,10 +70,32 @@ public class ItemController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         serviceTaille = new ServiceTaille();
+        serviceAvis = new ServiceAvis();
+        
+        rating.ratingProperty().setValue(0);
+        rating.ratingProperty().addListener(new ChangeListener<Number>(){
+            @Override
+            public void changed(ObservableValue<? extends Number> ov, Number old, Number newT) {
+                User user = new User();
+                user.setId(10);
+                Avis avis = new Avis(user, p, newT.floatValue() );
+                if(serviceAvis.userExiste(avis)){
+                        serviceAvis.update(avis);
+                }else{
+                                          serviceAvis.insert(avis);
+
+                }
+                msg.setText("Rating :"+newT);
+            }
+        
+        
+        });
+     
        
     }    
      public void setData(produit prod,Listeneritem l) throws FileNotFoundException
     {
+          
         this.p=prod;
         this.l=l;
         LabelNom.setText(prod.getNom());

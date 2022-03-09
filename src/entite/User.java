@@ -21,7 +21,9 @@ String pass;
 String tel;
 String role;
 String image;
-
+   public User() {
+       
+   }
     public User(String nom, String prenom, String email, String pass, String tel, String role, String image) {
         this.nom = nom;
         this.prenom = prenom;
