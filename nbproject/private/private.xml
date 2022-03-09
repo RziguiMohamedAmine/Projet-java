@@ -4,22 +4,20 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/hamdi/Desktop/java/ftf_desktop/src/GUI/UpdateUserController.java</file>
+            <file>file:/C:/Users/hamdi/Desktop/java/ftf_desktop/src/GUI/MainController.java</file>
             <file>file:/C:/Users/hamdi/Desktop/java/ftf_desktop/src/GUI/NewFXMain.java</file>
-            <file>file:/C:/Users/hamdi/Desktop/java/ftf_desktop/src/service/UserSession.java</file>
+            <file>file:/C:/Users/hamdi/Desktop/java/ftf_desktop/src/GUI/loginuser1.fxml</file>
             <file>file:/C:/Users/hamdi/Desktop/java/ftf_desktop/src/entite/User.java</file>
-            <file>file:/C:/Users/hamdi/Desktop/java/ftf_desktop/src/GUI/NewPass.fxml</file>
+            <file>file:/C:/Users/hamdi/Desktop/java/ftf_desktop/src/service/IService.java</file>
+            <file>file:/C:/Users/hamdi/Desktop/java/ftf_desktop/src/GUI/DetailsController.java</file>
             <file>file:/C:/Users/hamdi/Desktop/java/ftf_desktop/src/GUI/inscription.fxml</file>
-            <file>file:/C:/Users/hamdi/Desktop/java/ftf_desktop/src/service/UserService.java</file>
+            <file>file:/C:/Users/hamdi/Desktop/java/ftf_desktop/src/GUI/Create.fxml</file>
+            <file>file:/C:/Users/hamdi/Desktop/java/ftf_desktop/src/GUI/Main.fxml</file>
             <file>file:/C:/Users/hamdi/Desktop/java/ftf_desktop/src/GUI/Loginuser1Controller.java</file>
             <file>file:/C:/Users/hamdi/Desktop/java/ftf_desktop/src/GUI/InscriptionController.java</file>
             <file>file:/C:/Users/hamdi/Desktop/java/ftf_desktop/src/GUI/CreateController.java</file>
-            <file>file:/C:/Users/hamdi/Desktop/java/ftf_desktop/src/service/servicesession.java</file>
             <file>file:/C:/Users/hamdi/Desktop/java/ftf_desktop/src/GUI/NewPassController.java</file>
-            <file>file:/C:/Users/hamdi/Desktop/java/ftf_desktop/src/GUI/EmailVController.java</file>
-            <file>file:/C:/Users/hamdi/Desktop/java/ftf_desktop/src/GUI/home.fxml</file>
             <file>file:/C:/Users/hamdi/Desktop/java/ftf_desktop/src/GUI/HomeController.java</file>
-            <file>file:/C:/Users/hamdi/Desktop/java/ftf_desktop/src/GUI/style.css</file>
-            <file>file:/C:/Users/hamdi/Desktop/java/ftf_desktop/src/test/Federation.java</file>
         </group>
     </open-files>
 </project-private>
