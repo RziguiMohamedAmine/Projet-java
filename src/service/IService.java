@@ -7,10 +7,7 @@ package service;
 
 import java.util.List;
 
-/**
- *
- * @author Houssem Charef
- */
+
 public interface IService<T> {
 
     boolean insert(T t);

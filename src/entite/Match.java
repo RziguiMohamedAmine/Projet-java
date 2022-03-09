@@ -5,6 +5,7 @@
  */
 package entite;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Objects;
 
@@ -253,5 +254,6 @@ public class Match {
     public void getEquipe1(Equipe equipe2) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
 
 }

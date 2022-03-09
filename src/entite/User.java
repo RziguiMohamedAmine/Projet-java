@@ -33,6 +33,11 @@ public static User session;
     }
 
     
+    public User(int id) {
+        this.id = id;
+    
+    }
+
     public User(int id, String nom, String prenom, String email, String pass, int tel ,String role) {
         this.id = id;
         this.nom = nom;
