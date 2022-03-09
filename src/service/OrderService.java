@@ -25,7 +25,9 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 public class OrderService implements IService<Order> {
     private Connection cnx;
@@ -196,11 +198,17 @@ public class OrderService implements IService<Order> {
     }
     private static Message prepareMessage(Session session , String myAccountEmail, String recepient,Order order ){
         try {
+            
+           
+            
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(myAccountEmail));
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(recepient));
             message.setSubject("FTF ");
             message.setText("Cher Client\n Vous avez passé la commande #"+order.getId()+" le "+order.getDate());
+            
+            
+            
             return message;
         } catch (Exception ex) {
             Logger.getLogger(OrderService.class.getName()).log(Level.SEVERE, null, ex);
