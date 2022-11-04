@@ -1,0 +1,19 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+     <router-outlet></router-outlet>
+    listInovice:
+    <tr *ngFor="let inovice of list">
+      <li class="nav-item">
+        Facture {{inovice.idFacture}}: <a class="nav-link" routerLink="Inovice/{{inovice.idFacture}}/{{inovice.active}}">Details</a>
+      </li>      
+    </tr>
+</body>
+</html>

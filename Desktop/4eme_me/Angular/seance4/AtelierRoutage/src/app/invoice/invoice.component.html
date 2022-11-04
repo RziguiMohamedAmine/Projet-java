@@ -1,0 +1,23 @@
+
+
+
+<ng-template [ngIf]="i.active=='true'" [ngIfElse]="rr">
+    <p>Impossible de visualiser les détails de la facture</p>
+</ng-template>
+<ng-template #rr>
+    
+        
+        <p>{{i.idFacture}}</p>
+        <p>{{i.active}}</p>
+        <p>{{i.montantFacture}}</p>
+        <p>{{i.montantRemise}}</p>
+        <p>{{i.dateFacture}}</p>
+        <button ><a routerLink="//Main">Retour</a></button>
+</ng-template>
+
+
+
+
+
+
+
